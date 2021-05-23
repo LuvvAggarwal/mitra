@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS cities (
+CREATE TABLE IF NOT EXISTS addresses (
   id UUID NOT NULL PRIMARY KEY,
   number BIGSERIAL NOT NULL,
   active BOOLEAN NOT NULL,
@@ -6,5 +6,5 @@ CREATE TABLE IF NOT EXISTS cities (
   updated_on TIMESTAMP NOT NULL,
   street varchar(150) NOT NULL,
   pin_code INT,
-  city UUID FOREIGN KEY REFERENCES cities(id) NOT NULL
+  city UUID REFERENCES cities(id) NOT NULL
 );

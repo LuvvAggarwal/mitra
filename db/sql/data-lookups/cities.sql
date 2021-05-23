@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS cities (
   created_on TIMESTAMP NOT NULL,
   updated_on TIMESTAMP NOT NULL,
   name varchar(150) NOT NULL,
-  state_id int NOT NULL,
+  state_id UUID NOT NULL,
   CONSTRAINT fk_states
       FOREIGN KEY(state_id) 
 	  REFERENCES states(id)

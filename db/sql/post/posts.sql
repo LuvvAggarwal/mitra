@@ -9,8 +9,12 @@ CREATE TABLE IF NOT EXISTS posts (
   title VARCHAR(200) NOT NULL,
   description TEXT NOT NULL,
   keyword TEXT,
-  visibility VISIBILITY NOT NULL,
-  group UUID FOREIGN KEY REFERENCES groups(id) NOT NULL,
-  user UUID FOREIGN KEY REFERENCES specials(id) NOT NULL,
-  approved BOOLEAN NOT NULL
+  visibility VISIBLITY NOT NULL,
+  group_id UUID REFERENCES groups(id),
+  special_id UUID REFERENCES specials(id),
+  counsaler_id UUID REFERENCES counsalers(id),
+  approved BOOLEAN
 ) ;
+
+CREATE DOMAIN POST_TYPE VARCHAR(10)
+     CHECK (VALUE IN ('text', 'multi-media', 'document'));

@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS special_achievers (
   middle_name VARCHAR(100) NOT NULL,
   last_name VARCHAR(100) NOT NULL,
   achievement TEXT NOT NULL,
-  problem_category UUID FOREIGN KEY REFERENCES problem_category(id) NOT NULL,
+  problem_category UUID REFERENCES problem_category(id) NOT NULL
 );

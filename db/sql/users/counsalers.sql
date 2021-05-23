@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS counsalers (
   profile_photo TEXT UNIQUE,
   cover_photo TEXT UNIQUE,
   bio TEXT UNIQUE,
-  address UUID FOREIGN KEY REFERENCES address(id) NOT NULL,
+  address UUID REFERENCES addresses(id) NOT NULL,
   last_login TIMESTAMP, /**AUTHENTICATION**/
   access_token TEXT NOT NULL UNIQUE,/**AUTHENTICATION**/
   visibility VISIBLITY NOT NULL DEFAULT 'public',/**SETTINGS**/
