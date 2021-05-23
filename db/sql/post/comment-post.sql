@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS comment_post (
+    id UUID NOT NULL PRIMARY KEY,
+    number BIGSERIAL NOT NULL,
+    active BOOLEAN NOT NULL,
+    created_on TIMESTAMP NOT NULL,
+    updated_on TIMESTAMP NOT NULL,
+    post UUID FOREIGN KEY REFERENCES posts(id) NOT NULL,
+    user UUID FOREIGN KEY REFERENCES users(id) NOT NULL,
+    comment TEXT NOT NULL,
+);

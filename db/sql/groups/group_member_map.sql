@@ -1,0 +1,31 @@
+CREATE TABLE IF NOT EXISTS group_member_map (
+  id UUID NOT NULL PRIMARY KEY,
+  number BIGSERIAL NOT NULL,
+  active BOOLEAN NOT NULL,
+  created_on TIMESTAMP NOT NULL,
+  updated_on TIMESTAMP NOT NULL,
+  group UUID FOREIGN KEY REFERENCES groups(id) NOT NULL,
+  user UUID FOREIGN KEY REFERENCES specials(id),
+  ngo UUID FOREIGN KEY REFERENCES ngos(id),
+  counsaler UUID FOREIGN KEY REFERENCES counsalers(id)
+) ;
+/*
+CREATE TABLE IF NOT EXISTS group_ngo_member_map (
+  id UUID NOT NULL PRIMARY KEY,
+  number BIGSERIAL NOT NULL,
+  active BOOLEAN NOT NULL,
+  created_on TIMESTAMP NOT NULL,
+  updated_on TIMESTAMP NOT NULL,
+  group UUID FOREIGN KEY REFERENCES groups(id) NOT NULL,
+  ngo UUID FOREIGN KEY REFERENCES ngos(id) NOT NULL
+) ;
+
+CREATE TABLE IF NOT EXISTS group_counsalers_member_map (
+  id UUID NOT NULL PRIMARY KEY,
+  number BIGSERIAL NOT NULL,
+  active BOOLEAN NOT NULL,
+  created_on TIMESTAMP NOT NULL,
+  updated_on TIMESTAMP NOT NULL,
+  group UUID FOREIGN KEY REFERENCES groups(id) NOT NULL,
+  counsaler UUID FOREIGN KEY REFERENCES counsalers(id) NOT NULL
+) ;*/

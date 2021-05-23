@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS atachment_post_map (
+    id UUID NOT NULL PRIMARY KEY,
+    number BIGSERIAL NOT NULL,
+    active BOOLEAN NOT NULL,
+    created_on TIMESTAMP NOT NULL,
+    updated_on TIMESTAMP NOT NULL,
+    type ATTACHMENT_TYPE NOT NULL,
+    post UUID FOREIGN KEY REFERENCES posts(id) NOT NULL,
+    url TEXT NOT NULL
+);
