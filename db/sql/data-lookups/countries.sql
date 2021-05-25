@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS countries (
-  id UUID NOT NULL PRIMARY KEY,
+  id UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
   number BIGSERIAL NOT NULL,
   active BOOLEAN NOT NULL,
-  created_on TIMESTAMP NOT NULL,
-  updated_on TIMESTAMP NOT NULL,
+  created_on TIMESTAMP DEFAULT NOW() NOT NULL,
+  updated_on TIMESTAMP DEFAULT NOW() NOT NULL,
   shortname varchar(3) NOT NULL,
   name varchar(150) NOT NULL,
   phonecode int NOT NULL
