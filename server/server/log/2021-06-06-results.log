@@ -1,0 +1,410 @@
+2021-06-06 18:19:40 info: a request has been made with the following uuid [73213baa-0eb2-4853-95ac-db711b097e45] /api/v1/signUp PostmanRuntime/7.28.0 {}
+2021-06-06 18:19:40 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: Joi.string(...).pattern is not a function
+2021-06-06 18:23:05 info: a request has been made with the following uuid [6e26c859-7195-4ea7-b4c8-f0679da19103] /api/v1/signUp PostmanRuntime/7.28.0 {}
+2021-06-06 18:23:05 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: pattern must be a RegExp
+2021-06-06 18:24:26 info: a request has been made with the following uuid [df76b7e4-3406-427f-81e9-54f2c7842fa1] /api/v1/signUp PostmanRuntime/7.28.0 {}
+2021-06-06 18:24:26 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: pattern must be a RegExp
+2021-06-06 18:24:52 info: a request has been made with the following uuid [7d5e2513-4f85-489f-b1e3-04b0784135b0] /api/v1/signUp PostmanRuntime/7.28.0 {}
+2021-06-06 18:24:52 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: pattern must be a RegExp
+2021-06-06 18:26:32 info: a request has been made with the following uuid [9084599f-e383-4c45-af7d-e19485fa4b25] /api/v1/signUp PostmanRuntime/7.28.0 {}
+2021-06-06 18:26:32 warn: error in validating request : "email" is required
+2021-06-06 18:26:32 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: "email" is required
+2021-06-06 18:30:13 info: a request has been made with the following uuid [8fa3ec08-c1f7-4693-871a-b3e9432aacb9] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggarwal2002@gmail.com","user_id":"jaiSiyaRam","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123"}
+2021-06-06 18:30:13 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.findUnique()` invocation:
+
+{
+  options: {
+  ~~~~~~~
+    where: {
+      OR: [
+        {
+          email: 'luvvaggarwal2002@gmail.com'
+        },
+        {
+          user_id: 'jaiSiyaRam'
+        }
+      ]
+    }
+  },
++ where: {
++   id?: String,
++   user_id?: String,
++   ph_number?: BigInt,
++   email?: String,
++   profile_photo?: String,
++   cover_photo?: String,
++   bio?: String,
++   access_token?: String
++ }
+}
+
+Unknown arg `options` in options for type users. Did you mean `where`?
+Argument where is missing.
+
+Note: Lines with + are required
+
+2021-06-06 18:37:29 info: a request has been made with the following uuid [9dcd1b69-110b-43b7-9722-7f2330ae7d80] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggarwal2002@gmail.com","user_id":"jaiSiyaRam","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 18:37:29 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.findUnique()` invocation:
+
+{
+  options: {
+  ~~~~~~~
+    where: {
+      OR: [
+        {
+          email: 'luvvaggarwal2002@gmail.com'
+        },
+        {
+          user_id: 'jaiSiyaRam'
+        }
+      ]
+    }
+  },
++ where: {
++   id?: String,
++   user_id?: String,
++   ph_number?: BigInt,
++   email?: String,
++   profile_photo?: String,
++   cover_photo?: String,
++   bio?: String,
++   access_token?: String
++ }
+}
+
+Unknown arg `options` in options for type users. Did you mean `where`?
+Argument where is missing.
+
+Note: Lines with + are required
+
+2021-06-06 18:44:02 info: a request has been made with the following uuid [c186629f-4183-4c23-91ee-37b9596e08ec] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggarwal2002@gmail.com","user_id":"jaiSiyaRam","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 18:44:02 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.findUnique()` invocation:
+
+{
+  options: {
+  ~~~~~~~
+    where: {
+      OR: [
+        {
+          email: 'luvvaggarwal2002@gmail.com'
+        },
+        {
+          user_id: 'jaiSiyaRam'
+        }
+      ]
+    }
+  },
++ where: {
++   id?: String,
++   user_id?: String,
++   ph_number?: BigInt,
++   email?: String,
++   profile_photo?: String,
++   cover_photo?: String,
++   bio?: String,
++   access_token?: String
++ }
+}
+
+Unknown arg `options` in options for type users. Did you mean `where`?
+Argument where is missing.
+
+Note: Lines with + are required
+
+2021-06-06 18:48:21 info: a request has been made with the following uuid [3379d9bd-2e44-4a3a-b7d1-c0ff18e43ffe] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggarwal2002@gmail.com","user_id":"jaiSiyaRam","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 18:48:21 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.findUnique()` invocation:
+
+{
+  options: {
+  ~~~~~~~
+    where: {
+      OR: [
+        {
+          email: 'luvvaggarwal2002@gmail.com'
+        },
+        {
+          user_id: 'jaiSiyaRam'
+        }
+      ]
+    }
+  },
++ where: {
++   id?: String,
++   user_id?: String,
++   ph_number?: BigInt,
++   email?: String,
++   profile_photo?: String,
++   cover_photo?: String,
++   bio?: String,
++   access_token?: String
++ }
+}
+
+Unknown arg `options` in options for type users. Did you mean `where`?
+Argument where is missing.
+
+Note: Lines with + are required
+
+2021-06-06 18:48:57 info: a request has been made with the following uuid [7f39b1a1-cc76-4e53-8e93-bd224cd61700] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggarwal2002@gmail.com","user_id":"jaiSiyaRam","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 18:48:57 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.findUnique()` invocation:
+
+{
+  where: {
+    OR: [
+    ~~
+      {
+        email: 'luvvaggarwal2002@gmail.com'
+      },
+      {
+        user_id: 'jaiSiyaRam'
+      }
+    ]
+  }
+}
+
+Unknown arg `OR` in where.OR for type usersWhereUniqueInput. Did you mean `id`? Available args:
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+  profile_photo?: String
+  cover_photo?: String
+  bio?: String
+  access_token?: String
+}
+
+
+2021-06-06 18:51:55 info: a request has been made with the following uuid [89695d90-3f04-4d95-9589-ecff5e68860d] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggarwal2002@gmail.com","user_id":"jaiSiyaRam","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 18:51:55 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.findMany()` invocation:
+
+
+  error: Environment variable not found: DATABASE_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+2021-06-06 19:14:51 info: a request has been made with the following uuid [d975f9cf-8135-4a98-a49d-bb8d5e0edfb7] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggarwal2002@gmail.com","user_id":"jaiSiyaRam","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 19:14:52 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.findMany()` invocation:
+
+
+  Error querying the database: db error: ERROR: syntax error at or near "DEV_APP_PORT"
+2021-06-06 19:15:49 info: a request has been made with the following uuid [bbd35885-72b9-4143-a6f3-71cc5e4b8a11] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggarwal2002@gmail.com","user_id":"jaiSiyaRam","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 19:15:50 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: invalid email account,email already existed
+2021-06-06 19:16:21 info: a request has been made with the following uuid [816e9798-9cda-4927-9b7c-d9d28cc6d338] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 19:16:21 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: invalid email account,email already existed
+2021-06-06 19:18:12 info: a request has been made with the following uuid [859b88c0-b9b9-46a3-a9cb-1f6eb7d68a8f] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 19:18:14 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: invalid email account,email already existed
+2021-06-06 19:19:12 info: a request has been made with the following uuid [e786a372-96b5-4663-971b-7919e6f9eb38] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","name":"Luvv Aggarwal","type":"USER","problem":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 19:19:14 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.create()` invocation:
+
+{
+  data: {
+    email: 'luvvaggar2wal2002@gmail.com',
+    user_id: 'jaiSiyaRam11',
+    name: 'Luvv Aggarwal',
+    type: 'USER',
+    problem: '2ecfc390-d009-4264-a91a-6523c3a0a750',
+    ~~~~~~~
+    password: '$2b$10$hefbcoPaIA.va22B6REuneyc08FUwTcmRheMNkpp1CMw.PQgWkg12',
+    ~~~~~~~~
+    ph_number: 8979058628,
+    id: '9038b603-ac42-43ff-b157-0a94d3e9e465',
++   problem_category_problem_categoryTousers: {
++     create?: problem_categoryCreateWithoutUsersInput | problem_categoryUncheckedCreateWithoutUsersInput,
++     connectOrCreate?: problem_categoryCreateOrConnectWithoutUsersInput,
++     connect?: problem_categoryWhereUniqueInput
++   },
+?   number?: BigInt,
+?   active?: Boolean,
+?   created_on?: DateTime,
+?   updated_on?: DateTime,
+?   first_name?: String | null,
+?   middle_name?: String | null,
+?   last_name?: String | null,
+?   occupation?: String | null,
+?   experience?: Int | null,
+?   registration_code?: String | null,
+?   profile_photo?: String | null,
+?   cover_photo?: String | null,
+?   bio?: String | null,
+?   last_login?: DateTime | null,
+?   access_token?: String | null,
+?   visibility?: PUBLIC | PRIVATE | FRIENDS,
+?   theme?: LIGHT | DARK,
+?   notification?: IMPORTANT | STANDARD | NO_NOTIFICATION,
+?   addresses?: {
+?     create?: addressesCreateWithoutUsersInput | addressesUncheckedCreateWithoutUsersInput,
+?     connectOrCreate?: addressesCreateOrConnectWithoutUsersInput,
+?     connect?: addressesWhereUniqueInput
+?   },
+?   help_type_help_typeTousers?: {
+?     create?: help_typeCreateWithoutUsersInput | help_typeUncheckedCreateWithoutUsersInput,
+?     connectOrCreate?: help_typeCreateOrConnectWithoutUsersInput,
+?     connect?: help_typeWhereUniqueInput
+?   },
+?   comment_post?: {
+?     create?: comment_postCreateWithoutUsersInput | comment_postCreateWithoutUsersInput | comment_postUncheckedCreateWithoutUsersInput | comment_postUncheckedCreateWithoutUsersInput,
+?     connectOrCreate?: comment_postCreateOrConnectWithoutUsersInput | comment_postCreateOrConnectWithoutUsersInput,
+?     createMany?: comment_postCreateManyUsersInputEnvelope,
+?     connect?: comment_postWhereUniqueInput | comment_postWhereUniqueInput
+?   },
+?   follower_following_follower_following_followerTousers?: {
+?     create?: follower_followingCreateWithoutUsers_follower_following_followerTousersInput | follower_followingCreateWithoutUsers_follower_following_followerTousersInput | follower_followingUncheckedCreateWithoutUsers_follower_following_followerTousersInput | follower_followingUncheckedCreateWithoutUsers_follower_following_followerTousersInput,
+?     connectOrCreate?: follower_followingCreateOrConnectWithoutUsers_follower_following_followerTousersInput | follower_followingCreateOrConnectWithoutUsers_follower_following_followerTousersInput,
+?     createMany?: follower_followingCreateManyUsers_follower_following_followerTousersInputEnvelope,
+?     connect?: follower_followingWhereUniqueInput | follower_followingWhereUniqueInput
+?   },
+?   follower_following_follower_following_followingTousers?: {
+?     create?: follower_followingCreateWithoutUsers_follower_following_followingTousersInput | follower_followingCreateWithoutUsers_follower_following_followingTousersInput | follower_followingUncheckedCreateWithoutUsers_follower_following_followingTousersInput | follower_followingUncheckedCreateWithoutUsers_follower_following_followingTousersInput,
+?     connectOrCreate?: follower_followingCreateOrConnectWithoutUsers_follower_following_followingTousersInput | follower_followingCreateOrConnectWithoutUsers_follower_following_followingTousersInput,
+?     createMany?: follower_followingCreateManyUsers_follower_following_followingTousersInputEnvelope,
+?     connect?: follower_followingWhereUniqueInput | follower_followingWhereUniqueInput
+?   },
+?   group_member_map?: {
+?     create?: group_member_mapCreateWithoutUsersInput | group_member_mapCreateWithoutUsersInput | group_member_mapUncheckedCreateWithoutUsersInput | group_member_mapUncheckedCreateWithoutUsersInput,
+?     connectOrCreate?: group_member_mapCreateOrConnectWithoutUsersInput | group_member_mapCreateOrConnectWithoutUsersInput,
+?     createMany?: group_member_mapCreateManyUsersInputEnvelope,
+?     connect?: group_member_mapWhereUniqueInput | group_member_mapWhereUniqueInput
+?   },
+?   group_member_req_group_member_req_request_recieverTousers?: {
+?     create?: group_member_reqCreateWithoutUsers_group_member_req_request_recieverTousersInput | group_member_reqCreateWithoutUsers_group_member_req_request_recieverTousersInput | group_member_reqUncheckedCreateWithoutUsers_group_member_req_request_recieverTousersInput | group_member_reqUncheckedCreateWithoutUsers_group_member_req_request_recieverTousersInput,
+?     connectOrCreate?: group_member_reqCreateOrConnectWithoutUsers_group_member_req_request_recieverTousersInput | group_member_reqCreateOrConnectWithoutUsers_group_member_req_request_recieverTousersInput,
+?     createMany?: group_member_reqCreateManyUsers_group_member_req_request_recieverTousersInputEnvelope,
+?     connect?: group_member_reqWhereUniqueInput | group_member_reqWhereUniqueInput
+?   },
+?   group_member_req_group_member_req_request_senderTousers?: {
+?     create?: group_member_reqCreateWithoutUsers_group_member_req_request_senderTousersInput | group_member_reqCreateWithoutUsers_group_member_req_request_senderTousersInput | group_member_reqUncheckedCreateWithoutUsers_group_member_req_request_senderTousersInput | group_member_reqUncheckedCreateWithoutUsers_group_member_req_request_senderTousersInput,
+?     connectOrCreate?: group_member_reqCreateOrConnectWithoutUsers_group_member_req_request_senderTousersInput | group_member_reqCreateOrConnectWithoutUsers_group_member_req_request_senderTousersInput,
+?     createMany?: group_member_reqCreateManyUsers_group_member_req_request_senderTousersInputEnvelope,
+?     connect?: group_member_reqWhereUniqueInput | group_member_reqWhereUniqueInput
+?   },
+?   groups_groups_created_byTousers?: {
+?     create?: groupsCreateWithoutUsers_groups_created_byTousersInput | groupsCreateWithoutUsers_groups_created_byTousersInput | groupsUncheckedCreateWithoutUsers_groups_created_byTousersInput | groupsUncheckedCreateWithoutUsers_groups_created_byTousersInput,
+?     connectOrCreate?: groupsCreateOrConnectWithoutUsers_groups_created_byTousersInput | groupsCreateOrConnectWithoutUsers_groups_created_byTousersInput,
+?     createMany?: groupsCreateManyUsers_groups_created_byTousersInputEnvelope,
+?     connect?: groupsWhereUniqueInput | groupsWhereUniqueInput
+?   },
+?   groups_groups_updated_byTousers?: {
+?     create?: groupsCreateWithoutUsers_groups_updated_byTousersInput | groupsCreateWithoutUsers_groups_updated_byTousersInput | groupsUncheckedCreateWithoutUsers_groups_updated_byTousersInput | groupsUncheckedCreateWithoutUsers_groups_updated_byTousersInput,
+?     connectOrCreate?: groupsCreateOrConnectWithoutUsers_groups_updated_byTousersInput | groupsCreateOrConnectWithoutUsers_groups_updated_byTousersInput,
+?     createMany?: groupsCreateManyUsers_groups_updated_byTousersInputEnvelope,
+?     connect?: groupsWhereUniqueInput | groupsWhereUniqueInput
+?   },
+?   like_post?: {
+?     create?: like_postCreateWithoutUsersInput | like_postCreateWithoutUsersInput | like_postUncheckedCreateWithoutUsersInput | like_postUncheckedCreateWithoutUsersInput,
+?     connectOrCreate?: like_postCreateOrConnectWithoutUsersInput | like_postCreateOrConnectWithoutUsersInput,
+?     createMany?: like_postCreateManyUsersInputEnvelope,
+?     connect?: like_postWhereUniqueInput | like_postWhereUniqueInput
+?   },
+?   notifications_notifications_recipientTousers?: {
+?     create?: notificationsCreateWithoutUsers_notifications_recipientTousersInput | notificationsCreateWithoutUsers_notifications_recipientTousersInput | notificationsUncheckedCreateWithoutUsers_notifications_recipientTousersInput | notificationsUncheckedCreateWithoutUsers_notifications_recipientTousersInput,
+?     connectOrCreate?: notificationsCreateOrConnectWithoutUsers_notifications_recipientTousersInput | notificationsCreateOrConnectWithoutUsers_notifications_recipientTousersInput,
+?     createMany?: notificationsCreateManyUsers_notifications_recipientTousersInputEnvelope,
+?     connect?: notificationsWhereUniqueInput | notificationsWhereUniqueInput
+?   },
+?   notifications_notifications_senderTousers?: {
+?     create?: notificationsCreateWithoutUsers_notifications_senderTousersInput | notificationsCreateWithoutUsers_notifications_senderTousersInput | notificationsUncheckedCreateWithoutUsers_notifications_senderTousersInput | notificationsUncheckedCreateWithoutUsers_notifications_senderTousersInput,
+?     connectOrCreate?: notificationsCreateOrConnectWithoutUsers_notifications_senderTousersInput | notificationsCreateOrConnectWithoutUsers_notifications_senderTousersInput,
+?     createMany?: notificationsCreateManyUsers_notifications_senderTousersInputEnvelope,
+?     connect?: notificationsWhereUniqueInput | notificationsWhereUniqueInput
+?   },
+?   posts?: {
+?     create?: postsCreateWithoutUsersInput | postsCreateWithoutUsersInput | postsUncheckedCreateWithoutUsersInput | postsUncheckedCreateWithoutUsersInput,
+?     connectOrCreate?: postsCreateOrConnectWithoutUsersInput | postsCreateOrConnectWithoutUsersInput,
+?     createMany?: postsCreateManyUsersInputEnvelope,
+?     connect?: postsWhereUniqueInput | postsWhereUniqueInput
+?   },
+?   share_post?: {
+?     create?: share_postCreateWithoutUsersInput | share_postCreateWithoutUsersInput | share_postUncheckedCreateWithoutUsersInput | share_postUncheckedCreateWithoutUsersInput,
+?     connectOrCreate?: share_postCreateOrConnectWithoutUsersInput | share_postCreateOrConnectWithoutUsersInput,
+?     createMany?: share_postCreateManyUsersInputEnvelope,
+?     connect?: share_postWhereUniqueInput | share_postWhereUniqueInput
+?   }
+  }
+}
+
+Unknown arg `problem` in data.problem for type usersCreateInput. Did you mean `number`?
+Unknown arg `password` in data.password for type usersCreateInput.
+Argument problem_category_problem_categoryTousers for data.problem_category_problem_categoryTousers is missing.
+
+Note: Lines with + are required, lines with ? are optional.
+
+2021-06-06 19:28:47 info: a request has been made with the following uuid [b6fbc1d8-bb33-44cf-a375-7d0f4f95ef5d] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","first_name":"Luvv","last_name":"Aggarwal","type":"USER","problem_category":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 19:28:50 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.create()` invocation:
+
+{
+  data: {
+    id: '9463c25e-c531-43d5-b8e6-a4e5ea671f20',
+    user_id: 'jaiSiyaRam11',
+    first_name: 'Luvv',
+    last_name: 'Aggarwal',
+    email: 'luvvaggar2wal2002@gmail.com',
+    password: '$2b$10$8TuJeYfzD5THkSsvMCcAn.NLt9FR/HMaPb30zq.8o5zA9OmZs1Y3S',
+    ~~~~~~~~
+    type: 'USER',
+    ph_number: 8979058628,
+    problem_category: '2ecfc390-d009-4264-a91a-6523c3a0a750'
+  }
+}
+
+Unknown arg `password` in data.password for type usersUncheckedCreateInput. Available args:
+
+type usersUncheckedCreateInput {
+  id: String
+  number?: BigInt
+  active?: Boolean
+  created_on?: DateTime
+  updated_on?: DateTime
+  user_id: String
+  type: User_Type
+  first_name?: String | Null
+  middle_name?: String | Null
+  last_name?: String | Null
+  name?: String | Null
+  occupation?: String | Null
+  experience?: Int | Null
+  problem_category: String
+  registration_code?: String | Null
+  help_type?: String | Null
+  ph_number: BigInt
+  email?: String | Null
+  profile_photo?: String | Null
+  cover_photo?: String | Null
+  bio?: String | Null
+  address?: String | Null
+  last_login?: DateTime | Null
+  access_token?: String | Null
+  visibility?: Visibility
+  theme?: Theme
+  notification?: Notifcation
+  comment_post?: comment_postUncheckedCreateNestedManyWithoutUsersInput
+  follower_following_follower_following_followerTousers?: follower_followingUncheckedCreateNestedManyWithoutUsers_follower_following_followerTousersInput
+  follower_following_follower_following_followingTousers?: follower_followingUncheckedCreateNestedManyWithoutUsers_follower_following_followingTousersInput
+  group_member_map?: group_member_mapUncheckedCreateNestedManyWithoutUsersInput
+  group_member_req_group_member_req_request_recieverTousers?: group_member_reqUncheckedCreateNestedManyWithoutUsers_group_member_req_request_recieverTousersInput
+  group_member_req_group_member_req_request_senderTousers?: group_member_reqUncheckedCreateNestedManyWithoutUsers_group_member_req_request_senderTousersInput
+  groups_groups_created_byTousers?: groupsUncheckedCreateNestedManyWithoutUsers_groups_created_byTousersInput
+  groups_groups_updated_byTousers?: groupsUncheckedCreateNestedManyWithoutUsers_groups_updated_byTousersInput
+  like_post?: like_postUncheckedCreateNestedManyWithoutUsersInput
+  notifications_notifications_recipientTousers?: notificationsUncheckedCreateNestedManyWithoutUsers_notifications_recipientTousersInput
+  notifications_notifications_senderTousers?: notificationsUncheckedCreateNestedManyWithoutUsers_notifications_senderTousersInput
+  posts?: postsUncheckedCreateNestedManyWithoutUsersInput
+  share_post?: share_postUncheckedCreateNestedManyWithoutUsersInput
+}
+
+
+2021-06-06 19:33:27 info: a request has been made with the following uuid [e4fb10ac-b6b4-4b1d-b62f-6ed1087f8a78] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","first_name":"Luvv","last_name":"Aggarwal","type":"USER","problem_category":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-06 19:33:30 info: a request has been made and proccessed successfully at: Sun Jun 06 2021 19:33:30 GMT+0530 (India Standard Time)

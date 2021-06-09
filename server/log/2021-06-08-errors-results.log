@@ -1,0 +1,296 @@
+2021-06-08 13:03:33 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: "email" is required
+2021-06-08 13:05:00 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: please provide all required headers
+2021-06-08 13:35:38 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:38:07 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:39:19 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:40:47 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:42:24 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:12:24.973Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTM5OTQ0LCJleHAiOjE2MzE3Nzk5NDR9.wF_HsY6xUy9KOljj6JY-14crN4WFsBRCLeJEcfKnfYKKylXapw-hSq1TH8svJFsfOkU6ZW4yyJNS2O0rTyWZ_g'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 13:44:49 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:45:40 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: Cannot read property 'toString' of undefined
+2021-06-08 13:46:40 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:48:03 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:49:36 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:54:52 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:24:52.875Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQwNjkyLCJleHAiOjE2MzE3ODA2OTJ9.6K0sDMWbfVDxwQpvK1BLC_V3vPjldlHKH9yhWWpRPBDKBhtKCMLey4smb15J-HYP4kejYXxjeNhZpvwgVeGKJA'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 13:55:13 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:55:15 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:55:17 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:56:24 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:01:43 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:02:41 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:05:22 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:35:22.330Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQxMzIyLCJleHAiOjE2MzE3ODEzMjJ9.Jwa5y6y37GcSRBrZY76ccaYYO6Kgi7wyy6EriBrwLzHZXu_6xqgaT_hgfXHCSB6tuievS5PBxujewQ620cl5pA'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:07:05 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:37:05.068Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQxNDI1LCJleHAiOjE2MzE3ODE0MjV9.nvVKbFLo4Lx5YYH4TAA7iugiLbp5M_hqyuBnzxpnVxdNmxJmwo5VorcCzgWCvUAa68oMuPAzIAQBgppBN4tgIw'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:08:44 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:38:44.757Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQxNTI0LCJleHAiOjE2MzE3ODE1MjR9.Nj7aS1mWkoACYVA-s7zIz1APASE3etkppkY0DotK0iUsQWAf6cRteLjT8dPA5d3I5auo-y5kQgMM1Nqv3UlmfA'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:15:22 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:45:22.924Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQxOTIyLCJleHAiOjE2MzE3ODE5MjJ9.9J8su-tx8LM1DVsEjclAink6rd8J9k9fBvOeZXOFsWsVfqosEzw08IkuqodzqhHg-xYOkPTg5x29qPPiJCICog'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:19:46 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:49:46.818Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQyMTg2LCJleHAiOjE2MzE3ODIxODZ9.Qq9VP5rab9kopZfT0NtyteuajD5Lfot8gLe6MSlQdyKwVTi5ogTUwr_lDLHUlS8xpRKYS2D1dxgIu4rvUjr0BQ'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:21:48 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:51:48.263Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQyMzA4LCJleHAiOjE2MzE3ODIzMDh9.IrjdaErKtrEHPv0QWI1Aq9lPn1EP92F1LVSUDnba2LQ14qmON-sdpQNSVb7WuKGpTn4uuUQ-XeprKrFu7Krucw'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:22:30 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:52:30.207Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQyMzUwLCJleHAiOjE2MzE3ODIzNTB9.-key9FTigq30VxE1hvs1Q2Wyr1RpokKr5gIvA9BK9RlcSIBvNVTSc6l4iymanx4zN5QFgSHqHEYv6a4ARz0g7A'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:27:12 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:28:06 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:34:09 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:34:55 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: Cannot access 'bcrypt' before initialization
+2021-06-08 14:36:22 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T09:06:22.036Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQzMTgyLCJleHAiOjE2MzE3ODMxODJ9.F0Meg2r8HcaPEGaudJM9TpK2J0y20eq9vWaxO0A3sO7z_-xo966jNZIIrjaLVMpF7wTHYMw2WsEB_tJs3hPRpQ'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:37:24 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T09:07:24.323Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQzMjQ0LCJleHAiOjE2MzE3ODMyNDR9.Qv9jISRqeCYj30s0I6zzecf7q569KymGVsVI6ws-v1SAFMxxv8rji48WnjqzFHELrp05OOxf2fV_lUohwVbxpQ'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 18:08:56 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: Do not know how to serialize a BigInt
+2021-06-08 18:09:46 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:10:20 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:16:58 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:31:51 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:32:09 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:33:07 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:41:18 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: Cannot access 'user' before initialization
+2021-06-08 18:42:29 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:43:03 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: Cannot access 'user' before initialization
+2021-06-08 18:43:57 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required

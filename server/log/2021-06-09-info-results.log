@@ -1,0 +1,11 @@
+2021-06-09 15:12:20 info: a request has been made with the following uuid [60dad511-99d3-489b-a3d6-21bb0036de52] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:13:37 info: a request has been made with the following uuid [9abc47e2-9f0c-49a4-b1ba-6e51202b7964] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:15:15 info: a request has been made with the following uuid [8dba7a7c-2712-4158-a304-b2238b5ce40c] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:15:51 info: a request has been made with the following uuid [7ba2339c-c55a-4cde-b400-b062b1717981] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:15:52 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 15:15:52 GMT+0530 (India Standard Time)
+2021-06-09 15:16:52 info: a request has been made with the following uuid [c3f987fa-f1c0-45b8-bdea-b41da060a71a] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:16:53 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 15:16:53 GMT+0530 (India Standard Time)
+2021-06-09 15:25:12 info: a request has been made with the following uuid [73cbc9e8-7784-4c4a-800f-316cdb4c62b2] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:26:51 info: a request has been made with the following uuid [311e8c40-ebf2-4fc6-afe2-453c0610ebf0] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:30:00 info: a request has been made with the following uuid [d755f915-0013-4319-809f-c5db11245577] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:30:02 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 15:30:02 GMT+0530 (India Standard Time)
