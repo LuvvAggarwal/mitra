@@ -28,6 +28,20 @@ module.exports = {
 		// refresh_token_secret: process.env.REFRESH_TOKEN_SECRET || 'VmVyeVBvd2VyZnVsbFNlY3JldA==',
 		// refresh_token_expiresin: process.env.REFRESH_TOKEN_EXPIRES_IN || '2d', // 2 days
 	},
+	oauth2Credentials: {
+		client_id: process.env.GOOGLE_0AUTH_CLIENT_ID,
+		project_id: process.env.GOOGLE_0AUTH_PROJECT_ID, // The name of your project
+		auth_uri: "https://accounts.google.com/o/oauth2/auth",
+		token_uri: "https://oauth2.googleapis.com/token",
+		auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+		client_secret: process.env.GOOGLE_0AUTH_CLIENT_SECRET,
+		redirect_uris: [
+		  `http://localhost:${process.env.DEV_APP_PORT}/`
+		],
+		scopes: [
+		//   'https://www.googleapis.com/auth/youtube.readonly'
+		]
+	  }
 	// sendgrid: {
 	// 	api_key: process.env.SEND_GRID_API_KEY,
 	// 	api_user: process.env.USERNAME,

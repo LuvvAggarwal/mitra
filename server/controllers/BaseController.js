@@ -124,7 +124,7 @@ class BaseController {
 		let result;
 
 		try {
-			result = await prisma[modelName].update(options).then(
+			result = await prisma[modelName].updateMany(options).then(
 				errHandler.throwIf(r => !r, 500, 'Internal server error', 'something went wrong couldnt update data'),
 				errHandler.throwError(500, 'sequelize error'),
 

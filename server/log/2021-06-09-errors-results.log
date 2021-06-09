@@ -1,0 +1,120 @@
+2021-06-09 17:27:47 error: the url you are trying to reach is not hosted on our server
+2021-06-09 17:28:23 error: the url you are trying to reach is not hosted on our server
+2021-06-09 17:28:55 error: the url you are trying to reach is not hosted on our server
+2021-06-09 17:30:10 error: the url you are trying to reach is not hosted on our server
+2021-06-09 17:32:29 error: the url you are trying to reach is not hosted on our server
+2021-06-09 17:33:07 error: error ,Error during processing request: http://localhost:3000/api/v1/logout details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYTU2MjQwMDktMmY2ZC00OTAyLWJiNmQtMDkzYjgxYTk1MjAwIiwibnVtYmVyIjoiMW4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjpudWxsLCJjb3Zlcl9waG90byI6bnVsbCwiYmlvIjpudWxsLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyMzkxNzIsImV4cCI6MTYzMTg3OTE3Mn0.l2wHK23TxyUDTTj7bYafkerrZJUScIQOGx5HJUo4uZoapYlIHlXvlii9FZnBmPzr_uG__bulx6dWAccugASdcw',
+    id: 'a5624009-2f6d-4902-bb6d-093b81a95200'
+  },
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  data: {
+    access_token: ''
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs exactly one argument, but you provided access_token and id. Please choose one. Available args: 
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+  profile_photo?: String
+  cover_photo?: String
+  bio?: String
+  access_token?: String
+}
+
+
+2021-06-09 17:55:54 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: stringUtil is not defined
+2021-06-09 17:56:29 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: "middle_name" is required
+2021-06-09 17:57:29 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: "middle_name" is not allowed to be empty
+2021-06-09 17:57:51 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: "middle_name" is not allowed to be empty
+2021-06-09 17:58:18 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.create()` invocation:
+
+
+  Foreign key constraint failed on the field: `users_problem_category_fkey (index)`
+2021-06-09 18:06:48 error: error ,Error during processing request: http://localhost:3000/api/v1/logout details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA',
+    ~~~~~~~~~~~~
+    id: '55425835-db14-4d6d-a6c0-a04bfb6a79d1'
+  },
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  data: {
+    access_token: ''
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs exactly one argument, but you provided access_token and id. Please choose one. Available args: 
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+}
+Unknown arg `access_token` in where.access_token for type usersWhereUniqueInput. Available args:
+
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+}
+
+
+2021-06-09 18:12:54 error: error ,Error during processing request: http://localhost:3000/api/v1/logout details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA'
+    ~~~~~~~~~~~~
+  },
+  data: {
+    access_token: ''
+  }
+}
+
+Unknown arg `access_token` in where.access_token for type usersWhereUniqueInput. Available args:
+
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+}
+
+
+2021-06-09 18:21:16 error: error ,Error during processing request: http://localhost:3000/api/v1/logout details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA'
+    ~~~~~~~~~~~~
+  },
+  data: {
+    access_token: ''
+  }
+}
+
+Unknown arg `access_token` in where.access_token for type usersWhereUniqueInput. Available args:
+
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+}
+
+
+2021-06-09 18:27:41 error: error ,Error during processing request: http://localhost:3000/api/v1/logout details message: User Already logged out Successfully

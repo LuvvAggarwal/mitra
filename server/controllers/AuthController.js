@@ -1,18 +1,22 @@
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
-const async = require('async');
+// const async = require('async');
 const jwt = require('jsonwebtoken');
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
 const BaseController = require('../controllers/BaseController');
-const stringUtil = require('../utils/stringUtil');
-const email = require('../utils/email');
+// const stringUtil = require('../utils/stringUtil');
+// const email = require('../utils/email');
+const OAuth2 = google.auth.OAuth2;
+const google = require('googleapis').google;
+
 const config = require('../config/appconfig');
 const auth = require('../utils/auth');
-const date = require('joi/lib/types/date');
+// const date = require('joi/lib/types/date');
 const uuid = require('uuid');
-const { Console } = require('winston/lib/winston/transports');
+// const { Console } = require('winston/lib/winston/transports');
+const json = require("../utils/jsonUtil");
 const logger = new Logger();
 const requestHandler = new RequestHandler(logger);
 const tokenList = {};
@@ -33,15 +37,15 @@ class AuthController extends BaseController {
 				// platform: req.headers.platform,
 			}, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-			console.log('finding');
+			// console.log('finding');
 			const options = { email: req.body.email };
-			console.log('before');
+			// console.log('before');
 			try {
 
 				const userdata = await super.getByCustomOptions(req, 'users', options);
 				const user = userdata[0]
-				console.log(user);
-				console.log(" >>>>>>>>>>>> id " + user.id);
+				// console.log(user);
+				// console.log(" >>>>>>>>>>>> id " + user.id);
 				// const json = toJson(user)
 				// console.log(json);
 
@@ -58,39 +62,26 @@ class AuthController extends BaseController {
 				}
 				else {
 					// console.log(backAgain);
-					console.log("bcrypting >>>>> " + user.password);
+					// console.log("bcrypting >>>>> " + user.password);
 					const bcryptdata = await bcrypt.compare(req.body.password, user.password).then(
 						console.log('. ' + user.password),
 						requestHandler.throwIf(r => !r, 400, 'incorrect', 'failed to login bad credentials'),
 						requestHandler.throwError(500, 'bcrypt error'),
 					);
-					console.log("comparing pswd");
+					// console.log("comparing pswd");
 					// Implemented similar Pakistani social media n/w videos
 					req.params.id = user.id;
-					console.log(user.id);
-					const payload = _.omit(user, ['created_on', 'updated_on', 'last_login', 'password', 'gender', 'ph_number', 'profile_photo', 'cover_photo']);
-					console.log(payload)
-					const jsonStringify = JSON.stringify(user, (key, value) =>
-					typeof value === "bigint" ? value.toString() + "n" : value
-					);
-					const jsonParsed = JSON.parse(jsonStringify)
-					const token = jwt.sign({ payload : jsonParsed}, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
+					// console.log(user.id);
+					const payloadData = _.omit(user, ['created_on', 'updated_on', 'last_login', 'password', 'gender','access_token']);
+					const payload = json.parse(payloadData)
+					const token = jwt.sign({ payload}, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
 					const data = {
 						last_login: new Date().toISOString(),
 						access_token: token
 					};
-					console.log('updating');
+					// console.log('updating');
 					const updatedData = await super.updateById(req, 'users', data);
-					const updatedUser = updatedData
-					console.log(updatedData);
-					const json2 = JSON.stringify(updatedUser, (key, value) =>
-						typeof value === "bigint" ? value.toString() + "n" : value
-					);
-					requestHandler.sendSuccess(res, 'User logged in Successfully')({ token, json2 });
-					// res.status(200).json({
-					// 	msg: "login",
-					// 	data: json2
-					// })
+					requestHandler.sendSuccess(res, 'User logged in Successfully')({ token });
 				}
 
 
@@ -181,15 +172,15 @@ class AuthController extends BaseController {
 			const schema = {
 				email: Joi.string().email().required(),
 				first_name: Joi.string().required(),
-				middle_name: Joi.string().required(),
+				middle_name: Joi.string(),
 				last_name: Joi.string().required(),
 				type: Joi.string().regex(pattern),
 				problem_category: Joi.string().required(),
 				password: Joi.string().required()
 			};
-			const randomString = stringUtil.generateString();
+			// const randomString = stringUtil.generateString();
 
-			const { error } = Joi.validate({ email: data.email, first_name: data.first_name, last_name: data.last_name, middle_name: data.middle_name, type: date.type, problem_category: data.problem_category, password: data.password }, schema);
+			const { error } = Joi.validate({ email: data.email, first_name: data.first_name, last_name: data.last_name, type: data.type, problem_category: data.problem_category, password: data.password }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			const options = { OR: [{ email: data.email }, { user_id: data.user_id }] };
 			const user = await super.getByCustomOptions(req, 'users', options);
@@ -264,6 +255,7 @@ class AuthController extends BaseController {
 
 	static async logOut(req, res) {
 		try {
+			console.log('first');
 			const schema = {
 				// platform: Joi.string().valid('ios', 'android', 'web').required(),
 				access_token: Joi.string(),
@@ -272,9 +264,11 @@ class AuthController extends BaseController {
 				/*platform: req.headers.platform,*/ access_token: req.body.access_token,
 			}, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-
+			// console.log('before');.
 			const tokenFromHeader = auth.getJwtToken(req);
+			// console.log(tokenFromHeader);
 			const user = jwt.decode(tokenFromHeader);
+			// console.log(user);
 			const options = {
 				where: {
 					access_token: req.body.access_token,
@@ -288,7 +282,8 @@ class AuthController extends BaseController {
 			const delete_access_token = await super.updateByCustomWhere(req, 'users', options);
 			// req.params.id = access_token.dataValues.id;
 			// const deleteFcm = await super.updateById(req, 'users');
-			if (delete_access_token) {
+			// console.log(delete_access_token);
+			if (delete_access_token.count === 1) {
 				requestHandler.sendSuccess(res, 'User Logged Out Successfully')();
 			} else {
 				requestHandler.throwError(400, 'bad request', 'User Already logged out Successfully')();
@@ -297,5 +292,14 @@ class AuthController extends BaseController {
 			requestHandler.sendError(req, res, err);
 		}
 	}
+
+	/*static async signInWithGoogle(req,res){
+		const oauth2Client = new OAuth2(config.oauth2Credentials.client_id, config.oauth2Credentials.client_secret, config.oauth2Credentials.redirect_uris[0]);
+		const loginLink = oauth2Client.generateAuthUrl({
+			access_type: 'offline', // Indicates that we need to be able to access data continously without the user constantly giving us consent
+			scope: config.oauth2Credentials.scopes // Using the access scopes from our config file
+		  });
+		  requestHandler.sendSuccess(res, 'a new token is issued ', 200)(loginLink);
+	}*/
 }
 module.exports = AuthController;

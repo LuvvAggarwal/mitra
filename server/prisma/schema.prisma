@@ -2,10 +2,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
 model addresses {
   id         String   @id @db.Uuid
@@ -296,6 +296,12 @@ enum Notifcation {
   NO_NOTIFICATION
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
 model users {
   id                                                        String               @id @db.Uuid
   number                                                    BigInt               @default(autoincrement())
@@ -308,6 +314,7 @@ model users {
   middle_name                                               String?              @default("") @db.VarChar(100)
   last_name                                                 String?              @default("") @db.VarChar(100)
   name                                                      String?              @default("") @db.VarChar(250)
+  gender                                                    Gender?              @default(MALE)
   occupation                                                String?              @default("") @db.VarChar(100)
   experience                                                Int?                 @default(0)
   problem_category                                          String               @db.Uuid
@@ -316,16 +323,16 @@ model users {
   ph_number                                                 BigInt               @unique
   email                                                     String?              @unique @db.VarChar(150)
   password                                                  String
-  profile_photo                                             String?              @unique
-  cover_photo                                               String?              @unique
-  bio                                                       String?              @unique
-  address                                                   String?               @db.Uuid
+  profile_photo                                             String?              @default("") @db.VarChar(200)
+  cover_photo                                               String?              @default("") @db.VarChar(200)
+  bio                                                       String?              @default("") @db.VarChar(200)
+  address                                                   String?              @db.Uuid
   last_login                                                DateTime?            @db.Timestamp(6)
-  access_token                                              String?              @unique
+  access_token                                              String?
   visibility                                                Visibility           @default(FRIENDS)
   theme                                                     Theme                @default(LIGHT)
   notification                                              Notifcation          @default(STANDARD)
-  addresses                                                 addresses?            @relation(fields: [address], references: [id])
+  addresses                                                 addresses?           @relation(fields: [address], references: [id])
   help_type_help_typeTousers                                help_type?           @relation(fields: [help_type], references: [id])
   problem_category_problem_categoryTousers                  problem_category     @relation(fields: [problem_category], references: [id])
   comment_post                                              comment_post[]

@@ -16,7 +16,9 @@ function getTokenFromHeader(req) {
 }
 
 function verifyToken(req, res, next) {
+	// console.log(req);
 	try {
+		console.log("starting");
 		if (_.isUndefined(req.headers.authorization)) {
 			requestHandler.throwError(401, 'Unauthorized', 'Not Authorized to access this resource!')();
 		}

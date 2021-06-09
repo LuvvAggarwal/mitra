@@ -5,6 +5,7 @@ const compression = require('compression');
 const uuid = require('uuid');
 const config = require('../config/appconfig');
 const Logger = require('../utils/logger.js');
+const cookieParser = require('cookie-parser');
 
 const logger = new Logger();
 const app = express();
@@ -15,7 +16,7 @@ app.use(require('method-override')());
 // app.use(compression());
 app.use(cors());
 const swagger = require('../utils/swagger');
-
+app.use(cookieParser());
 
 process.on('SIGINT', () => {
 	logger.log('stopping the server', 'info');
