@@ -7,9 +7,8 @@ const auth = require('../../utils/auth');
    * definitions:
    *   users:
    *     required:
-   *       - id
-   *       - username
    *       - email
+   *       - password
    *     properties:
    *       id:
    *         type: integer
@@ -29,7 +28,7 @@ const auth = require('../../utils/auth');
   *     produces:
   *       - application/json
   *     parameters:
-  *     - name: body
+  *     - name: email,first_name,last_name,middle_name,ph_number,type,problem
   *       in: body
   *       description: sign up using email and full name
   *       required: true
@@ -167,22 +166,11 @@ router.post('/refreshToken', auth.isAuthunticated, AuthController.refreshToken);
  *     produces:
  *       - application/json
  *     parameters:
- *     - name: platform
- *       description: device platform
+ *     - name: access_token
+ *       description: access_token
  *       in: header
  *       required: true
  *       type: string
- *     - name: body
- *       in: body
- *       description: the fcm token of the current logged in user
- *       required: true
- *       schema:
- *         type: object
- *         required:
- *           - fcmToken
- *         properties:
- *           fcmToken:
- *             type: string
  *     responses:
  *       200:
  *         description: log out from application

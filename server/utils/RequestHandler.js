@@ -41,7 +41,7 @@ class RequestHandler {
 	}
 
 	sendError(req, res, error) {
-		this.logger.log(`error ,Error during processing request: ${`${req.protocol}://${req.get('host')}${req.originalUrl}`} details message: ${error.message}`, 'error');
+		this.logger.log(`error ,Error during processing request: ${`${req.protocol}://${req.get('host')}${req.originalUrl}`} details message: ${error.message || "Unhandled error"}`, 'error');
 		return res.status(error.status || 500).json({
 			type: 'error', message: error.message || error.message || 'Unhandled Error', error,
 		});

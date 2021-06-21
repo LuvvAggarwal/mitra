@@ -1,11 +1,28 @@
 const router = require('express').Router();
 // const AuthController = require('../../controllers/AuthController');
-const UsersController = require('../../controllers/UsersController');
+const GroupsController = require('../../controllers/GroupsController');
 const auth = require('../../utils/auth');
+/**
+   * @swagger
+   * definitions:
+   *   users:
+   *     required:
+   *       - id
+   *       - username
+   *       - email
+   *     properties:
+   *       id:
+   *         type: integer
+   *       username:
+   *         type: string
+   *       email:
+   *         type: string
+   */
+
 
 /**
  * @swagger
- * /users/id={userId}:
+ * /users/{userId}:
  *   get:
  *     tags:
  *       - users
@@ -16,22 +33,22 @@ const auth = require('../../utils/auth');
  *       - application/json
  *     parameters:
  *      - name: userId
- *        description: uuid of the user to get
+ *        description: numeric id of the user to get
  *        in: path
  *        required: true
- *        type: string
+ *        type: integer
+ *        minimum: 1
  *     responses:
  *       200:
  *         description: a single user object
  *         schema:
  *           $ref: '#/definitions/users'
  */
-// router.get('/:id', auth.isAuthunticated, UsersController.getUserById);
- router.get('/id=:id',auth.isAuthunticated,UsersController.getUserById);
-
+// router.get('/:id', auth.isAuthunticated, GroupsController.getUserById);
+router.get('/id=:id', auth.isAuthunticated, GroupsController.getGroupById);
 /**
  * @swagger
- * /users/id={userId}:
+ * /users/{userId}:
  *   delete:
  *     tags:
  *       - users
@@ -41,17 +58,19 @@ const auth = require('../../utils/auth');
  *       - application/json
  *     parameters:
  *      - name: userId
- *        description: delete the user
+ *        description: numeric id of the user to get
  *        in: path
  *        required: true
- *        type: string
+ *        type: integer
+ *        minimum: 1
  *     responses:
  *       200:
  *         description: delete user with id
  *         schema:
  *           $ref: '#/definitions/users'
  */
-router.delete('/id=:id',auth.isAuthunticated, UsersController.deleteById);
+router.delete('/id=:id', auth.isAuthunticated, GroupsController.deleteById);
+router.put('/id=:id', auth.isAuthunticated, GroupsController.activateById);
 
 /**
  * @swagger
@@ -70,8 +89,7 @@ router.delete('/id=:id',auth.isAuthunticated, UsersController.deleteById);
  *           $ref: '#/definitions/users'
  */
 
-router.get('/profile', auth.isAuthunticated, UsersController.getProfile)
-
+router.get('/profile/id=:id', auth.isAuthunticated, GroupsController.getProfileGroup)
 /**
  * @swagger
  * /users/updateProfile:
@@ -88,7 +106,10 @@ router.get('/profile', auth.isAuthunticated, UsersController.getProfile)
  *         schema:
  *           $ref: '#/definitions/users'
  */
- router.post('/updateProfile', auth.isAuthunticated, UsersController.updateProfile);
+router.put('/updateProfile/id=:id', auth.isAuthunticated, GroupsController.updateGroup);
+router.post('/create', auth.isAuthunticated, GroupsController.createGroup);
+router.post('/user/id=:id', auth.isAuthunticated, GroupsController.groupsList);
+// router.post('/addMember', auth.isAuthunticated, GroupsController.addGroupMember);
 
 
 module.exports = router;

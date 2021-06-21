@@ -38,17 +38,25 @@ getFullPathes(filesName);
 const options = {
 	swaggerDefinition: {
 		info: {
-			title: 'i Lrn',
+			title: 'Mitra',
 			version: '1.0.0',
-			description: 'i Lrn Microlearning System,REST API with Swagger doc',
+			description: 'Mitra Social Media Platform,REST API with Swagger doc',
 			contact: {
-				email: 'a.mezian@dreamtechs.co',
+				email: 'luvvaggarwal2002@gmail.com',
 			},
 		},
 		tags: [
 			{
 				name: 'users',
 				description: 'Users API',
+			},
+			{
+				name: 'groups',
+				description: 'Users API',
+			},
+			{
+				name: 'group_members',
+				description: 'Group Member API',
 			},
 			{
 				name: 'Auth',

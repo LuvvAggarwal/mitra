@@ -1,5 +1,5 @@
-require('dotenv').config({path: __dirname + '/.env'});	
-console.log(require('dotenv').config())
+require('dotenv').config();	
+// console.log(require('dotenv').config())
 console.log('app >>>> ' + process.env.APP_NAME);
 // config.js
 module.exports = {

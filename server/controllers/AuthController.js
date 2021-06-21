@@ -8,20 +8,37 @@ const Logger = require('../utils/logger');
 const BaseController = require('../controllers/BaseController');
 // const stringUtil = require('../utils/stringUtil');
 // const email = require('../utils/email');
-const OAuth2 = google.auth.OAuth2;
+// const OAuth2 = google.auth.OAuth2;
 const google = require('googleapis').google;
 
 const config = require('../config/appconfig');
 const auth = require('../utils/auth');
 // const date = require('joi/lib/types/date');
 const uuid = require('uuid');
+const { createId } = require('../utils/idUtil');
 // const { Console } = require('winston/lib/winston/transports');
-const json = require("../utils/jsonUtil");
+// const {createId} = require("../utils/idUtil");
 const logger = new Logger();
 const requestHandler = new RequestHandler(logger);
 const tokenList = {};
 
 class AuthController extends BaseController {
+
+	/*********************************************
+ * Param - req - email: req.body.email,
+			password: req.body.password,
+ * Use - Login user
+ * Flow - 1 check if user exists - where: { email: req.body.email }
+ * 		  2 if not user throw err
+ * 		  3 compare bcrypt password 
+ * 		  4 if match - sign jwt
+ * 			Update user record - with data = {
+					last_login: new Date().toISOString(),
+					access_token: token
+				};
+		  5 if no match throw err
+ */
+
 	static async login(req, res) {
 		try {
 			const schema = {
@@ -38,12 +55,14 @@ class AuthController extends BaseController {
 			}, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			// console.log('finding');
-			const options = { email: req.body.email };
+			const options = {
+				where: { email: req.body.email }
+			};
 			// console.log('before');
 			try {
 
 				const userdata = await super.getByCustomOptions(req, 'users', options);
-				const user = userdata[0]
+				const user = userdata
 				// console.log(user);
 				// console.log(" >>>>>>>>>>>> id " + user.id);
 				// const json = toJson(user)
@@ -72,9 +91,9 @@ class AuthController extends BaseController {
 					// Implemented similar Pakistani social media n/w videos
 					req.params.id = user.id;
 					// console.log(user.id);
-					const payloadData = _.omit(user, ['created_on', 'updated_on', 'last_login', 'password', 'gender','access_token']);
-					const payload = json.parse(payloadData)
-					const token = jwt.sign({ payload}, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
+					const payload = _.omit(user, ['created_on', 'updated_on', 'last_login', 'password', 'gender', 'access_token']);
+					// const payload = json.parse(payloadData)
+					const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
 					const data = {
 						last_login: new Date().toISOString(),
 						access_token: token
@@ -165,27 +184,61 @@ class AuthController extends BaseController {
 		}
 	}
 
+	/*********************************************
+* Param - req - email: req.body.email,
+		password: req.body.password,
+		first_name,last_name,middle_name,,type,problem_category in body
+* Use - sign up user
+* Flow - 1 check if user exists - where: { email: data.email }
+* 		  2 if user throw err
+* 		  3 set name = fn + mn + ln
+				crypt pswd
+* 		  4 if match - sign jwt
+* 			Update user record - with data = {
+				last_login: new Date().toISOString(),
+				access_token: token
+			};
+		  5 create user
+		       if err throw
+*/
+
+
+
 	static async signUp(req, res) {
 		try {
 			const data = req.body;
-			let pattern = /USER|NGO|COUNSALER/;
+			const type = /USER|NGO|COUNSALER/;
+			const ph_number = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
 			const schema = {
 				email: Joi.string().email().required(),
 				first_name: Joi.string().required(),
 				middle_name: Joi.string(),
 				last_name: Joi.string().required(),
-				type: Joi.string().regex(pattern),
+				type: Joi.string().regex(type),
 				problem_category: Joi.string().required(),
-				password: Joi.string().required()
+				password: Joi.string().required(),
+				ph_number: Joi.string().regex(ph_number).required()
 			};
 			// const randomString = stringUtil.generateString();
 
-			const { error } = Joi.validate({ email: data.email, first_name: data.first_name, last_name: data.last_name, type: data.type, problem_category: data.problem_category, password: data.password }, schema);
+			const validate = {
+				ph_number: data.ph_number,
+				email: data.email,
+				first_name: data.first_name,
+				last_name: data.last_name,
+				middle_name: data.middle_name,
+				type: data.type,
+				problem_category: data.problem_category,
+				password: data.password
+			}
+			const { error } = Joi.validate(validate, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-			const options = { OR: [{ email: data.email }, { user_id: data.user_id }] };
+
+			data.user_id = createId(data.name)
+			const options = { where: { email: data.email } };
 			const user = await super.getByCustomOptions(req, 'users', options);
 			console.log(user);
-			if (user.length > 0) {
+			if (user) {
 				requestHandler.throwError(400, 'bad request', 'invalid email account,email already existed')();
 			}
 
@@ -207,11 +260,12 @@ class AuthController extends BaseController {
 			// 		logger.log(`an email has been sent at: ${new Date()} to : ${data.email} with the following results ${results}`, 'info');
 			// 	}
 			// });
+			data.name = data.first_name + ' ' + data.middle_name + ' ' + data.last_name
 
 			const hashedPass = bcrypt.hashSync(data.password, config.auth.saltRounds);
 			data.password = hashedPass;
 			data.id = uuid.v4();
-			let obj = _.pick(data, "id", "user_id", "first_name", "last_name", "email", "password", "type", "ph_number", "problem_category")
+			const obj = _.pick(data, "id", "user_id", "first_name", "last_name", "email", "password", "type", "ph_number", "problem_category")
 			const createdUser = await super.create(req, 'users', obj);
 			if (!(_.isNull(createdUser))) {
 				requestHandler.sendSuccess(res, 'email with your password sent successfully', 201)();
@@ -223,6 +277,63 @@ class AuthController extends BaseController {
 		}
 	}
 
+	/*********************************************
+* Param - req - id: req.params.id,
+		password: req.body.password,
+* Use - reset password
+* Flow - 1 check if user exists - where: { id: req.params.id, active: true}
+* 		  2 if !user throw err
+* 		  3 crypt new pswd
+* 		  4 Update user record - with data = {
+				password: data.password
+			}
+		  5 update user
+		  6 if err throw
+*/
+
+	//NOT USING ROUTE 
+	// RESET FLOW - USER CLICK FORGOT PSWD. LINK TO RESET password SENT ON EMAIL 
+	static async resetPswd(req, res) {
+		try {
+			const data = req.body;
+
+			const schema = {
+				id: Joi.string().required(),
+				password: Joi.string().required()
+			};
+			// const randomString = stringUtil.generateString();
+
+			const validate = {
+				id: req.params.id,
+				password: data.password
+			}
+			const { error } = Joi.validate(validate, schema);
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+
+			// data.user_id = createId(data.name)
+			const options = { where: { id: req.params.id, active: true}};
+			const user = await super.getById(req, 'users', options);
+			console.log(user);
+			if (!user) {
+				requestHandler.throwError(400, 'bad request', 'User does not exists.')();
+			}
+			const hashedPass = bcrypt.hashSync(data.password, config.auth.saltRounds);
+			data.password = hashedPass;
+
+			const updateUser = await super.updateById(req, 'users', {
+				password: data.password
+			});
+			if (updateUser) {
+				requestHandler.sendSuccess(res, 'password updated successfully', 201)();
+			} else {
+				requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+			}
+		} catch (err) {
+			requestHandler.sendError(req, res, err);
+		}
+	}
+
+	//NOT USING IT 👇
 	static async refreshToken(req, res) {
 		try {
 			const data = req.body;
@@ -253,27 +364,42 @@ class AuthController extends BaseController {
 		}
 	}
 
+	
+	/*********************************************
+* Param - req - id & access_token from body.decoded.payload & body
+* Use - logout user
+* Flow - 1 check if update user -where: {
+					access_token: req.body.access_token,
+					// platform: req.headers.platform,
+					id: user
+				},
+				data: {
+					access_token: ""
+				}
+* 		  2 if delete_access_token.count === 1 success
+			else err
+*/
+
 	static async logOut(req, res) {
 		try {
 			console.log('first');
 			const schema = {
 				// platform: Joi.string().valid('ios', 'android', 'web').required(),
-				access_token: Joi.string(),
+				access_token: Joi.string().required(),
 			};
 			const { error } = Joi.validate({
 				/*platform: req.headers.platform,*/ access_token: req.body.access_token,
 			}, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			// console.log('before');.
-			const tokenFromHeader = auth.getJwtToken(req);
 			// console.log(tokenFromHeader);
-			const user = jwt.decode(tokenFromHeader);
+			const user = req.decoded.payload.id;
 			// console.log(user);
 			const options = {
 				where: {
 					access_token: req.body.access_token,
 					// platform: req.headers.platform,
-					id: user.payload.id
+					id: user
 				},
 				data: {
 					access_token: ""
