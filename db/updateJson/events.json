@@ -1,0 +1,86 @@
+{
+    "data": [
+        {
+            "id": "25968c21-4a43-482c-997e-2b850d0bfd76",
+            "number": 1,
+            "active": true,
+            "created_on": "2021-07-04T12:30:02.913Z",
+            "updated_on": "2021-07-04T12:30:02.913Z",
+            "name": "like_post",
+            "message": "has liked your post."
+          },
+          {
+            "id": "9c118f1d-83e2-4f05-86b6-958141d8311b",
+            "number": 2,
+            "active": true,
+            "created_on": "2021-07-04T12:30:02.975Z",
+            "updated_on": "2021-07-04T12:30:02.975Z",
+            "name": "comment_post",
+            "message": "has commented on your post."
+          },
+          {
+            "id": "a183c8cb-e623-4ea6-aac3-50e11ea08b50",
+            "number": 3,
+            "active": true,
+            "created_on": "2021-07-04T12:30:02.983Z",
+            "updated_on": "2021-07-04T12:30:02.983Z",
+            "name": "share_post",
+            "message": "has shared your post."
+          },
+          {
+            "id": "39ecf3b4-d59e-4f22-883e-05c94d9262c1",
+            "number": 4,
+            "active": true,
+            "created_on": "2021-07-04T12:30:02.990Z",
+            "updated_on": "2021-07-04T12:30:02.990Z",
+            "name": "new_follow",
+            "message": "has started following you."
+          },
+          {
+            "id": "02e7dec9-e2f2-46dc-aac7-dd5b1a19d9b5",
+            "number": 5,
+            "active": true,
+            "created_on": "2021-07-04T12:30:02.997Z",
+            "updated_on": "2021-07-04T12:30:02.997Z",
+            "name": "group_membership_request",
+            "message": "has requested to join group."
+          },
+          {
+            "id": "cad57b56-e9bb-482f-ae6a-10fe881e835c",
+            "number": 6,
+            "active": true,
+            "created_on": "2021-07-04T12:30:03.006Z",
+            "updated_on": "2021-07-04T12:30:03.006Z",
+            "name": "group_membership_request_admin",
+            "message": "has requested you to join group."
+          },
+          {
+            "id": "e3e01ace-62ab-4da9-b510-9c75ca325403",
+            "number": 7,
+            "active": true,
+            "created_on": "2021-07-04T12:30:03.013Z",
+            "updated_on": "2021-07-04T12:30:03.013Z",
+            "name": "group_post_approved",
+            "message": "your post has been approved."
+          },
+          {
+            "id": "d4e9d078-5d8e-4d7d-8d25-df9451735685",
+            "number": 8,
+            "active": true,
+            "created_on": "2021-07-04T12:30:03.021Z",
+            "updated_on": "2021-07-04T12:30:03.021Z",
+            "name": "message",
+            "message": "has messaged you."
+          },
+          {
+            "id": "9f465a38-ff01-47bc-b14e-babc97adf4e8",
+            "number": 9,
+            "active": true,
+            "created_on": "2021-07-04T12:30:03.039Z",
+            "updated_on": "2021-07-04T12:30:03.039Z",
+            "name": "group_member_request_accepted",
+            "message": "You are now group member of "
+          }
+          
+    ]
+}

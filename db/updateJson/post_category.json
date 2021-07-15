@@ -1,0 +1,44 @@
+{
+    "data": [
+        {
+            "id": "13c533e9-28f1-4499-bc6e-4f6e07cf1375",
+            "number": 1,
+            "active": true,
+            "created_on": "2021-07-04T12: 00: 31.647Z",
+            "updated_on": "2021-07-04T12: 00: 31.647Z",
+            "name": "Motivation",
+            "value": 1,
+            "description": "Posts that motivates the reader."
+        },
+          {
+            "id": "920d1939-deb8-40a4-927c-f8f6fd3e5f5d",
+            "number": 2,
+            "active": true,
+            "created_on": "2021-07-04T12: 00: 31.834Z",
+            "updated_on": "2021-07-04T12: 00: 31.834Z",
+            "name": "Help",
+            "value": 2,
+            "description": "Posts that are related to help.Either asking help or giving help."
+        },
+          {
+            "id": "1b691e65-b9b7-48ba-8331-ac6e1abb5c02",
+            "number": 3,
+            "active": true,
+            "created_on": "2021-07-04T12: 00: 31.837Z",
+            "updated_on": "2021-07-04T12: 00: 31.837Z",
+            "name": "Other",
+            "value": 3,
+            "description": "Posts that are not related to motivation, help or other"
+        },
+          {
+            "id": "09471b25-4aef-4314-a7c6-f29afbb73025",
+            "number": 4,
+            "active": true,
+            "created_on": "2021-07-04T12: 00: 31.840Z",
+            "updated_on": "2021-07-04T12: 00: 31.840Z",
+            "name": "Depressed",
+            "value": 4,
+            "description": "Posts that may motivates the reader."
+        }
+    ]
+}

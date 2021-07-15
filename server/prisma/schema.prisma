@@ -1,7 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["selectRelationCount"]
-  
 }
 
 datasource db {
@@ -9,73 +8,59 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model addresses {
-//   id         String   @id @db.Uuid
-//   number     BigInt   @default(autoincrement())
-//   active     Boolean  @default(true)
-//   created_on DateTime @default(now()) @db.Timestamp(6)
-//   updated_on DateTime @default(now()) @db.Timestamp(6)
-//   street     String   @db.VarChar(150)
-//   pin_code   Int?
-//   city       String   @db.Uuid
-//   cities     cities   @relation(fields: [city], references: [id])
-//   users      users[]
-// }
-
-enum Attachment_Type {
-  IMAGE
-  VIDEO
-  EXCEL
-  DOC
-  PDF
-}
-
 model atachment_post_map {
-  id         String          @id @db.Uuid
-  number     BigInt          @default(autoincrement())
-  active     Boolean         @default(true)
-  created_on DateTime        @default(now()) @db.Timestamp(6)
-  updated_on DateTime        @default(now()) @db.Timestamp(6)
-  type       Attachment_Type @default(IMAGE)
-  post       String          @db.Uuid
+  id         String    @id @db.Uuid
+  number     BigInt    @default(autoincrement())
+  active     Boolean   @default(true)
+  deleted    Boolean   @default(false)
+  created_on DateTime  @default(now()) @db.Timestamp(6)
+  updated_on DateTime  @default(now()) @db.Timestamp(6)
+  deleted_on DateTime? @default(now()) @db.Timestamp(6)
+  mime_type  String    @db.VarChar(150)
+  post       String    @db.Uuid
   url        String
-  posts      posts           @relation(fields: [post], references: [id])
+  posts      posts     @relation(fields: [post], references: [id])
 }
 
 model cities {
-  id         String   @id @db.Uuid
-  number     BigInt   @default(autoincrement())
-  active     Boolean  @default(true)
-  created_on DateTime @default(now()) @db.Timestamp(6)
-  updated_on DateTime @default(now()) @db.Timestamp(6)
-  name       String   @db.VarChar(150)
-  state_id   String   @db.Uuid
-  states     states   @relation(fields: [state_id], references: [id])
+  id         String    @id @db.Uuid
+  number     BigInt    @default(autoincrement())
+  active     Boolean   @default(true)
+  deleted    Boolean   @default(false)
+  created_on DateTime  @default(now()) @db.Timestamp(6)
+  updated_on DateTime  @default(now()) @db.Timestamp(6)
+  deleted_on DateTime? @default(now()) @db.Timestamp(6)
+  name       String    @db.VarChar(150)
+  state_id   String    @db.Uuid
+  states     states    @relation(fields: [state_id], references: [id])
   users      users[]
-  // addresses  addresses[]
 }
 
 model comment_post {
-  id         String   @id @db.Uuid
-  number     BigInt   @default(autoincrement())
-  active     Boolean  @default(true)
-  created_on DateTime @default(now()) @db.Timestamp(6)
-  updated_on DateTime @default(now()) @db.Timestamp(6)
-  post       String   @db.Uuid
-  user_id    String   @db.Uuid
+  id         String    @id @db.Uuid
+  number     BigInt    @default(autoincrement())
+  active     Boolean   @default(true)
+  deleted    Boolean   @default(false)
+  deleted_on DateTime? @default(now()) @db.Timestamp(6)
+  created_on DateTime  @default(now()) @db.Timestamp(6)
+  updated_on DateTime  @default(now()) @db.Timestamp(6)
+  post       String    @db.Uuid
+  user_id    String    @db.Uuid
   comment    String
-  posts      posts    @relation(fields: [post], references: [id])
-  users      users    @relation(fields: [user_id], references: [id])
+  posts      posts     @relation(fields: [post], references: [id])
+  users      users     @relation(fields: [user_id], references: [id])
 }
 
 model countries {
-  id         String   @id @db.Uuid
-  number     BigInt   @default(autoincrement())
-  active     Boolean  @default(true)
-  created_on DateTime @default(now()) @db.Timestamp(6)
-  updated_on DateTime @default(now()) @db.Timestamp(6)
-  shortname  String   @db.VarChar(3)
-  name       String   @db.VarChar(150)
+  id         String    @id @db.Uuid
+  number     BigInt    @default(autoincrement())
+  active     Boolean   @default(true)
+  deleted    Boolean   @default(false)
+  deleted_on DateTime? @default(now()) @db.Timestamp(6)
+  created_on DateTime  @default(now()) @db.Timestamp(6)
+  updated_on DateTime  @default(now()) @db.Timestamp(6)
+  shortname  String    @db.VarChar(3)
+  name       String    @db.VarChar(150)
   phonecode  Int
   states     states[]
 }
@@ -84,6 +69,8 @@ model events {
   id            String          @id @db.Uuid
   number        BigInt          @default(autoincrement())
   active        Boolean         @default(true)
+  deleted       Boolean         @default(false)
+  deleted_on    DateTime?       @default(now()) @db.Timestamp(6)
   created_on    DateTime        @default(now()) @db.Timestamp(6)
   updated_on    DateTime        @default(now()) @db.Timestamp(6)
   name          String          @db.VarChar(150)
@@ -92,55 +79,64 @@ model events {
 }
 
 model follower_following {
-  id              String   @id @db.Uuid
-  number          BigInt   @default(autoincrement())
-  active          Boolean  @default(true)
-  created_on      DateTime @default(now()) @db.Timestamp(6)
-  updated_on      DateTime @default(now()) @db.Timestamp(6)
-  follower        String   @db.Uuid
-  following       String   @db.Uuid
-  follower_users  users    @relation("follower_following_followerTousers", fields: [follower], references: [id])
-  following_users users    @relation("follower_following_followingTousers", fields: [following], references: [id])
+  id             String    @id @db.Uuid
+  number         BigInt    @default(autoincrement())
+  active         Boolean   @default(true)
+  deleted        Boolean   @default(false)
+  deleted_on     DateTime? @default(now()) @db.Timestamp(6)
+  created_on     DateTime  @default(now()) @db.Timestamp(6)
+  updated_on     DateTime  @default(now()) @db.Timestamp(6)
+  follower       String    @db.Uuid
+  following      String    @db.Uuid
+  follower_user  users     @relation("follower_following_followerTousers", fields: [follower], references: [id])
+  following_user users     @relation("follower_following_followingTousers", fields: [following], references: [id])
 }
 
 model group_member_map {
-  id         String             @id @db.Uuid
-  number     BigInt             @default(autoincrement())
-  active     Boolean            @default(true)
-  created_on DateTime           @default(now()) @db.Timestamp(6)
-  updated_on DateTime           @default(now()) @db.Timestamp(6)
-  group_id   String             @db.Uuid
-  user_id    String             @db.Uuid
-  is_admin   Boolean
-  groups     groups             @relation(fields: [group_id], references: [id])
-  users      users              @relation(fields: [user_id], references: [id])
-  req        group_member_req[]
+  id               String             @id @db.Uuid
+  number           BigInt             @default(autoincrement())
+  active           Boolean            @default(true)
+  deleted          Boolean            @default(false)
+  deleted_on       DateTime?          @default(now()) @db.Timestamp(6)
+  created_on       DateTime           @default(now()) @db.Timestamp(6)
+  updated_on       DateTime           @default(now()) @db.Timestamp(6)
+  group_id         String             @db.Uuid
+  user_id          String             @db.Uuid
+  is_admin         Boolean
+  block            Boolean            @default(false)
+  groups           groups             @relation(fields: [group_id], references: [id])
+  users            users              @relation(fields: [user_id], references: [id])
+  group_member_req group_member_req[]
 }
 
 model group_member_req {
-  id                String            @id @db.Uuid
-  number            BigInt            @default(autoincrement())
-  active            Boolean           @default(true)
-  created_on        DateTime          @default(now()) @db.Timestamp(6)
-  updated_on        DateTime          @default(now()) @db.Timestamp(6)
-  group_id          String            @db.Uuid
-  request_sender    String            @db.Uuid
-  request_reciever  String            @db.Uuid
-  is_acceptor_admin Boolean
-  request_accepted  Boolean
-  member_id         String?            @db.Uuid
-  member            group_member_map? @relation(fields: [member_id], references: [id])
-  groups            groups            @relation(fields: [group_id], references: [id])
-  req_acceptor      users             @relation("group_member_req_request_recieverTousers", fields: [request_reciever], references: [id])
-  req_sender        users             @relation("group_member_req_request_senderTousers", fields: [request_sender], references: [id])
+  id                    String            @id @db.Uuid
+  number                BigInt            @default(autoincrement())
+  active                Boolean           @default(true)
+  deleted               Boolean           @default(false)
+  deleted_on            DateTime?         @default(now()) @db.Timestamp(6)
+  created_on            DateTime          @default(now()) @db.Timestamp(6)
+  updated_on            DateTime          @default(now()) @db.Timestamp(6)
+  group_id              String            @db.Uuid
+  request_sender        String            @db.Uuid
+  request_reciever      String            @db.Uuid
+  is_acceptor_admin     Boolean
+  request_accepted      Boolean
+  member_id             String?           @db.Uuid
+  groups                groups            @relation(fields: [group_id], references: [id])
+  group_member_map      group_member_map? @relation(fields: [member_id], references: [id])
+  request_reciever_user users             @relation("group_member_req_request_recieverTousers", fields: [request_reciever], references: [id])
+  request_sender_user   users             @relation("group_member_req_request_senderTousers", fields: [request_sender], references: [id])
 }
 
 model groups {
   id               String             @id @db.Uuid
   number           BigInt             @default(autoincrement())
   active           Boolean            @default(true)
+  deleted          Boolean            @default(false)
   created_on       DateTime           @default(now()) @db.Timestamp(6)
   updated_on       DateTime           @default(now()) @db.Timestamp(6)
+  deleted_on       DateTime?          @default(now()) @db.Timestamp(6)
   group_id         String             @unique @db.VarChar(100)
   name             String             @db.VarChar(150)
   problem_category String             @db.Uuid
@@ -149,89 +145,113 @@ model groups {
   profile_photo    String?
   cover_photo      String?
   bio              String?            @unique
-  visibility       Visibility         @default(FRIENDS)
   created_by       String             @db.Uuid
   updated_by       String             @db.Uuid
+  visibility       Visibility         @default(FRIENDS)
   created_by_user  users              @relation("groups_created_byTousers", fields: [created_by], references: [id])
   problem          problem_category   @relation(fields: [problem_category], references: [id])
-  updated_by_user  users              @relation("groups_updated_byTousers", fields: [updated_by], references: [id])
-  group_member_map group_member_map[]
-  group_member_req group_member_req[]
+  updated_by_users users              @relation("groups_updated_byTousers", fields: [updated_by], references: [id])
+  members          group_member_map[]
+  requests         group_member_req[]
   posts            posts[]
 }
 
 model help_type {
-  id          String   @id @db.Uuid
-  number      BigInt   @default(autoincrement())
-  active      Boolean  @default(true)
-  created_on  DateTime @default(now()) @db.Timestamp(6)
-  updated_on  DateTime @default(now()) @db.Timestamp(6)
-  name        String   @db.VarChar(150)
+  id          String    @id @db.Uuid
+  number      BigInt    @default(autoincrement())
+  active      Boolean   @default(true)
+  deleted     Boolean   @default(false)
+  deleted_on  DateTime? @default(now()) @db.Timestamp(6)
+  created_on  DateTime  @default(now()) @db.Timestamp(6)
+  updated_on  DateTime  @default(now()) @db.Timestamp(6)
+  name        String    @db.VarChar(150)
   description String
   users       users[]
 }
 
 model like_post {
-  id         String   @id @db.Uuid
-  number     BigInt   @default(autoincrement())
-  active     Boolean  @default(true)
-  created_on DateTime @default(now()) @db.Timestamp(6)
-  updated_on DateTime @default(now()) @db.Timestamp(6)
-  post       String   @db.Uuid
-  user_id    String   @db.Uuid
-  posts      posts    @relation(fields: [post], references: [id])
-  users      users    @relation(fields: [user_id], references: [id])
+  id         String    @id @db.Uuid
+  number     BigInt    @default(autoincrement())
+  active     Boolean   @default(true)
+  deleted    Boolean   @default(false)
+  deleted_on DateTime? @default(now()) @db.Timestamp(6)
+  created_on DateTime  @default(now()) @db.Timestamp(6)
+  updated_on DateTime  @default(now()) @db.Timestamp(6)
+  post       String    @db.Uuid
+  user_id    String    @db.Uuid
+  posts      posts     @relation(fields: [post], references: [id])
+  users      users     @relation(fields: [user_id], references: [id])
+
+  // @@unique([post, user_id], name: "post_user_unique")
 }
 
 model notifications {
-  id             String   @id @db.Uuid
-  number         BigInt   @default(autoincrement())
-  active         Boolean  @default(true)
-  created_on     DateTime @default(now()) @db.Timestamp(6)
-  updated_on     DateTime @default(now()) @db.Timestamp(6)
-  event          String   @db.Uuid
-  sender         String   @db.Uuid
-  recipient      String   @db.Uuid
+  id             String    @id @db.Uuid
+  number         BigInt    @default(autoincrement())
+  active         Boolean   @default(true)
+  deleted        Boolean   @default(false)
+  deleted_on     DateTime? @default(now()) @db.Timestamp(6)
+  created_on     DateTime  @default(now()) @db.Timestamp(6)
+  updated_on     DateTime  @default(now()) @db.Timestamp(6)
+  link_source    String    @db.VarChar(150)
+  event          String    @db.Uuid
+  sender         String    @db.Uuid
+  recipient      String    @db.Uuid
   message        String
   seen           Boolean
-  events         events   @relation(fields: [event], references: [id])
-  recipient_user users    @relation("notifications_recipientTousers", fields: [recipient], references: [id])
-  sender_user    users    @relation("notifications_senderTousers", fields: [sender], references: [id])
-}
-
-enum Post {
-  TEXT
-  MULTIMEDIA
-  DOCUMENT
+  events         events    @relation(fields: [event], references: [id])
+  recipient_user users     @relation("notifications_recipientTousers", fields: [recipient], references: [id])
+  sender_users   users     @relation("notifications_senderTousers", fields: [sender], references: [id])
 }
 
 model posts {
-  id          String               @id @db.Uuid
-  number      BigInt               @default(autoincrement())
-  active      Boolean              @default(true)
-  created_on  DateTime             @default(now()) @db.Timestamp(6)
-  updated_on  DateTime             @default(now()) @db.Timestamp(6)
-  type        Post                 @default(TEXT)
-  title       String               @db.VarChar(200)
-  description String
-  keyword     String?
+  id            String               @id @db.Uuid
+  number        BigInt               @default(autoincrement())
+  active        Boolean              @default(true)
+  deleted       Boolean              @default(false)
+  deleted_on    DateTime?            @default(now()) @db.Timestamp(6)
+  created_on    DateTime             @default(now()) @db.Timestamp(6)
+  updated_on    DateTime             @default(now()) @db.Timestamp(6)
+  type          Post                 @default(TEXT)
+  title         String               @db.VarChar(200)
+  description   String
+  category      String               @db.Uuid
+  // keyword         String?
   // visibility  String               @db.VarChar(10)
-  group_id    String?              @db.Uuid
-  user_id     String?              @db.Uuid
-  approved    Boolean?
-  visibility  Visibility
-  groups      groups?              @relation(fields: [group_id], references: [id])
-  users       users?               @relation(fields: [user_id], references: [id])
-  atachments  atachment_post_map[]
-  comments    comment_post[]
-  likes       like_post[]
-  shares      share_post[]
+  rank          Float                @db.DoublePrecision
+  group_id      String?              @db.Uuid
+  user_id       String               @db.Uuid
+  approved      Boolean?
+  visibility    Visibility
+  groups        groups?              @relation(fields: [group_id], references: [id])
+  users         users?               @relation(fields: [user_id], references: [id])
+  atachments    atachment_post_map[]
+  comments      comment_post[]
+  likes         like_post[]
+  shares        share_post[]
+  post_category post_category        @relation(fields: [category], references: [id])
+}
+
+model post_category {
+  id          String    @id @db.Uuid
+  number      BigInt    @default(autoincrement())
+  active      Boolean   @default(true)
+  deleted     Boolean   @default(false)
+  deleted_on  DateTime? @default(now()) @db.Timestamp(6)
+  created_on  DateTime  @default(now()) @db.Timestamp(6)
+  updated_on  DateTime  @default(now()) @db.Timestamp(6)
+  name        String    @db.VarChar(100)
+  value       Int       @db.SmallInt
+  description String
+  posts       posts[]
 }
 
 model problem_category {
   id                String              @id @db.Uuid
   number            BigInt              @default(autoincrement())
   active            Boolean             @default(true)
+  deleted           Boolean             @default(false)
+  deleted_on        DateTime?           @default(now()) @db.Timestamp(6)
   created_on        DateTime            @default(now()) @db.Timestamp(6)
   updated_on        DateTime            @default(now()) @db.Timestamp(6)
   name              String              @db.VarChar(150)
@@ -242,23 +262,27 @@ model problem_category {
 }
 
 model share_post {
-  id         String   @id @db.Uuid
-  number     BigInt   @default(autoincrement())
-  active     Boolean  @default(true)
-  created_on DateTime @default(now()) @db.Timestamp(6)
-  updated_on DateTime @default(now()) @db.Timestamp(6)
-  post       String   @db.Uuid
-  user_id    String   @db.Uuid
-  shared_on  String   @db.VarChar(50)
+  id         String    @id @db.Uuid
+  number     BigInt    @default(autoincrement())
+  active     Boolean   @default(true)
+  deleted    Boolean   @default(false)
+  deleted_on DateTime? @default(now()) @db.Timestamp(6)
+  created_on DateTime  @default(now()) @db.Timestamp(6)
+  updated_on DateTime  @default(now()) @db.Timestamp(6)
+  post       String    @db.Uuid
+  user_id    String    @db.Uuid
+  shared_on  String    @db.VarChar(50)
   share_link String
-  posts      posts    @relation(fields: [post], references: [id])
-  users      users    @relation(fields: [user_id], references: [id])
+  posts      posts     @relation(fields: [post], references: [id])
+  users      users     @relation(fields: [user_id], references: [id])
 }
 
 model special_achievers {
   id               String           @id @db.Uuid
   number           BigInt           @default(autoincrement())
   active           Boolean          @default(true)
+  deleted          Boolean          @default(false)
+  deleted_on       DateTime?        @default(now()) @db.Timestamp(6)
   created_on       DateTime         @default(now()) @db.Timestamp(6)
   updated_on       DateTime         @default(now()) @db.Timestamp(6)
   first_name       String           @db.VarChar(100)
@@ -273,12 +297,97 @@ model states {
   id         String    @id @db.Uuid
   number     BigInt    @default(autoincrement())
   active     Boolean   @default(true)
+  deleted    Boolean   @default(false)
+  deleted_on DateTime? @default(now()) @db.Timestamp(6)
   created_on DateTime  @default(now()) @db.Timestamp(6)
   updated_on DateTime  @default(now()) @db.Timestamp(6)
   name       String    @db.VarChar(150)
   country_id String    @db.Uuid
-  country    countries @relation(fields: [country_id], references: [id])
+  countries  countries @relation(fields: [country_id], references: [id])
   cities     cities[]
+}
+
+model users {
+  id                      String               @id @db.Uuid
+  number                  BigInt               @default(autoincrement())
+  active                  Boolean              @default(true)
+  verified                Boolean              @default(false)
+  deleted                 Boolean              @default(false)
+  deleted_on              DateTime?            @default(now()) @db.Timestamp(6)
+  created_on              DateTime             @default(now()) @db.Timestamp(6)
+  updated_on              DateTime             @default(now()) @db.Timestamp(6)
+  user_id                 String               @unique @db.VarChar(100)
+  type                    User_Type
+  first_name              String?              @default("") @db.VarChar(100)
+  middle_name             String?              @default("") @db.VarChar(100)
+  last_name               String?              @default("") @db.VarChar(100)
+  name                    String?              @default("") @db.VarChar(250)
+  occupation              String?              @default("") @db.VarChar(100)
+  experience              Int?                 @default(0)
+  problem_category        String               @db.Uuid
+  registration_code       String?              @db.VarChar(100)
+  help_type               String?              @db.Uuid
+  ph_number               String?              @unique @db.VarChar(15)
+  email                   String?              @unique @db.VarChar(150)
+  profile_photo           String?              @default("") @db.VarChar(200)
+  cover_photo             String?              @default("") @db.VarChar(200)
+  bio                     String?              @default("") @db.VarChar(200)
+  address                 String?              @default("") @db.VarChar(200)
+  last_login              DateTime?            @db.Timestamp(6)
+  access_token            String?
+  visibility              Visibility           @default(FRIENDS)
+  theme                   Theme                @default(LIGHT)
+  notification            Notifcation          @default(STANDARD)
+  password                String
+  gender                  Gender?              @default(MALE)
+  city                    String?              @db.Uuid
+  cities                  cities?              @relation(fields: [city], references: [id])
+  help                    help_type?           @relation(fields: [help_type], references: [id])
+  problem                 problem_category     @relation(fields: [problem_category], references: [id])
+  comment_post            comment_post[]
+  follower                follower_following[] @relation("follower_following_followerTousers")
+  following               follower_following[] @relation("follower_following_followingTousers")
+  groups                  group_member_map[]
+  request_reciever        group_member_req[]   @relation("group_member_req_request_recieverTousers")
+  request_sender          group_member_req[]   @relation("group_member_req_request_senderTousers")
+  groups_created_by       groups[]             @relation("groups_created_byTousers")
+  groups_updated_by       groups[]             @relation("groups_updated_byTousers")
+  like_post               like_post[]
+  notifications_recipient notifications[]      @relation("notifications_recipientTousers")
+  notifications_senderTo  notifications[]      @relation("notifications_senderTousers")
+  posts                   posts[]
+  share_post              share_post[]
+}
+
+enum Attachment_Type {
+  IMAGE
+  VIDEO
+  EXCEL
+  DOC
+  PDF
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum Notifcation {
+  IMPORTANT
+  STANDARD
+  NO_NOTIFICATION
+}
+
+enum Post {
+  TEXT
+  MULTIMEDIA
+  DOCUMENT
+}
+
+enum Theme {
+  LIGHT
+  DARK
 }
 
 enum User_Type {
@@ -291,72 +400,4 @@ enum Visibility {
   PUBLIC
   PRIVATE
   FRIENDS
-}
-
-enum Theme {
-  LIGHT
-  DARK
-}
-
-enum Notifcation {
-  IMPORTANT
-  STANDARD
-  NO_NOTIFICATION
-}
-
-enum Gender {
-  MALE
-  FEMALE
-  OTHER
-}
-
-model users {
-  id                       String               @id @db.Uuid
-  number                   BigInt               @default(autoincrement())
-  active                   Boolean              @default(true)
-  created_on               DateTime             @default(now()) @db.Timestamp(6)
-  updated_on               DateTime             @default(now()) @db.Timestamp(6)
-  user_id                  String               @unique @db.VarChar(100)
-  type                     User_Type
-  first_name               String?              @default("") @db.VarChar(100)
-  middle_name              String?              @default("") @db.VarChar(100)
-  last_name                String?              @default("") @db.VarChar(100)
-  name                     String?              @default("") @db.VarChar(250)
-  gender                   Gender?              @default(MALE)
-  occupation               String?              @default("") @db.VarChar(100)
-  experience               Int?                 @default(0)
-  problem_category         String               @db.Uuid
-  registration_code        String?              @db.VarChar(100)
-  help_type                String?              @db.Uuid
-  ph_number                String?              @unique @db.VarChar(15)
-  email                    String?              @unique @db.VarChar(150)
-  password                 String
-  profile_photo            String?              @default("") @db.VarChar(200)
-  cover_photo              String?              @default("") @db.VarChar(200)
-  bio                      String?              @default("") @db.VarChar(200)
-  address                  String?              @default("") @db.VarChar(200)
-  city                     String?              @db.Uuid
-  last_login               DateTime?            @db.Timestamp(6)
-  access_token             String?
-  visibility               Visibility           @default(FRIENDS)
-  theme                    Theme                @default(LIGHT)
-  notification             Notifcation          @default(STANDARD)
-  user_city                cities?              @relation(fields: [city], references: [id])
-  help                     help_type?           @relation(fields: [help_type], references: [id])
-  problem                  problem_category     @relation(fields: [problem_category], references: [id])
-  comments_by_user         comment_post[]
-  following                follower_following[] @relation("follower_following_followerTousers")
-  followers                follower_following[] @relation("follower_following_followingTousers")
-  groups                   group_member_map[]
-  group_join_req_to_accept group_member_req[]   @relation("group_member_req_request_recieverTousers")
-  req_to_join_groups       group_member_req[]   @relation("group_member_req_request_senderTousers")
-  groups_created           groups[]             @relation("groups_created_byTousers")
-  groups_updated           groups[]             @relation("groups_updated_byTousers")
-  likes_by_user            like_post[]
-  notifications_recieved   notifications[]      @relation("notifications_recipientTousers")
-  notifications_sent       notifications[]      @relation("notifications_senderTousers")
-  posts                    posts[]
-  share_post               share_post[]
-  // addresses                                                 addresses?           @relation(fields: [addressesId], references: [id])
-  // addressesId                                               String?
 }

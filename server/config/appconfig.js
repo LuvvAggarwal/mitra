@@ -3,6 +3,9 @@ require('dotenv').config();
 console.log('app >>>> ' + process.env.APP_NAME);
 // config.js
 module.exports = {
+	worker: {
+		enabled : process.env.WORKER_POOL_ENABLED
+	},
 	app: {
 		port: process.env.DEV_APP_PORT || 3000,
 		appName: process.env.APP_NAME || 'mitra',

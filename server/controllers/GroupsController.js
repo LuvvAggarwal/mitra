@@ -3,18 +3,24 @@ const Joi = require('joi');
 const uuid = require('uuid')
 const _ = require('lodash');
 // const BaseController = require('./BaseController');
-const GroupMemberController = require("./GroupsMemberController");
+const {isGroupMember} = require("./GroupsMemberController");
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
+const data_type = require("../config/validations/dataTypes")
 const auth = require('../utils/auth');
 // const json = require('../utils/jsonUtil');
 const { createId } = require('../utils/idUtil');
+const {group_children} = require("../config/softDeleteCascade")
+const take_config = require("../config/takeConfig");
+const BaseController = require('./BaseController');
+const take = take_config.groups;
+
 // const { profile } = require('winston');
 const logger = new Logger();
 const requestHandler = new RequestHandler(logger);
 // const gm = new GroupMemberController(10);
 // console.log(gm);
-class groupsController extends GroupMemberController {
+class groupsController extends BaseController {
 	/*********************************************
 	 * Param - req - group_id: req.params.id | Member Request Id
 	 * Use - Group with full data
@@ -28,7 +34,7 @@ class groupsController extends GroupMemberController {
 			const reqParam = req.params.id;
 			console.log(reqParam);
 			const schema = {
-				id: Joi.string().required(),
+				id: data_type.id,
 				// is_active: Joi.boolean().required(),
 			};
 			const { error } = Joi.validate({ id: reqParam, /*is_active: req.body.is_active */ }, schema);
@@ -36,52 +42,40 @@ class groupsController extends GroupMemberController {
 
 			// EFFECTIVE QUERY HANDLING
 			const options = {
+				where: {
+					id: reqParam,
+					// active: req.body.is_active
+				},
+				
 				include: {
 					_count: {
-						select: { group_member_map: true },
+						select: {
+							members: true,
+							posts: true,
+							requests: true
+						},
 					},
-					created_by_user: true,
+					created_by_user: {
+						select : {
+							user_id: true,
+							name: true,
+							gender: true,
+							profile_photo: true,
+							cover_photo: true,
+							bio: true,
+						}
+					},
 					problem: {
 						select: {
 							name: true,
 							description: true
 						}
 					},
-					posts: {
-						skip: 0,
-						take: 10,
-						where: {
-							active: true,
-						},
-						select: {
-							title: true,
-							description: true,
-							keyword: true,
-							atachments: {
-								select: {
-									url: true
-								}
-							},
-						}
-					},
-
-				},
-				where: {
-					id: reqParam,
-					// active: req.body.is_active
-				},
+				}
 			};
 			console.log("checking");
-			const member_check = await super.isGroupMember(req, res, { group_id: reqParam, user_id: req.decoded.payload.id });
-			// const member_check = _isGroupMember.bind(this);
-			if (!member_check.isMember) {
-				console.log("no");
-				options.include.posts.where.visibility = 'PUBLIC';
-			}
-			if (member_check.isMember && member_check.isAdmin !== true) {
-				console.log("member");
-				options.include.posts.where.NOT = { visibility: 'PUBLIC' };
-			}
+			const member_check = await isGroupMember(req, res, { group_id: reqParam, user_id: req.decoded.payload.id });
+	
 			console.log(options);
 			const result = await super.getByCustomOptions(req, 'groups', options);
 			const payload = result
@@ -97,24 +91,26 @@ class groupsController extends GroupMemberController {
 	 * Flow - 1 check if user is admin
 	 * 		  2 if admin soft delete- active = false
 	 */
-	static async deleteById(req, res) {
+	static async deleteGroupById(req, res) {
 		try {
 			// const tokenFromHeader = auth.getJwtToken(req);
 			// const user = jwt.decode(tokenFromHeader).payload.id;
 			const user = req.decoded.payload.id;
 			const group = req.params.id;
 			const schema = {
-				group_id: Joi.string().required()
+				id: data_type.id
 			}
-			const { error } = Joi.validate({ group_id: group, /*is_active: req.body.is_active */ }, schema);
+			const { error } = Joi.validate({ id: group, /*is_active: req.body.is_active */ }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
-			const member_check = await super.isGroupMember(req, res, { group_id: group, user_id: user })
+			const member_check = await isGroupMember(req, res, { group_id: group, user_id: user })
 			console.log(member_check);
 			// console.log(JSON.stringify(member_check));
 			if (member_check.isAdmin) {
-				const result = await super.updateById(req, 'groups', {
-					active: false, updated_by: user
-				});
+				// const result = await super.updateById(req, 'groups', {
+				// 	active: false, updated_by: user
+				// });
+				const children_data = group_children()
+				const result = await super.deleteByIdCascade(req, 'groups',children_data)
 				console.log("result");
 				console.log(result);
 				const payload = result
@@ -135,31 +131,31 @@ class groupsController extends GroupMemberController {
  * Use - soft delete Group
  * Flow - 1 check if user is admin
  * 		  2 if admin soft delete- active = true
- */
-	static async activateById(req, res) {
-		try {
-			// const tokenFromHeader = auth.getJwtToken(req);
-			// const user = jwt.decode(tokenFromHeader).payload.id;
-			const user = req.decoded.payload.id;
-			const group = req.params.id;
-			const member_check = await super.isGroupMember(req, res, { group_id: group, user_id: user })
-			// console.log(member_check);
-			// console.log(JSON.stringify(member_check));
-			if (member_check.isAdmin) {
-				const result = await super.updateById(req, 'groups', { active: true, updated_by: user });
-				console.log("result");
-				console.log(result);
-				const payload = _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
-				return requestHandler.sendSuccess(res, 'Group Deleted Successfully')({ payload });
-			}
-			else {
-				return requestHandler.throwError(400, 'bad request', "User is not authorized to activate group.")()
-			}
-		} catch (err) {
-			console.log(err);
-			return requestHandler.sendError(req, res, err);
-		}
-	}
+//  */
+// 	static async activateById(req, res) {
+// 		try {
+// 			// const tokenFromHeader = auth.getJwtToken(req);
+// 			// const user = jwt.decode(tokenFromHeader).payload.id;
+// 			const user = req.decoded.payload.id;
+// 			const group = req.params.id;
+// 			const member_check = await isGroupMember(req, res, { group_id: group, user_id: user })
+// 			// console.log(member_check);
+// 			// console.log(JSON.stringify(member_check));
+// 			if (member_check.isAdmin) {
+// 				const result = await super.updateById(req, 'groups', { active: true, updated_by: user });
+// 				console.log("result");
+// 				console.log(result);
+// 				const payload = _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
+// 				return requestHandler.sendSuccess(res, 'Group Deleted Successfully')({ payload });
+// 			}
+// 			else {
+// 				return requestHandler.throwError(400, 'bad request', "User is not authorized to activate group.")()
+// 			}
+// 		} catch (err) {
+// 			console.log(err);
+// 			return requestHandler.sendError(req, res, err);
+// 		}
+// 	}
 
 	/*********************************************
  * Param - req - group_id: req.params.id | Member Request Id
@@ -189,7 +185,7 @@ class groupsController extends GroupMemberController {
 			const reqParam = req.params.id;
 			// const user = req.decoded.payload.id;
 			const schema = {
-				id: Joi.string().required(),
+				id: data_type.id,
 			};
 			const { error } = Joi.validate({ id: reqParam }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
@@ -201,7 +197,16 @@ class groupsController extends GroupMemberController {
 					active: true
 				},
 				include: {
-					created_by_user: true,
+					created_by_user: {
+						select : {
+							user_id: true,
+							name: true,
+							gender: true,
+							profile_photo: true,
+							cover_photo: true,
+							bio: true,
+						}
+					},
 					problem: {
 						select: {
 							name: true,
@@ -210,16 +215,17 @@ class groupsController extends GroupMemberController {
 					},
 					_count: {
 						select: {
-							group_member_map: true,
+							members: true,
+							// requests: true,
 							posts: true
 						}
 					}
 				},
 			};
-			// const member_check = await this._isGroupMember(user, reqParam);
+			// const member_check = await isGroupMember(user, reqParam);
 			console.log(options);
 			const result = await super.getByCustomOptions(req, 'groups', options);
-			const payload = _.omit(result, ['created_on', 'active', 'updated_by'])
+			const payload = _.omit(result, ['created_on', 'active', 'updated_on',])
 			return requestHandler.sendSuccess(res, 'User Data Extracted')({ payload });
 		} catch (error) {
 			return requestHandler.sendError(req, res, error);
@@ -241,23 +247,23 @@ class groupsController extends GroupMemberController {
 			const ph_number = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
 			const visibility = /PUBLIC|PRIVATE|FRIENDS/;
 			const schema = {
-				name: Joi.string(),
-				email: Joi.string().email(),
-				ph_number: Joi.string().regex(ph_number),
-				profile_photo: Joi.string(),
-				cover_photo: Joi.string(),
-				id: Joi.string(),
-				bio: Joi.string(),
-				problem_category: Joi.string(),
-				visibility: Joi.string().regex(visibility),
+				id: data_type.id,
+				name: data_type.str_250_req,
+				email: data_type.email,
+				ph_number: data_type.ph_number,
+				profile_photo: data_type.img_url,
+				cover_photo: data_type.img_url,
+				bio: data_type.text,
+				problem_category: data_type.id,
+				visibility: data_type.visibility,
 			}
 			const options = {
 				id: group,
 				name: data.name,
 				email: data.email,
 				ph_number: data.ph_number,
-				profile_photo: data.profile_photo,
-				cover_photo: data.cover_photo,
+				profile_photo: req.files.profile_photo[0].path,
+				cover_photo: req.files.cover_photo[0].path,
 				bio: data.bio,
 				problem_category: data.problem_category,
 				visibility: data.visibility,
@@ -270,7 +276,7 @@ class groupsController extends GroupMemberController {
 			options.updated_by = user;
 			console.log("updating .... ");
 			// ISME DONO COVER HO GYE GROUP CHECK AND MEMBER CHECK
-			const member_check = await super.isGroupMember(req, res, { user_id: user, group_id: group });
+			const member_check = await isGroupMember(req, res, { user_id: user, group_id: group });
 			if (member_check.isAdmin) {
 				const groupProfile = await super.updateById(req, 'groups', options);
 				console.log(groupProfile);
@@ -300,23 +306,25 @@ class groupsController extends GroupMemberController {
 			// const gruop = req.params.id;
 			const user = req.decoded.payload.id;
 			const ph_number = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
+			console.log(req.files.profile_photo[0].path);
+			// res.json({req})
 			const visibility = /PUBLIC|PRIVATE|FRIENDS/;
 			const schema = {
-				name: Joi.string(),
-				email: Joi.string().email(),
-				ph_number: Joi.string().regex(ph_number),
-				profile_photo: Joi.string(),
-				cover_photo: Joi.string(),
-				bio: Joi.string(),
-				problem_category: Joi.string(),
-				visibility: Joi.string().regex(visibility),
+				name: data_type.str_250_req,
+				email: data_type.email,
+				ph_number: data_type.ph_number,
+				profile_photo: data_type.img_url,
+				cover_photo: data_type.img_url,
+				bio: data_type.text,
+				problem_category: data_type.id,
+				visibility: data_type.visibility,
 			}
 			const options = {
 				name: data.name,
 				email: data.email,
 				ph_number: data.ph_number,
-				profile_photo: data.profile_photo,
-				cover_photo: data.cover_photo,
+				profile_photo: req.files.profile_photo[0].path,
+				cover_photo: req.files.cover_photo[0].path,
 				bio: data.bio,
 				problem_category: data.problem_category,
 				visibility: data.visibility,
@@ -326,7 +334,8 @@ class groupsController extends GroupMemberController {
 			options.id = uuid.v4()
 			options.group_id = createId(data.name);
 			options.created_by = user;
-			options.updated_by = user
+			options.updated_by = user;
+			// options.profile_photo = req.files.
 			console.log("req > ");
 			console.log(req);
 			console.log(options);
@@ -344,13 +353,23 @@ class groupsController extends GroupMemberController {
 	 * Param - req - user_id: req.params.id | Member Request Id
 	 * Use - User groups
 	 * Flow - 1 getting user by custom options -
-	 * 			where: {
-					id: user
+	 * 	const options = {
+				take: take,
+				where: {
+					user_id: user,
+					active: true,
+				},
+				orderBy:{
+					number: "asc"
 				},
 				select: {
 					groups: {
 						select: {
-							groups : true
+							id: true,
+							group_id: true,
+							name: true,
+							profile_photo: true,
+							cover_photo: true,
 						}
 					}
 				}
@@ -360,30 +379,45 @@ class groupsController extends GroupMemberController {
 			// const tokenFromHeader = auth.getJwtToken(req);
 			// const user = jwt.decode(tokenFromHeader).payload.id;
 			const user = req.params.id;
+			const lastNumber = req.body.lastNumber
 			// const group = req.params.id;
-			// const member_check = await super.isGroupMember(req, res, { group_id: group, user_id: user })
+			// const member_check = await isGroupMember(req, res, { group_id: group, user_id: user })
 			// console.log(member_check);
 			// console.log(JSON.stringify(member_check));
 			const schema = {
-				id: Joi.string().required()
+				id: data_type.id,
+				lastNumber: data_type.integer
 			}
-			const { error } = Joi.validate({ id: user, /*is_active: req.body.is_active */ }, schema);
+			const { error } = Joi.validate({ id: user, lastNumber: lastNumber/*is_active: req.body.is_active */ }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
 			console.log('GETTING');
+			//WE COULD DIRECTLY SEARCH ON GROUP MEMBER MAP BUT FINE AS OF NOW
 			const options = {
+				take: take,
 				where: {
-					id: user
+					user_id: user,
+					active: true,
+				},
+				orderBy:{
+					number: "asc"
 				},
 				select: {
 					groups: {
 						select: {
-							groups: true
+							id: true,
+							group_id: true,
+							name: true,
+							profile_photo: true,
+							cover_photo: true,
 						}
 					}
 				}
 			}
+			if (lastNumber > -1) {
+				options.where.number = {gt: lastNumber}
+			}
 			console.log(options);
-			const user_grp_map = await super.getByCustomOptions(req, 'users', options);
+			const user_grp_map = await super.getList(req, 'group_member_map', options);
 			const payload = user_grp_map;
 			console.log(payload);
 			return requestHandler.sendSuccess(res, 'Groups')({ payload });
@@ -392,65 +426,6 @@ class groupsController extends GroupMemberController {
 			return requestHandler.sendError(req, res, err);
 		}
 	}
-	/*
-		static async _isGroupMember(user, group) {
-			try {
-				const options = {
-					where: {
-						active: true,
-						user_id: user,
-						group_id: group,
-						isadmin: true,
-					}
-				}
-				const obj = {};
-				console.log('check');
-				const member_check = await super.getByCustomOptions(req, 'group_member_map', options);
-				console.log(member_check);
-				if (member_check.length > 0) {
-					obj.isMember = true;
-					obj.iAdmin = member_check.isadmin;
-				}
-				else {
-					obj.isMember = false;
-					obj.isAdmin = member_check.isadmin;
-				}
-				console.log(obj);
-				return obj;
-			} catch (err) {
-				console.log(err);
-				return requestHandler.sendError(req, res, err);
-			}
-		}
-	
-		static async addGroupMember(req, res) {
-			try {
-				const data = req.body;
-				const schema = {
-					user_id: Joi.string().required(),
-					group_id: Joi.string().required(),
-					isadmin: Joi.boolean().required()
-				}
-				const options = {
-					user_id: data.user,
-					group_id: data.group,
-					isadmin: data.isadmin
-				}
-				const { error } = Joi.validate(options, schema);
-				requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-	
-				options.id = uuid.v4()
-				// const obj = {};
-				const add_member = await super.create(req, 'group_member_map', options);
-				return requestHandler.sendSuccess(res, 'Group member added successfully')({ add_member });;
-			} catch (err) {
-				// console.log(err);
-				return requestHandler.sendError(req, res, err);
-			}
-		}
-	
-	
-	*/
 }
 
 module.exports = groupsController;

@@ -1,21 +1,29 @@
+// JAI SHREE SITARAM
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
+
 const cors = require('cors');
 const compression = require('compression');
 const uuid = require('uuid');
 const config = require('../config/appconfig');
 const Logger = require('../utils/logger.js');
 const cookieParser = require('cookie-parser');
-
+// const config = require("../config/appconfig");
+const WorkerCon = require("../Worker/WorkerPoolController")
 const logger = new Logger();
 const app = express();
 app.set('config', config); // the system configrationsx
-app.use(bodyParser.json());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
+
+
 app.use(require('method-override')());
 
 // app.use(compression());
 app.use(cors());
 const swagger = require('../utils/swagger');
+const { worker } = require('../config/appconfig');
 app.use(cookieParser());
 
 process.on('SIGINT', () => {
@@ -45,9 +53,18 @@ app.use((req, res, next) => {
 	next(err);
 });
 
-app.listen(port,() => {
-	console.log("Server is running on http://localhost:" + port) ;
-})
+(async () => {
+	// Init Worker Pool
+	if (worker.enabled === '1') {
+		const options = { minWorkers: 'max' }
+		await WorkerCon.init(options)
+	}
+
+	// Start Server
+	app.listen(port, () => {
+		console.log('Server is listening on: ', port)
+	})
+})()
 
 
 module.exports = app;

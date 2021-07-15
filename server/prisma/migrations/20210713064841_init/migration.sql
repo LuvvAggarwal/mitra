@@ -1,0 +1,76 @@
+-- AlterTable
+ALTER TABLE "atachment_post_map" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "cities" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "comment_post" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "countries" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "events" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "follower_following" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "group_member_map" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "group_member_req" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "groups" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "help_type" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "like_post" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "notifications" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "post_category" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "posts" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "problem_category" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "share_post" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "special_achievers" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "states" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "users" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "deleted_on" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "verified" BOOLEAN NOT NULL DEFAULT false;

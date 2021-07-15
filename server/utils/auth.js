@@ -40,7 +40,7 @@ function verifyToken(req, res, next) {
 				requestHandler.throwError(401, 'Unauthorized', 'please provide a vaid token ,your token might be expired')();
 			}
 			//finding user based on access Token
-			const user = await getByCustomOptions(req, 'users', { where: { access_token: token } });
+			const user = await getByCustomOptions(req, 'users', { where: { access_token: token, active: true } });
 			// console.log(user);
 			if (!user) {
 				const err = { status: 401, message: "user not found" }

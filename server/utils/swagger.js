@@ -52,11 +52,15 @@ const options = {
 			},
 			{
 				name: 'groups',
-				description: 'Users API',
+				description: 'Group API',
 			},
 			{
 				name: 'group_members',
 				description: 'Group Member API',
+			},
+			{
+				name: 'group_member_requests',
+				description: 'Group Member Request API',
 			},
 			{
 				name: 'Auth',

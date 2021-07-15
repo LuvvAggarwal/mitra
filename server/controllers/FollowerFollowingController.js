@@ -5,6 +5,11 @@ const BaseController = require('./BaseController');
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
 const { v4 } = require('uuid');
+const take_config = require("../config/takeConfig")
+const take = take_config.follower_following;
+const data_type = require("../config/validations/dataTypes")
+const nc = require('../controllers/NotificationController');
+// const nc = new notificationController()
 // const auth = require('../utils/auth');
 // const json = require('../utils/jsonUtil');
 // const { profile } = require('winston');
@@ -13,25 +18,44 @@ const requestHandler = new RequestHandler(logger);
 
 class followerFollowingController extends BaseController {
 	/*********************************************
-* Param - req - follower, following - body
+* Param - req - following - body
 * Use - GET USER
 * Flow - 1 updating if record available, creating record if not
 		 2 else throw err
 */
 	static async follow(req, res) {
 		try {
-			const { follower, following } = req.body;
+			const follower = req.decoded.payload.id
+			const name = req.decoded.payload.name
+			const user_id = req.decoded.payload.user_id
+			const following  = req.params.id;
 			const schema = {
-				follower: Joi.string().required(),
-				following: Joi.string().required(),
+				follower: data_type.id,
+				following: data_type.id,
 			};
-			const { error } = Joi.validate({ id: reqParam }, schema);
+			const { error } = Joi.validate({ follower, following }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			if (follower === following)
+				requestHandler.throwError(400, 'bad request', 'You cannot follow yourself')
+			
+			const count = await super.count(req,"follower_following",{where: {follower,active: true}})
+			if (count > 1000)
+				requestHandler.throwError(400, 'bad request', 'You are already following 1000 people')
+			
 			const id = v4()
-			const query = {follower,following}
-			const payload = await super.upsert(req, 'follower_following', { id, follower, following },{follower,following,active: true},query);
+			const query = {
+				follower, following, active: true
+			}
+			const record = await super.getByCustomOptions(req, "follower_following", { where: query });
+			if (record)
+				requestHandler.throwError(400, 'bad request', 'You are already following')
+			const payload = await super.create(req, 'follower_following', { id, follower, following });
+			// const update = await super.raw()
+			// const updateFollowCount = await super.updateById(r)
+			const link_source = "/users/" + user_id;
+			const notify = nc.newFollowNotification({ id: follower, name }, following, link_source);
 			// const payload = _.omit(result, ['created_on', 'updated_on'])
-			return requestHandler.sendSuccess(res, 'User Data Extracted')({ payload });
+			return requestHandler.sendSuccess(res, 'User Data Extracted')({ payload, notify });
 		} catch (error) {
 			return requestHandler.sendError(req, res, error);
 		}
@@ -50,7 +74,7 @@ class followerFollowingController extends BaseController {
 			// const tokenFromHeader = auth.getJwtToken(req);
 			const user = req.decoded.payload.id;
 			const schema = {
-				id: Joi.string().required()
+				id: data_type.id
 			}
 			const { error } = Joi.validate({ id: req.params.id }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
@@ -58,20 +82,20 @@ class followerFollowingController extends BaseController {
 			const record = await super.getById(req, "follower_following", options)
 			if (_.isUndefined(record))
 				return requestHandler.sendError(res, 'record not found')();
-			
+
 			if (record.follower !== user) {
-				requestHandler.throwError(400,'bad request','You cannot unfollow')();
+				requestHandler.throwError(400, 'bad request', 'You cannot unfollow')();
 			}
 			const payload = await super.deleteById(req, 'follower_following');
 			// const payload = _.omit(result, [ 'created_on', 'updated_on'])
-			return requestHandler.sendSuccess(res, 'User Deleted Successfully')({ payload });
+			return requestHandler.sendSuccess(res, 'Unfollowed Successfully')({ payload });
 		} catch (err) {
 			return requestHandler.sendError(req, res, err);
 		}
 	}
 
 	/*********************************************
-* Param - req - follower in body
+* Param - req - follower as user, skip
 * Use - GET list of users where user = follower
 * Flow - list of follower_following - where - 
 				skip: skip,
@@ -96,23 +120,28 @@ class followerFollowingController extends BaseController {
 	static async getFollowing(req, res) {
 		// console.log(req);
 		try {
-			const { follower,skip } = req.body;
+			const follower = req.decoded.payload.id
+			const { lastNumber } = req.body;
 			const schema = {
-				follower: Joi.string().required(),
+				follower: data_type.id,
+				lastNumber: data_type.integer
 			};
 			const { error } = Joi.validate({ follower }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
 			const options = {
-				skip: skip,
-				take: 10, // hard-coded
+				// skip: skip,
+				take: take, // hard-coded
 				where: {
 					follower: follower,
 					active: true
 				},
+				orderBy: {
+					number: "asc"
+				},
 				select: {
 					id: true,
 					number: true,
-					following_users: {
+					follower_user: {
 						select: {
 							id: true,
 							user_id: true,
@@ -122,7 +151,10 @@ class followerFollowingController extends BaseController {
 					}
 				}
 			}
-			const result = await super.getList(req, 'users',options);
+			if (lastNumber > -1) {
+				options.where.number = { gt: lastNumber }
+			}
+			const result = await super.getList(req, 'follower_following', options);
 			// console.log(userProfile);
 			// const userProfileParsed = userProfile
 			const payload = _.omit(result, ['created_on', 'updated_on',]);
@@ -133,49 +165,54 @@ class followerFollowingController extends BaseController {
 		}
 	}
 
-		/*********************************************
-* Param - req - following in body
+	/*********************************************
+* Param - req - following as user,skip
 * Use - GET list of users following user
 * Flow - list of follower_following - where - 
-				skip: skip,
-				take: 10, // hard-coded
-				where: {
-					following: following,
-					active: true
-				},
-				select: {
-					id: true,
-					number: true,
-					follower_users: {
-						select: {
-							id: true,
-							user_id: true,
-							name: true,
-							profile_photo: true
-						}
+			skip: skip,
+			take: 10, // hard-coded
+			where: {
+				following: following,
+				active: true
+			},
+			select: {
+				id: true,
+				number: true,
+				follower_users: {
+					select: {
+						id: true,
+						user_id: true,
+						name: true,
+						profile_photo: true
 					}
 				}
+			}
 */
 	static async getFollowers(req, res) {
 		// console.log(req);
 		try {
-			const { following,skip } = req.body;
+			const following = req.decoded.payload.id
+			const { lastNumber } = req.body;
 			const schema = {
-				follower: Joi.string().required(),
+				following: data_type.id,
+				lastNumber: data_type.integer,
 			};
-			const { error } = Joi.validate({ follower }, schema);
+			const { error } = Joi.validate({ following, skip }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
 			const options = {
-				skip: skip,
-				take: 10, // hard-coded
+				// skip: skip,
+				take: take, // hard-coded
 				where: {
-					following,
+					following: following,
 					active: true
+				},
+				orderBy: {
+					number: "asc"
 				},
 				select: {
 					id: true,
 					number: true,
-					follower_users: {
+					following_user: {
 						select: {
 							id: true,
 							user_id: true,
@@ -185,7 +222,10 @@ class followerFollowingController extends BaseController {
 					}
 				}
 			}
-			const result = await super.getList(req, 'users',options);
+			if (lastNumber > -1) {
+				options.where.number = { gt: lastNumber }
+			}
+			const result = await super.getList(req, 'follower_following', options);
 			// console.log(userProfile);
 			// const userProfileParsed = userProfile
 			const payload = _.omit(result, ['created_on', 'updated_on',]);
@@ -196,79 +236,80 @@ class followerFollowingController extends BaseController {
 		}
 	}
 
-		/*********************************************
+	/*********************************************
 * Param - req - other in body
 * Use - relation ship of user with otherUser
 * Flow - getting list where - const options = {
-				where: {
-					OR: [
-						{
-							follower : otherUser,
-							following : user
-						},
-						{
-							follower : user,
-							following : otherUser
-						}
-					],
-					active: true
-				}
+			where: {
+				OR: [
+					{
+						follower : otherUser,
+						following : user
+					},
+					{
+						follower : user,
+						following : otherUser
+					}
+				],
+				active: true
 			}
-		
-		if (record.length === 0) {
-				obj.relation = 'No-Friend'
-			} 
-		else if(record.length === 1){
-				if(record.follower === user)
-					obj.relation = 'Follower';
-				if(record.follower === otherUser)
-					obj.relation = 'Following'
-			}
-		else if(obj.length === 2)
-					obj.relation = 'Friend'	
+		}
+	
+	if (record.length === 0) {
+			obj.relation = 'No-Friend'
+		} 
+	else if(record.length === 1){
+			if(record.follower === user)
+				obj.relation = 'Follower';
+			if(record.follower === otherUser)
+				obj.relation = 'Following'
+		}
+	else if(obj.length === 2)
+				obj.relation = 'Friend'	
 */
-	static async getRelation(req, res) {
+	static async getRelation(req, res, otherUser) {
 		// console.log(req);
 
 		try {
-			const user = req.decoded.payload.id ;
-			const { otherUser } = req.body;
+			const user = req.decoded.payload.id;
+			// const { otherUser } = req.body;
+			console.log(user + "  " + otherUser);
 			const schema = {
-				user: Joi.string().required(),
-				otherUser: Joi.string().required(),
+				user: data_type.id,
+				otherUser: data_type,
 			};
-			const { error } = Joi.validate({ user,otherUser }, schema);
+			const { error } = Joi.validate({ user, otherUser }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
 			const options = {
 				where: {
+					active: true,
 					OR: [
 						{
-							follower : otherUser,
-							following : user
+							follower: otherUser,
+							following: user
 						},
 						{
-							follower : user,
-							following : otherUser
+							follower: user,
+							following: otherUser
 						}
-					],
-					active: true
+					]
 				}
 			}
-			let obj = {} ;
-			const record = await super.getList(req, 'follower_following',options);
+			let obj = {};
+			const record = await super.getList(req, 'follower_following', options);
 			if (record.length === 0) {
 				obj.relation = 'No-Friend'
-			} else if(record.length === 1){
-				if(record.follower === user)
+			} else if (record.length === 1) {
+				if (record.follower === user)
 					obj.relation = 'Follower';
-				if(record.follower === otherUser)
+				if (record.follower === otherUser)
 					obj.relation = 'Following'
-			}else if(obj.length === 2)
-					obj.relation = 'Friend'			// console.log(userProfile);
+			} else if (obj.length === 2)
+				obj.relation = 'Friend'			// console.log(userProfile);
 			// const userProfileParsed = userProfile
-			return obj ;
+			return obj.relation;
 		}
-			catch(err){
+		catch (err) {
 			console.log('error');
 			return requestHandler.sendError(req, res, err);
 		}

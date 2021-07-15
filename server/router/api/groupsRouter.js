@@ -2,114 +2,290 @@ const router = require('express').Router();
 // const AuthController = require('../../controllers/AuthController');
 const GroupsController = require('../../controllers/GroupsController');
 const auth = require('../../utils/auth');
-/**
-   * @swagger
-   * definitions:
-   *   users:
-   *     required:
-   *       - id
-   *       - username
-   *       - email
-   *     properties:
-   *       id:
-   *         type: integer
-   *       username:
-   *         type: string
-   *       email:
-   *         type: string
-   */
+// const multer = require("multer")
+const { uploadIamge } = require("../../utils/multerUtil")
 
+const profile = uploadIamge.fields([
+   {
+      name: 'profile_photo', maxCount: 1
+   },
+   {
+      name: 'cover_photo', maxCount: 1
+   }
+])
 
 /**
  * @swagger
- * /users/{userId}:
+ * /groups/id={id}:
  *   get:
  *     tags:
- *       - users
- *     description: Return a specific user
+ *       - groups
+ *     description:  get a group
  *     security:
  *       - Bearer: []
  *     produces:
  *       - application/json
  *     parameters:
- *      - name: userId
- *        description: numeric id of the user to get
+ *      - name: id
+ *        description: id of group
  *        in: path
  *        required: true
- *        type: integer
- *        minimum: 1
+ *        schema:
+ *         type: string
+ *         format: uuid
  *     responses:
  *       200:
- *         description: a single user object
+ *         description: get a group
  *         schema:
- *           $ref: '#/definitions/users'
+ *           $ref: '#/definitions/groups'
  */
-// router.get('/:id', auth.isAuthunticated, GroupsController.getUserById);
 router.get('/id=:id', auth.isAuthunticated, GroupsController.getGroupById);
+
 /**
  * @swagger
- * /users/{userId}:
+ * /groups/id={id}:
  *   delete:
  *     tags:
- *       - users
+ *       - groups
+ *     description: delete a group
  *     security:
  *       - Bearer: []
  *     produces:
  *       - application/json
  *     parameters:
- *      - name: userId
- *        description: numeric id of the user to get
+ *      - name: id
+ *        description: id of group
  *        in: path
  *        required: true
- *        type: integer
- *        minimum: 1
+ *        schema:
+ *         type: string
+ *         format: uuid
  *     responses:
  *       200:
- *         description: delete user with id
+ *         description: delete a group
  *         schema:
- *           $ref: '#/definitions/users'
+ *           $ref: '#/definitions/groups'
  */
-router.delete('/id=:id', auth.isAuthunticated, GroupsController.deleteById);
-router.put('/id=:id', auth.isAuthunticated, GroupsController.activateById);
+router.delete('/id=:id', auth.isAuthunticated, GroupsController.deleteGroupById);
+
 
 /**
  * @swagger
- * /users/profile:
+ * /groups/profile/id={id}:
  *   get:
  *     tags:
- *       - users
+ *       - groups
+ *     description: profile of a group
  *     security:
  *       - Bearer: []
  *     produces:
  *       - application/json
+ *     parameters:
+ *      - name: id
+ *        description: id of group
+ *        in: path
+ *        required: true
+ *        schema:
+ *         type: string
+ *         format: uuid
  *     responses:
  *       200:
- *         description: return the user profile
+ *         description: profile a group
  *         schema:
- *           $ref: '#/definitions/users'
+ *           $ref: '#/definitions/groups'
  */
-
 router.get('/profile/id=:id', auth.isAuthunticated, GroupsController.getProfileGroup)
+
 /**
  * @swagger
- * /users/updateProfile:
- *   get:
+ * /groups/id={id}:
+ *   put:
  *     tags:
- *       - users
+ *       - groups
+ *     description: updates a group
+ *     security:
+ *       - Bearer: []
+ *     produces:
+ *       - multipart/form-data
+ *     parameters:
+ *      - name: id
+ *        description: id of group
+ *        in: path
+ *        required: true
+ *        schema:
+ *         type: string
+ *         format: uuid
+ *      - name: name
+ *        description: name of group
+ *        in: body
+ *        required: true
+ *        schema:
+ *         type: string
+ *      - name: email
+ *        description: email of group
+ *        in: body
+ *        required: true
+ *        schema:
+ *         type: string
+ *         format: email
+ *      - name: ph_number
+ *        description: ph_number of group
+ *        in: body
+ *        required: true
+ *        schema:
+ *         type: string
+ *      - name: bio
+ *        description: bio of group
+ *        in: body
+ *        required: true
+ *        schema:
+ *         type: string
+ *      - name: problem_category
+ *        description: problem_category of group
+ *        in: body
+ *        required: true
+ *        schema:
+ *         type: string
+ *         format: uuid
+ *      - name: visibility
+ *        description: visibility of the user. PUBLIC | PRIVATE | FRIENDS
+ *        in: body
+ *        required: true
+ *        schema:
+ *          type: string
+ *      - name: profile_photo
+ *        description: profile_photo of the user.
+ *        in: body
+ *        required: true
+ *        schema:
+ *          type: string
+ *          format: binary
+ *      - name: cover_photo
+ *        description: cover_photo of the user.
+ *        in: body
+ *        required: false
+ *        schema:
+ *          type: integer
+ *          format: binary
+ *     responses:
+ *       200:
+ *         description: updates a group
+ *         schema:
+ *           $ref: '#/definitions/groups'
+ */
+router.put('/id=:id', auth.isAuthunticated, profile, GroupsController.updateGroup);
+
+/**
+ * @swagger
+ * /groups/id={id}:
+ *   post:
+ *     tags:
+ *       - groups
+ *     description: creates a group
+ *     security:
+ *       - Bearer: []
+ *     produces:
+ *       - multipart/form-data
+ *     parameters:
+ *      - name: id
+ *        description: id of group
+ *        in: path
+ *        required: true
+ *        schema:
+ *         type: string
+ *         format: uuid
+ *      - name: name
+ *        description: name of group
+ *        in: body
+ *        required: true
+ *        schema:
+ *         type: string
+ *      - name: email
+ *        description: email of group
+ *        in: body
+ *        required: true
+ *        schema:
+ *         type: string
+ *         format: email
+ *      - name: ph_number
+ *        description: ph_number of group
+ *        in: body
+ *        required: true
+ *        schema:
+ *         type: string
+ *      - name: bio
+ *        description: bio of group
+ *        in: body
+ *        required: true
+ *        schema:
+ *         type: string
+ *      - name: problem_category
+ *        description: problem_category of group
+ *        in: body
+ *        required: true
+ *        schema:
+ *         type: string
+ *         format: uuid
+ *      - name: visibility
+ *        description: visibility of the user. PUBLIC | PRIVATE | FRIENDS
+ *        in: body
+ *        required: true
+ *        schema:
+ *          type: string
+ *      - name: profile_photo
+ *        description: profile_photo of the user.
+ *        in: body
+ *        required: true
+ *        schema:
+ *          type: string
+ *          format: binary
+ *      - name: cover_photo
+ *        description: cover_photo of the user.
+ *        in: body
+ *        required: false
+ *        schema:
+ *          type: integer
+ *          format: binary
+ *     responses:
+ *       200:
+ *         description: updates a group
+ *         schema:
+ *           $ref: '#/definitions/groups'
+ */
+router.post('/create', auth.isAuthunticated, profile, GroupsController.createGroup);
+
+/**
+ * @swagger
+ * /groups/user/id={id}:
+ *   post:
+ *     tags:
+ *       - groups
+ *     description: Return groups of user
  *     security:
  *       - Bearer: []
  *     produces:
  *       - application/json
+ *     parameters:
+ *      - name: id
+ *        description: id of group
+ *        in: path
+ *        required: true
+ *        schema: 
+ *          type: string
+ *          format: uuid
+ *      - name: lastNumber
+ *        description: lastNumber of records fetched. If -1 then latest records will be fetched. It is used for pagination
+ *        in: body
+ *        required: true
+ *        schema: 
+ *          type: integer
  *     responses:
  *       200:
- *         description: updste the user profile
+ *         description: List of groups of user
  *         schema:
- *           $ref: '#/definitions/users'
+ *           $ref: '#/definitions/group'
  */
-router.put('/updateProfile/id=:id', auth.isAuthunticated, GroupsController.updateGroup);
-router.post('/create', auth.isAuthunticated, GroupsController.createGroup);
 router.post('/user/id=:id', auth.isAuthunticated, GroupsController.groupsList);
-// router.post('/addMember', auth.isAuthunticated, GroupsController.addGroupMember);
 
 
 module.exports = router;

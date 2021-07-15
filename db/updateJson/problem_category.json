@@ -1,0 +1,67 @@
+{
+    "data" : [
+        {
+            "id": "b63d39e0-3ecc-4586-bc16-495f37bc016c",
+            "number": 1,
+            "active": true,
+            "created_on": "2021-07-06T14:10:13.636Z",
+            "updated_on": "2021-07-06T14:10:13.636Z",
+            "name": "Physical Disability",
+            "description": "Disability of the bones, joint or muscles leading to substantial restriction of the movement of the limbs or a usual form of cerebral palsy."
+          },
+          {
+            "id": "de68262e-e301-4edc-9cc6-a8e0ff67a29c",
+            "number": 2,
+            "active": true,
+            "created_on": "2021-07-06T14:10:13.755Z",
+            "updated_on": "2021-07-06T14:10:13.755Z",
+            "name": "Vision Impairment",
+            "description": "Vision impairment refers to people who are blind or who have partial vision."
+          },
+          {
+            "id": "611ab618-60d3-47b2-97f0-733ac6db7b90",
+            "number": 3,
+            "active": true,
+            "created_on": "2021-07-06T14:10:13.765Z",
+            "updated_on": "2021-07-06T14:10:13.765Z",
+            "name": "Hearing impairment",
+            "description": "Problem in hearing."
+          },
+          {
+            "id": "6b78499e-acf9-44fe-883d-d5167036c431",
+            "number": 4,
+            "active": true,
+            "created_on": "2021-07-06T14:10:13.770Z",
+            "updated_on": "2021-07-06T14:10:13.770Z",
+            "name": "Speech Impairment",
+            "description": "Condition that affects a person’s ability to produce sounds that create words."
+          },
+          {
+            "id": "5b75fadf-76d7-43cc-a0a9-ded3d44dc593",
+            "number": 5,
+            "active": true,
+            "created_on": "2021-07-06T14:10:13.773Z",
+            "updated_on": "2021-07-06T14:10:13.773Z",
+            "name": "Mental Illness",
+            "description": "Below average intelligence and set of life skills present before age 18.."
+          },
+          {
+            "id": "d2af0a83-e4f1-4ad8-a6e2-08fc6f837177",
+            "number": 6,
+            "active": true,
+            "created_on": "2021-07-07T05:39:33.193Z",
+            "updated_on": "2021-07-07T05:39:33.193Z",
+            "name": "Financial Problem",
+            "description": "Any problem related to finance like loan, broke, etc."
+          },
+          {
+            "id": "3c22d7e2-673a-46ae-a44d-a9c436810a5e",
+            "number": 7,
+            "active": true,
+            "created_on": "2021-07-07T05:39:33.553Z",
+            "updated_on": "2021-07-07T05:39:33.553Z",
+            "name": "Depression",
+            "description": "Feelings of sadness, loss, or anger that interfere with a person’s everyday tivities."
+          }
+    ]
+}

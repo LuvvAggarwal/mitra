@@ -2,22 +2,6 @@ const router = require('express').Router();
 const AuthController = require('../../controllers/AuthController');
 const auth = require('../../utils/auth');
 
-/**
-   * @swagger
-   * definitions:
-   *   users:
-   *     required:
-   *       - email
-   *       - password
-   *     properties:
-   *       id:
-   *         type: integer
-   *       username:
-   *         type: string
-   *       email:
-   *         type: string
-   */
-
 
 /**
   * @swagger
@@ -28,23 +12,63 @@ const auth = require('../../utils/auth');
   *     produces:
   *       - application/json
   *     parameters:
-  *     - name: email,first_name,last_name,middle_name,ph_number,type,problem
+  *     - name: email
   *       in: body
-  *       description: sign up using email and full name
+  *       description: email of user
+  *       required: true
+  *       schema: 
+  *         type: string
+  *     - name: ph_number
+  *       in: body
+  *       description: ph_number of user
+  *       required: true
+  *       schema: 
+  *         type: string
+  *     - name: password  
+  *       in: body
+  *       description: password of user
+  *       required: true
+  *       schema: 
+  *         type: string
+  *     - name: problem_category
+  *       in: body
+  *       description: problem_category of user. guid of problem_category
+  *       required: true
+  *       schema: 
+  *         type: string
+  *     - name: type
+  *       in: body
+  *       description: type of user. USER | NGO | COUSALER
   *       required: true
   *       schema:
-  *         type: object
-  *         required:
-  *           - email
-  *           - name
-  *         properties:
-  *           email:
-  *             type: string
-  *           name:
-  *             type: string
+  *         type: string
+  *     - name: first_name
+  *       in: body
+  *       description: first_name of user. Required if type USER | COUNSALER.
+  *       required: false
+  *       schema:
+  *         type: string
+  *     - name: middle_name
+  *       in: body
+  *       description: middle_name of user. Required if type USER | COUNSALER.
+  *       required: false
+  *       schema:
+  *         type: string
+  *     - name: last_name
+  *       in: body
+  *       description: last_name of user. Required if type USER | COUNSALER.
+  *       required: false
+  *       schema:
+  *         type: string
+  *     - name: name
+  *       in: body
+  *       description: name of user. Required if type NGO.
+  *       required: false
+  *       schema:
+  *         type: string
   *     responses:
   *       201:
-  *         description: send an email to the user with the auto generated password and register him
+  *         description: send an email to the user with the verification link and register him
   */
 
 
@@ -59,30 +83,18 @@ router.post('/signUp', AuthController.signUp);
   *     produces:
   *       - application/json
   *     parameters:
-  *     - name: fcmToken
-  *       in: header
-  *       description: fire base cloud messaging token
-  *       required: true
-  *       type: string
-  *     - name: platform
-  *       in: header
-  *       description: the platform that the user is using to access the system ios/android
-  *       required: true
-  *       type: string
-  *     - name: body
+  *     - name: email
   *       in: body
-  *       description: the login credentials
+  *       description: email of user
   *       required: true
-  *       schema:
-  *         type: object
-  *         required:
-  *           - email
-  *           - password
-  *         properties:
-  *           email:
-  *             type: string
-  *           password:
-  *             type: string
+  *       schema: 
+  *         type: string
+  *     - name: password  
+  *       in: body
+  *       description: password of user
+  *       required: true
+  *       schema: 
+  *         type: string
   *     responses:
   *       200:
   *         description: user logged in succesfully
@@ -91,69 +103,73 @@ router.post('/login', AuthController.login);
 
 /**
   * @swagger
-  * /signInWithGoogle:
-  *   post:
+  * /verify/{uniqueString}:
+  *   get:
   *     tags:
   *       - Auth
   *     produces:
   *       - application/json
   *     parameters:
-  *     - name: fcmToken
-  *       in: header
-  *       description: fire base cloud messaging token
+  *     - name: uniqueString
+  *       in: path
+  *       description: uniqueString containing id of user
   *       required: true
-  *       type: string
-  *     - name: platform
-  *       in: header
-  *       description: the platform that the user is using to access the system ios/android
-  *       required: true
-  *       type: string
-  *     - name: body
-  *       in: body
-  *       description: the login credentials
-  *       required: true
-  *       schema:
-  *         type: object
-  *         required:
-  *           - email
-  *           - password
-  *         properties:
-  *           email:
-  *             type: string
-  *           password:
-  *             type: string
+  *       schema: 
+  *         type: string
   *     responses:
   *       200:
-  *         description: user logged in succesfully
+  *         description: user verified and activated in succesfully
   */
-// router.post('/signInGoogle',AuthController.signInWithGoogle)
+router.get('/verify/:uniqueString', AuthController.verify);
+
 /**
   * @swagger
-  * /refreshToken:
-  *   post:
+  * /resendVerificationLink/{email}:
+  *   get:
   *     tags:
   *       - Auth
-  *     security:
-  *       - Bearer: []
   *     produces:
   *       - application/json
   *     parameters:
-  *     - name: body
-  *       in: body
-  *       description: the refresh token
+  *     - name: email
+  *       in: path
+  *       description: email of user
   *       required: true
-  *       schema:
-  *         type: object
-  *         required:
-  *           - refreshToken
-  *         properties:
-  *           refreshToken:
-  *             type: string
+  *       schema: 
+  *         type: string
   *     responses:
   *       200:
-  *         description: a new jwt token with a new expiry date is issued
+  *         description: user verified and activated in succesfully
   */
-router.post('/refreshToken', auth.isAuthunticated, AuthController.refreshToken);
+router.get('/resendVerificationLink/:email', AuthController.resendVerificationLink);
+
+/**
+  * @swagger
+  * /resetPswd/{email}:
+  *   post:
+  *     tags:
+  *       - Auth
+  *     produces:
+  *       - application/json
+  *     parameters:
+  *     - name: email
+  *       in: path
+  *       description: email of user
+  *       required: true
+  *       schema: 
+  *         type: string
+  *     - name: password
+  *       in: body
+  *       description: password of user
+  *       required: true
+  *       schema: 
+  *         type: string
+  *     responses:
+  *       200:
+  *         description: user verified and activated in succesfully
+  */
+router.post('/resetPswd/:email', AuthController.resetPswd);
+
 
 /**
  * @swagger
@@ -167,7 +183,7 @@ router.post('/refreshToken', auth.isAuthunticated, AuthController.refreshToken);
  *       - application/json
  *     parameters:
  *     - name: access_token
- *       description: access_token
+ *       description: access_token of logged in user
  *       in: header
  *       required: true
  *       type: string
