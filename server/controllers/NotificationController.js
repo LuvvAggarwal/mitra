@@ -245,7 +245,7 @@ class notificationController extends BaseController {
 				takeNotification: data_type.take_notification
 			};
 			const { error } = Joi.validate({ id: user, lastNumber, takeNotification }, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
 			console.log(user);
 			// EFFECTIVE QUERY HANDLING
@@ -298,8 +298,7 @@ class notificationController extends BaseController {
 			console.log(payload);
 			return requestHandler.sendSuccess(res, "Notification fetched successfully", 200)({payload});
 		} catch (error) {
-			return requestHandler.throwError(500, "Internal Server Error", error)
-				(error);
+			return requestHandler.sendError(req,res,err)
 		}
 	}
 
@@ -313,7 +312,7 @@ class notificationController extends BaseController {
 				records: data_type.array_id
 			};
 			const { error } = Joi.validate({ records }, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
 			// EFFECTIVE QUERY HANDLING
 			const data = {
@@ -332,8 +331,7 @@ class notificationController extends BaseController {
 			const payload = await super.updateMany(req, 'notifications', data);
 			return requestHandler.sendSuccess(res, "Notification updated successfully", 200)({payload});
 		} catch (error) {
-			return requestHandler.throwError(500, "Internal Server Error", error)
-				(error);
+			return requestHandler.sendError(req,res,err)
 		}
 	}
 

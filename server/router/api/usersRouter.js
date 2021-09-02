@@ -11,6 +11,7 @@ const profile = uploadIamge.fields([
       name: 'cover_photo', maxCount: 1
    }
 ])
+
 /**
  * @swagger
  * /users/id={id}:
@@ -63,6 +64,32 @@ const profile = uploadIamge.fields([
  *           $ref: '#/definitions/users'
  */
 router.delete('/id=:id',auth.isAuthunticated, UsersController.deleteUserById);
+
+/**
+ * @swagger
+ * /users/profile/{user_id}:
+ *   get:
+ *     tags:
+ *       - users
+ *     security:
+ *       - Bearer: []
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *      - name: user_id
+ *        description: profile of the user
+ *        in: path
+ *        required: true
+ *        schema:
+ *          type: string
+ *     responses:
+ *       200:
+ *         description: return the user profile
+ *         schema:
+ *           $ref: '#/definitions/users'
+ */
+
+ router.get('/profile/:user_id', auth.isAuthunticated, UsersController.getProfile)
 
 /**
  * @swagger
@@ -142,8 +169,8 @@ router.get('/counsaler_profile/id=:id', auth.isAuthunticated, UsersController.ge
 
 /**
  * @swagger
- * /users/updateProfile:
- *   post:
+ * /users/update:
+ *   put:
  *     tags:
  *       - users
  *     security:
@@ -273,7 +300,7 @@ router.get('/counsaler_profile/id=:id', auth.isAuthunticated, UsersController.ge
  *         schema:
  *           $ref: '#/definitions/users'
  */
- router.post('/updateProfile', auth.isAuthunticated,profile, UsersController.updateProfile);
+ router.put('/update', auth.isAuthunticated,profile, UsersController.updateProfile);
 
 
 module.exports = router;

@@ -68,6 +68,32 @@ router.get('/id=:id', auth.isAuthunticated, GroupsController.getGroupById);
  */
 router.delete('/id=:id', auth.isAuthunticated, GroupsController.deleteGroupById);
 
+/**
+ * @swagger
+ * /groups/profile/{group_id}:
+ *   get:
+ *     tags:
+ *       - groups
+ *     description: profile of a group
+ *     security:
+ *       - Bearer: []
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *      - name: group_id
+ *        description: group_id of group
+ *        in: path
+ *        required: true
+ *        schema:
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: profile of a group
+ *         schema:
+ *           $ref: '#/definitions/groups'
+ */
+ router.get('/profile/:group_id', auth.isAuthunticated, GroupsController.getProfile)
+
 
 /**
  * @swagger
@@ -90,7 +116,7 @@ router.delete('/id=:id', auth.isAuthunticated, GroupsController.deleteGroupById)
  *         format: uuid
  *     responses:
  *       200:
- *         description: profile a group
+ *         description: profile of a group
  *         schema:
  *           $ref: '#/definitions/groups'
  */
@@ -177,7 +203,7 @@ router.put('/id=:id', auth.isAuthunticated, profile, GroupsController.updateGrou
 
 /**
  * @swagger
- * /groups/id={id}:
+ * /groups/create:
  *   post:
  *     tags:
  *       - groups

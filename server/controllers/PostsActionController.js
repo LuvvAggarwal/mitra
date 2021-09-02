@@ -119,7 +119,7 @@ class postsActionController extends BaseController {
 				user: data_type.id
 			}
 			const { error } = Joi.validate({ id, user /*is_active: req.body.is_active */ }, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', error);
+			requestHandler.validateJoi(error, 400,'bad Request', 'invalid Like Id');
 
 			const query = {
 				where: {
@@ -292,7 +292,7 @@ class postsActionController extends BaseController {
 			const link_source = "/post/" + record.id
 			const notify = await nc.commentNotification(user, record.user_id, link_source)
 			// _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
-			return requestHandler.sendSuccess(res, 'Post Commented')({ payload, notify });
+			return requestHandler.sendSuccess(res, 'Commented on Post successfully')({ payload, notify });
 		} catch (error) {
 			return requestHandler.sendError(req, res, error);
 		}
@@ -618,7 +618,7 @@ class postsActionController extends BaseController {
 				console.log(result);
 				const payload = result
 				//  _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
-				return requestHandler.sendSuccess(res, 'Post Atch deleted Successfully')({ payload });
+				return requestHandler.sendSuccess(res, 'Post Attachment deleted Successfully')({ payload });
 			}
 			else {
 				requestHandler.throwError(400, "bad request", "You cannot delete attachment")()

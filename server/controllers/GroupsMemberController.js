@@ -115,7 +115,7 @@ class groupsMemberController extends BaseController {
 			const req_data = await super.getByCustomOptions(req, "group_member_req", query)
 			console.log(req_data);
 			if (!req_data) {
-				requestHandler.throwError(400, 'bad request', 'invalid request, not found')();
+				requestHandler.throwError(400, 'bad request', 'Request not found')();
 			}
 			const user_id = req_data.is_acceptor_admin ? req_data.request_sender : req_data.request_reciever;
 
@@ -206,7 +206,7 @@ class groupsMemberController extends BaseController {
 				const children_data = group_member_map_children()
 				const result = await super.deleteByIdCascade(req, 'group_member_map',children_data);
 				const payload = _.pick(result, ["id", "user_id", "group_id"])
-				return requestHandler.sendSuccess(res, 'You are no longer the group member')({ payload });
+				return requestHandler.sendSuccess(res, 'group member deleted successfully')({ payload });
 			} else {
 				return requestHandler.throwError(400, 'bad request', 'You are not authorized to delete')();
 			}
@@ -335,9 +335,9 @@ class groupsMemberController extends BaseController {
 			if (req_data && is_admin) {
 				const result = await super.updateById(req, 'group_member_map',{block: true});
 				const payload = _.omit(result, ["created_on", "updated_on", " number"])
-				return requestHandler.sendSuccess(res, 'You are no longer the group member')({ payload });
+				return requestHandler.sendSuccess(res, 'group member blocked successfully')({ payload });
 			} else {
-				return requestHandler.throwError(400, "bad request", "You are not authorized to delete")
+				return requestHandler.throwError(400, "bad request", "You are not authorized to block")()
 			}
 		} catch (err) {
 			// console.log(err);
@@ -404,7 +404,7 @@ class groupsMemberController extends BaseController {
 				const payload = _.pick(result, ["id", "user_id", "group_id"])
 				return requestHandler.sendSuccess(res, 'You have activated group member')({ payload });
 			} else {
-				return requestHandler.sendError(req, res, { message: "You are not authorized to delete" })
+				return requestHandler.throwError(400, 'bad request', 'You are not authorized to activate group member')();
 			}
 		} catch (err) {
 			// console.log(err);
@@ -473,7 +473,7 @@ class groupsMemberController extends BaseController {
 				const payload = _.pick(result, ["id", "user_id", "group_id"])
 				return requestHandler.sendSuccess(res, 'You have activated group member')({ payload });
 			} else {
-				return requestHandler.sendError(req, res, { message: "You are not authorized to delete" })
+				return requestHandler.throwError(400, 'bad request', 'You are not authorized to update group member')();
 			}
 		} catch (err) {
 			// console.log(err);
@@ -807,7 +807,7 @@ class groupsMemberController extends BaseController {
 			}
 			// const obj = {};
 			const payload = await super.getList(req, 'group_member_req', options);
-			return requestHandler.sendSuccess(res, 'Group member requests fetched successfully')({ payload });;
+			return requestHandler.sendSuccess(res, "Group's member requests fetched successfully")({ payload });;
 		} catch (err) {
 			console.log(err);
 			return requestHandler.sendError(req, res, err);
@@ -908,7 +908,7 @@ class groupsMemberController extends BaseController {
 			}
 			// const obj = {};
 			const payload = await super.getList(req, 'group_member_req', options);
-			return requestHandler.sendSuccess(res, 'Group member added successfully')({ payload });;
+			return requestHandler.sendSuccess(res, "User's Group member requests fetched successfully")({ payload });;
 		} catch (err) {
 			// console.log(err);
 			return requestHandler.sendError(req, res, err);

@@ -55,7 +55,7 @@ class followerFollowingController extends BaseController {
 			const link_source = "/users/" + user_id;
 			const notify = nc.newFollowNotification({ id: follower, name }, following, link_source);
 			// const payload = _.omit(result, ['created_on', 'updated_on'])
-			return requestHandler.sendSuccess(res, 'User Data Extracted')({ payload, notify });
+			return requestHandler.sendSuccess(res, 'User followed successfully')({ payload, notify });
 		} catch (error) {
 			return requestHandler.sendError(req, res, error);
 		}
@@ -158,7 +158,7 @@ class followerFollowingController extends BaseController {
 			// console.log(userProfile);
 			// const userProfileParsed = userProfile
 			const payload = _.omit(result, ['created_on', 'updated_on',]);
-			return requestHandler.sendSuccess(res, 'User follows fetched Successfully')({ payload });
+			return requestHandler.sendSuccess(res, 'User following fetched Successfully')({ payload });
 		} catch (err) {
 			console.log('error');
 			return requestHandler.sendError(req, res, err);
@@ -276,10 +276,10 @@ class followerFollowingController extends BaseController {
 			console.log(user + "  " + otherUser);
 			const schema = {
 				user: data_type.id,
-				otherUser: data_type,
+				otherUser: data_type.id,
 			};
 			const { error } = Joi.validate({ user, otherUser }, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			const options = {
 				where: {
 					active: true,
@@ -311,7 +311,7 @@ class followerFollowingController extends BaseController {
 		}
 		catch (err) {
 			console.log('error');
-			return requestHandler.sendError(req, res, err);
+			return requestHandler.throwError(400, "bad request", err.message)({err});
 		}
 	}
 

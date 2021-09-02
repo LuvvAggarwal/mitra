@@ -46,7 +46,7 @@ class postsController extends BaseController {
 				// is_active: Joi.boolean().required(),
 			};
 			const { error } = Joi.validate({ id: reqParam, /*is_active: req.body.is_active */ }, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid Post Id');
 
 			// EFFECTIVE QUERY HANDLING
 			const options = {
@@ -89,7 +89,7 @@ class postsController extends BaseController {
 			const result = await super.getByCustomOptions(req, 'posts', options);
 			const payload = result
 			// _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
-			return requestHandler.sendSuccess(res, 'User Data Extracted')({ payload });
+			return requestHandler.sendSuccess(res, 'Post Data Extracted')({ payload });
 		} catch (error) {
 			return requestHandler.sendError(req, res, error);
 		}
@@ -189,7 +189,7 @@ class postsController extends BaseController {
 				id: data_type.id,
 			};
 			const { error } = Joi.validate({ id: reqParam }, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid Post Id');
 
 			const query = {
 				where: {
@@ -222,7 +222,7 @@ class postsController extends BaseController {
 				return requestHandler.sendSuccess(res, 'Post approved')({ payload, notify });
 			}
 			else {
-				requestHandler.throwError(400, "bad request", "You are not authorized to approve post")
+				requestHandler.throwError(400, "bad request", "You are not authorized to approve post")()
 			}
 
 		} catch (error) {
@@ -367,10 +367,10 @@ class postsController extends BaseController {
 			if(options.group_id){
 				const member_check = await isGroupMember(req, res, { user_id: user, group_id: group });
 				if (member_check.isAdmin) {
-					options.group_id = true ;
+					options.approved = true ;
 				}
 				if (member_check.isMember && !member_check.isAdmin) {
-					options.group_id = false ;
+					options.approved = false ;
 				}
 				else{
 					requestHandler.throwError(400, "bad request", "You are not group member")() ;
@@ -501,7 +501,7 @@ class postsController extends BaseController {
 
 			// const payload = user_grp_map;
 			console.log(payload);
-			return requestHandler.sendSuccess(res, 'Posts')({ payload });
+			return requestHandler.sendSuccess(res, 'Group Posts')({ payload });
 		} catch (err) {
 			console.log(err);
 			return requestHandler.sendError(req, res, err);
@@ -585,7 +585,7 @@ class postsController extends BaseController {
 			const payload = await super.getList(req, 'posts', options);
 			// const payload = user_grp_map;
 			console.log(payload);
-			return requestHandler.sendSuccess(res, 'Posts')({ payload });
+			return requestHandler.sendSuccess(res, 'My Posts')({ payload });
 		} catch (err) {
 			console.log(err);
 			return requestHandler.sendError(req, res, err);
@@ -701,7 +701,7 @@ class postsController extends BaseController {
 			const payload = await super.getList(req, 'posts', options);
 			// const payload = user_grp_map;
 			console.log(payload);
-			return requestHandler.sendSuccess(res, 'Posts')({ payload });
+			return requestHandler.sendSuccess(res, 'Feed Posts')({ payload });
 		} catch (err) {
 			console.log(err);
 			return requestHandler.sendError(req, res, err);
@@ -777,7 +777,7 @@ class postsController extends BaseController {
 			const payload = await super.getList(req, 'posts', options);
 			// const payload = user_grp_map;
 			console.log(payload);
-			return requestHandler.sendSuccess(res, 'Posts')({ payload });
+			return requestHandler.sendSuccess(res, 'Popular Posts')({ payload });
 		} catch (err) {
 			console.log(err);
 			return requestHandler.sendError(req, res, err);

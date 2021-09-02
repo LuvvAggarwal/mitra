@@ -38,7 +38,7 @@ class groupsController extends BaseController {
 				// is_active: Joi.boolean().required(),
 			};
 			const { error } = Joi.validate({ id: reqParam, /*is_active: req.body.is_active */ }, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid Group Id');
 
 			// EFFECTIVE QUERY HANDLING
 			const options = {
@@ -74,7 +74,7 @@ class groupsController extends BaseController {
 				}
 			};
 			console.log("checking");
-			const member_check = await isGroupMember(req, res, { group_id: reqParam, user_id: req.decoded.payload.id });
+			// const member_check = await isGroupMember(req, res, { group_id: reqParam, user_id: req.decoded.payload.id });
 	
 			console.log(options);
 			const result = await super.getByCustomOptions(req, 'groups', options);
@@ -126,36 +126,7 @@ class groupsController extends BaseController {
 		}
 	}
 
-	/*********************************************
- * Param - req - group_id: req.params.id | Member Request Id
- * Use - soft delete Group
- * Flow - 1 check if user is admin
- * 		  2 if admin soft delete- active = true
-//  */
-// 	static async activateById(req, res) {
-// 		try {
-// 			// const tokenFromHeader = auth.getJwtToken(req);
-// 			// const user = jwt.decode(tokenFromHeader).payload.id;
-// 			const user = req.decoded.payload.id;
-// 			const group = req.params.id;
-// 			const member_check = await isGroupMember(req, res, { group_id: group, user_id: user })
-// 			// console.log(member_check);
-// 			// console.log(JSON.stringify(member_check));
-// 			if (member_check.isAdmin) {
-// 				const result = await super.updateById(req, 'groups', { active: true, updated_by: user });
-// 				console.log("result");
-// 				console.log(result);
-// 				const payload = _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
-// 				return requestHandler.sendSuccess(res, 'Group Deleted Successfully')({ payload });
-// 			}
-// 			else {
-// 				return requestHandler.throwError(400, 'bad request', "User is not authorized to activate group.")()
-// 			}
-// 		} catch (err) {
-// 			console.log(err);
-// 			return requestHandler.sendError(req, res, err);
-// 		}
-// 	}
+	
 
 	/*********************************************
  * Param - req - group_id: req.params.id | Member Request Id
@@ -172,6 +143,67 @@ class groupsController extends BaseController {
 			return requestHandler.sendError(req, res, err);
 		}
 	}
+
+	/*********************************************
+	 * Param - req - group_id: req.params.group_id | Member Request Id
+	 * Use - Group with less data
+	 * Flow - get generic data of group
+	 */
+	// IT IS LIKE HOME OF PAGE FOR GERNAL DETAILS
+	static async getProfile(req, res) {
+		// console.log(req);
+		// OVERVIEW OF PROFILE
+		try {
+			const group_id = req.params.group_id;
+			// const user = req.decoded.payload.id;
+			const schema = {
+				group_id: data_type.str_100_req,
+			};
+			const { error } = Joi.validate({ group_id }, schema);
+			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+
+			// EFFECTIVE QUERY HANDLING
+			const options = {
+				where: {
+					group_id,
+					active: true
+				},
+				include: {
+					created_by_user: {
+						select : {
+							user_id: true,
+							name: true,
+							gender: true,
+							profile_photo: true,
+							cover_photo: true,
+							bio: true,
+						}
+					},
+					problem: {
+						select: {
+							name: true,
+							description: true
+						}
+					},
+					_count: {
+						select: {
+							members: true,
+							// requests: true,
+							posts: true
+						}
+					}
+				},
+			};
+			// const member_check = await isGroupMember(user, reqParam);
+			console.log(options);
+			const result = await super.getByCustomOptions(req, 'groups', options);
+			const payload = _.omit(result, ['created_on', 'active', 'updated_on',])
+			return requestHandler.sendSuccess(res, 'Group Data Fetchted Successfully')({ payload });
+		} catch (error) {
+			return requestHandler.sendError(req, res, error);
+		}
+	}
+
 	/*********************************************
 	 * Param - req - group_id: req.params.id | Member Request Id
 	 * Use - Group with less data
@@ -226,7 +258,7 @@ class groupsController extends BaseController {
 			console.log(options);
 			const result = await super.getByCustomOptions(req, 'groups', options);
 			const payload = _.omit(result, ['created_on', 'active', 'updated_on',])
-			return requestHandler.sendSuccess(res, 'User Data Extracted')({ payload });
+			return requestHandler.sendSuccess(res, 'Group Data Fetchted Successfully')({ payload });
 		} catch (error) {
 			return requestHandler.sendError(req, res, error);
 		}
@@ -420,7 +452,7 @@ class groupsController extends BaseController {
 			const user_grp_map = await super.getList(req, 'group_member_map', options);
 			const payload = user_grp_map;
 			console.log(payload);
-			return requestHandler.sendSuccess(res, 'Groups')({ payload });
+			return requestHandler.sendSuccess(res, "User's Groups Fetched Successfully")({ payload });
 		} catch (err) {
 			console.log(err);
 			return requestHandler.sendError(req, res, err);

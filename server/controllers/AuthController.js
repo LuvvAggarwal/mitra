@@ -466,7 +466,7 @@ class AuthController extends BaseController {
 			// req.params.id = access_token.dataValues.id;
 			// const deleteFcm = await super.updateById(req, 'users');
 			// console.log(delete_access_token);
-			if (delete_access_token.count === 1) {
+			if (delete_access_token) {
 				requestHandler.sendSuccess(res, 'User Logged Out Successfully')();
 			} else {
 				requestHandler.throwError(400, 'bad request', 'User Already logged out Successfully')();

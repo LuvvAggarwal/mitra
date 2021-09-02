@@ -43,7 +43,7 @@ class dataLookupController extends BaseController {
 				// is_active: Joi.boolean().required(),
 			};
 			const { error } = Joi.validate({ model, /*is_active: req.body.is_active */ }, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
 			// EFFECTIVE QUERY HANDLING
 			const options = {
@@ -172,7 +172,7 @@ class dataLookupController extends BaseController {
 				// is_active: Joi.boolean().required(),
 			};
 			const { error } = Joi.validate({ model, name/*is_active: req.body.is_active */ }, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid model or name');
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
 			// EFFECTIVE QUERY HANDLING
 			const options = {

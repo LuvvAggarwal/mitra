@@ -9,7 +9,7 @@ const json = require('../utils/jsonUtil');
 const { getRelation } = require('./FollowerFollowingController');
 const { query } = require('winston');
 const data_type = require("../config/validations/dataTypes")
-const {user_children} = require("../config/softDeleteCascade")
+const { user_children } = require("../config/softDeleteCascade")
 // const { profile } = require('winston');
 const logger = new Logger();
 const requestHandler = new RequestHandler(logger);
@@ -37,7 +37,7 @@ class usersController extends BaseController {
 					id: reqParam,
 				},
 				include: {
-					problem_category_problem_categoryTousers: {
+					problem: {
 						select: {
 							name: true,
 							description: true
@@ -46,7 +46,7 @@ class usersController extends BaseController {
 				}
 			};
 			const result = await super.getByCustomOptions(req, 'users', options);
-			const payload = _.omit(result, ['access_token', 'password', 'theme', 'visibility', 'notification', 'created_on', 'updated_on'])
+			const payload = _.omit(result, ['access_token', 'password', 'theme', 'visibility', 'notification', ])
 			return requestHandler.sendSuccess(res, 'User Data Extracted')({ payload });
 		} catch (error) {
 			return requestHandler.sendError(req, res, error);
@@ -76,7 +76,7 @@ class usersController extends BaseController {
 			if (req.params.id === user.id) {
 				const children_data = user_children()
 				console.log(children_data);
-				const result = await super.deleteByIdCascade(req, 'users',children_data);
+				const result = await super.deleteByIdCascade(req, 'users', children_data);
 				const payload = _.omit(result, ['access_token', 'password', 'theme', 'visibility', 'notification', 'created_on', 'updated_on'])
 				return requestHandler.sendSuccess(res, 'User Deleted Successfully')({ payload });
 			}
@@ -97,6 +97,116 @@ class usersController extends BaseController {
 			return requestHandler.sendError(req, res, err);
 		}
 	}
+
+	// GET PROFILE
+	static async getProfile(req, res) {
+		// console.log(req);
+		try {
+			console.log('getting profile');
+			// const tokenFromHeader = auth.getJwtToken(req);
+			const current_user = req.decoded.payload.id;
+			const user_id = req.params.user_id;
+			console.log(user_id);
+			const schema = {
+				user_id: data_type.str_100_req,
+			};
+			const { error } = Joi.validate({ user_id }, schema);
+			console.log(error);
+			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			let options = {
+				where: {
+					user_id: user_id,
+					active: true,
+					// type: 'USER'
+				},
+				include: {
+					cities: {
+						select: {
+							name: true,
+							states: {
+								select: {
+									name: true,
+									countries: {
+										select: {
+											name: true
+										}
+									}
+								}
+							}
+						}
+					},
+					problem: {
+						select: {
+							name: true,
+							description: true,
+						}
+					},
+					help: {
+						select: {
+							name: true,
+							description: true,
+						}
+					},
+				}
+			};
+
+			let payload;
+			const profile = await super.getByCustomOptions(req, 'users', options);
+			if (!profile) {
+				requestHandler.throwError(400, "bad request", "User not found")() ;
+			}
+			if (current_user !== profile.id) {
+				console.log(profile.id);
+				const relation = await getRelation(req, res, profile.id);
+				if (relation == 'No-Friend') {
+					// HUME ABHI ZAROORAT H ISKI
+					if (profile.type === "COUNSALER") {
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password", "notification", "theme", "visibility", "email", "ph_number"])
+					}
+					if (profile.type === "NGO") {
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "last_login", "access_token", "password", "notification", "theme", "visibility", "gender"])
+					}
+					if (profile.type === "USER") {
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password", "notification", "theme", "visibility", "email", "ph_number"])
+					}
+				}
+				if (relation == 'Follower' || 'Following') {
+					// HUME ABHI ZAROORAT H ISKI
+					if (profile.type === "COUNSALER") {
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password", "notification", "theme", "visibility"])
+					}
+					if (profile.type === "NGO") {
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "last_login", "access_token", "password", "notification", "theme", "visibility", "gender"])
+					}
+					if (profile.type === "USER") {
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password", "notification", "theme", "visibility", "email", "ph_number"])
+					}
+				}
+				if (relation == "Friend") {
+					// HUME ABHI ZAROORAT H ISKI
+					if (profile.type === "COUNSALER") {
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password",])
+					}
+					if (profile.type === "NGO") {
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "last_login", "access_token", "password", "gender"])
+					}
+					if (profile.type === "USER") {
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password"])
+					}
+				}
+			}
+			else {
+				payload = _.omit(profile, ['created_on', 'updated_on', "deleted_on", "deleted", 'last_login', 'password', 'access_token']);
+			}
+			// const newOptions = { ...options, ...additionalOptions }
+
+			console.log(payload);
+			return requestHandler.sendSuccess(res, 'Profile fetched Successfully', 200)({ payload });
+		} catch (err) {
+			return requestHandler.sendError(req, res, err);
+		}
+	}
+
 	// TYPE === USER
 	/*********************************************
 * Param - req - id: req.params.id,
@@ -120,13 +230,12 @@ class usersController extends BaseController {
 			// const tokenFromHeader = auth.getJwtToken(req);
 			const current_user = req.decoded.payload.id;
 			const id = req.params.id;
-			// console.log(user.payload.id);
 			const schema = {
-				id: data_type.str_100
-			}
-			// const { error } = Joi.validate({ id }, schema);
-			// requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-			// console.log(id);
+				id: data_type.id,
+			};
+			const { error } = Joi.validate({ id: id }, schema);
+			console.log(error);
+			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
 			let options = {
 				where: {
 					id: id,
@@ -277,14 +386,17 @@ class usersController extends BaseController {
 
 			const userProfile = await super.getByCustomOptions(req, 'users', newOptions);
 			console.log(userProfile);
+			if (!userProfile) {
+				requestHandler.throwError(400, "bad request", "User not found")() ;
+			}
 			// const count = await super.raw()
 			// const userProfileParsed = userProfile
 			const payload = _.omit(userProfile, ['created_on', 'updated_on', 'number', 'last_login', 'password', 'access_token']);
 			console.log(payload);
-			return requestHandler.sendSuccess(res, 'User Profile fetched Successfully',200)({ payload });
+			return requestHandler.sendSuccess(res, 'User Profile fetched Successfully', 200)({ payload });
 		} catch (err) {
 			console.log(err);
-			// return requestHandler.sendError(req, res, err);
+			return requestHandler.sendError(req, res, err);
 		}
 	}
 
@@ -356,7 +468,7 @@ class usersController extends BaseController {
 									states: {
 										select: {
 											name: true,
-											country: {
+											countries: {
 												select: {
 													name: true
 												}
@@ -389,7 +501,7 @@ class usersController extends BaseController {
 									states: {
 										select: {
 											name: true,
-											country: {
+											countries: {
 												select: {
 													name: true
 												}
@@ -429,7 +541,7 @@ class usersController extends BaseController {
 									states: {
 										select: {
 											name: true,
-											country: {
+											countries: {
 												select: {
 													name: true
 												}
@@ -456,9 +568,12 @@ class usersController extends BaseController {
 
 			const userProfile = await super.getByCustomOptions(req, 'users', newOptions);
 			console.log(userProfile);
+			if (!userProfile) {
+				requestHandler.throwError(400, "bad request", "User not found")() ;
+			}
 			// const userProfileParsed = userProfile
 			const payload = _.omit(userProfile, ['created_on', 'updated_on', 'number', 'last_login', 'password', 'access_token']);
-			return requestHandler.sendSuccess(res, 'User Profile fetched Successfully')({ payload });
+			return requestHandler.sendSuccess(res, 'NGO Profile fetched Successfully')({ payload });
 		} catch (err) {
 			console.log('error');
 			return requestHandler.sendError(req, res, err);
@@ -532,7 +647,7 @@ class usersController extends BaseController {
 									states: {
 										select: {
 											name: true,
-											country: {
+											countries: {
 												select: {
 													name: true
 												}
@@ -572,7 +687,7 @@ class usersController extends BaseController {
 									states: {
 										select: {
 											name: true,
-											country: {
+											countries: {
 												select: {
 													name: true
 												}
@@ -612,7 +727,7 @@ class usersController extends BaseController {
 									states: {
 										select: {
 											name: true,
-											country: {
+											countries: {
 												select: {
 													name: true
 												}
@@ -639,9 +754,12 @@ class usersController extends BaseController {
 
 			const userProfile = await super.getByCustomOptions(req, 'users', newOptions);
 			console.log(userProfile);
+			if (!userProfile) {
+				requestHandler.throwError(400, "bad request", "User not found")() ;
+			}
 			// const userProfileParsed = userProfile
 			const payload = _.omit(userProfile, ['created_on', 'updated_on', 'number', 'last_login', 'password', 'access_token']);
-			return requestHandler.sendSuccess(res, 'User Profile fetched Successfully')({ payload });
+			return requestHandler.sendSuccess(res, 'Counsaler Profile fetched Successfully')({ payload });
 		} catch (err) {
 			console.log('error');
 			return requestHandler.sendError(req, res, err);
@@ -661,7 +779,7 @@ class usersController extends BaseController {
 		try {
 			const user = req.decoded.payload;
 			// const type = req.body.type ;
-			console.log(req.files) ;
+			console.log(req.files);
 			const schema = {
 				user: {
 					first_name: data_type.str_100_req,

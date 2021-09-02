@@ -104,7 +104,7 @@ router.post('/login', AuthController.login);
 /**
   * @swagger
   * /verify/{uniqueString}:
-  *   get:
+  *   put:
   *     tags:
   *       - Auth
   *     produces:
@@ -120,7 +120,7 @@ router.post('/login', AuthController.login);
   *       200:
   *         description: user verified and activated in succesfully
   */
-router.get('/verify/:uniqueString', AuthController.verify);
+router.put('/verify/:uniqueString', AuthController.verify);
 
 /**
   * @swagger

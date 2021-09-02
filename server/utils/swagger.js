@@ -63,6 +63,26 @@ const options = {
 				description: 'Group Member Request API',
 			},
 			{
+				name: 'post',
+				description: 'Post API',
+			},
+			{
+				name: 'post_action',
+				description: 'Post Action API',
+			},
+			{
+				name: 'follower_following',
+				description: 'Follower API',
+			},
+			{
+				name: 'notification',
+				description: 'Notification API',
+			},
+			{
+				name: 'data_lookup',
+				description: 'Data Lookup API',
+			},
+			{
 				name: 'Auth',
 				description: 'Authentication apis',
 			},

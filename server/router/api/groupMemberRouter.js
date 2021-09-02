@@ -224,7 +224,7 @@ router.put('/update/id=:id', auth.isAuthunticated, GroupMemberController.updateG
 router.post('/addReq', auth.isAuthunticated, GroupMemberController.addGroupMemberReq);
 /**
  * @swagger
- * /groupMember/req:
+ * /groupMember/req/{id}:
  *   delete:
  *     tags:
  *       - group_member_requests
@@ -289,7 +289,7 @@ router.delete('/req/id=:id', auth.isAuthunticated, GroupMemberController.deleteG
 router.post('/groupMemberReq/id=:id', auth.isAuthunticated, GroupMemberController.GroupMemberRequests);
 /**
 * @swagger
-* /groupMember/groupReq/id={Id}:
+* /groupMember/groupReq:
 *   post:
 *     tags:
 *       - group_member_requests

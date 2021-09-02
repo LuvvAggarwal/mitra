@@ -1,0 +1,3 @@
+FRONT END
+PACKAGE JSON 
+   scripts: "build": "react-scripts build",
