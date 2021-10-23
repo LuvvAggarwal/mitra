@@ -74,6 +74,8 @@ const auth = require('../../utils/auth');
 
 router.post('/signUp', AuthController.signUp);
 
+router.post('/ssoGoogle', AuthController.ssoGoogle);
+
 /**
   * @swagger
   * /login:

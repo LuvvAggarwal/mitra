@@ -81,7 +81,7 @@ router.delete('/:id', auth.isAuthunticated, followerFollowingController.unfollow
  *         schema:
  *           $ref: '#/definitions/follower_following'
  */
-router.post('/getFollowing/', auth.isAuthunticated, followerFollowingController.getFollowing);
+router.get('/getFollowing/:user/:lastNumber', auth.isAuthunticated, followerFollowingController.getFollowing);
 
 /**
  * @swagger
@@ -107,6 +107,6 @@ router.post('/getFollowing/', auth.isAuthunticated, followerFollowingController.
  *         schema:
  *           $ref: '#/definitions/follower_following'
  */
-router.post('/getFollower/', auth.isAuthunticated, followerFollowingController.getFollowers);
+router.get('/getFollower/:user/:lastNumber', auth.isAuthunticated, followerFollowingController.getFollowers);
 
 module.exports = router;

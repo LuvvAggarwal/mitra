@@ -365,24 +365,25 @@ class postsController extends BaseController {
 			// console.log(req);
 			console.log(options);
 			if(options.group_id){
-				const member_check = await isGroupMember(req, res, { user_id: user, group_id: group });
-				if (member_check.isAdmin) {
+				const member_check = await isGroupMember(req, res, { user_id: user, group_id: data.group_id });
+				if (member_check.isAdmin || member_check.isMember) {
 					options.approved = true ;
 				}
-				if (member_check.isMember && !member_check.isAdmin) {
-					options.approved = false ;
-				}
+				// if (member_check.isMember && !member_check.isAdmin) {
+				// 	options.approved = false ;
+				// }
 				else{
 					requestHandler.throwError(400, "bad request", "You are not group member")() ;
 				}
 			}
 			
 			let attachment_records;
+			options.active = true
 			const result = await super.create(req, 'posts', options);
 			if (attachments.length > 0) {
 				const workerPool = WorkerCon.get()
 				attachment_records = await workerPool.createAttachments(result.id, attachments)
-				console.log(JSON.stringify(workerPool.stats())); 
+				// console.log(JSON.stringify(workerPool.stats())); 
 			}
 			const payload = _.omit(result, ['created_on', 'updated_on', 'active']);
 			payload.attachments = attachment_records;
@@ -416,7 +417,8 @@ class postsController extends BaseController {
 			// const tokenFromHeader = auth.getJwtToken(req);
 			const user = req.decoded.payload.id;
 			const group_id = req.params.id;
-			const lastNumber = req.body.lastNumber
+			let lastNumber = req.params.lastNumber
+			lastNumber = parseInt(lastNumber.replace("n", ""), 10);
 			// const lastRank = req.body.lastRank
 			// const group = req.params.id;
 			// const member_check = await super.isGroupMember(req, res, { group_id: group, user_id: user })
@@ -443,9 +445,16 @@ class postsController extends BaseController {
 				},
 				select: {
 					id: true,
+					number: true,
 					title: true,
+					created_on: true,
 					description: true,
 					rank: true,
+					likes: {
+						where: {
+							user_id: user,
+						}
+					},
 					groups: {
 						select: {
 							group_id: true,
@@ -482,7 +491,7 @@ class postsController extends BaseController {
 				}
 			}
 
-			const member_check = await isGroupMember(req, res, { user_id: user, group_id: group });
+			const member_check = await isGroupMember(req, res, { user_id: user, group_id });
 
 			if (member_check.isMember && !member_check.isAdmin) {
 				options.where.visibility =  { not: "PRIVATE" } ;
@@ -508,21 +517,24 @@ class postsController extends BaseController {
 		}
 	}
 
-	static async getMyPosts(req, res) {
+	static async getUserPosts(req, res) {
 		try {
 			// const tokenFromHeader = auth.getJwtToken(req);
 			// const user = jwt.decode(tokenFromHeader).payload.id;
 			const user_id = req.decoded.payload.id;
-			const lastNumber = req.body.lastNumber
+			const user = req.params.id
+			let lastNumber = req.params.lastNumber
+			lastNumber = parseInt(lastNumber.replace("n", ""), 10);
 			// const group = req.params.id;
 			// const member_check = await super.isGroupMember(req, res, { group_id: group, user_id: user })
 			// console.log(member_check);
 			// console.log(JSON.stringify(member_check));
 			const schema = {
 				user_id: data_type.id,
+				user: data_type.id,
 				lastNumber: data_type.integer
 			}
-			const { error } = Joi.validate({ user_id, lastNumber/*lastRank: lastRankis_active: req.body.is_active */ }, schema);
+			const { error } = Joi.validate({ user_id, user ,lastNumber/*lastRank: lastRankis_active: req.body.is_active */ }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			console.log('GETTING');
 
@@ -531,7 +543,7 @@ class postsController extends BaseController {
 			const options = {
 				take: take,
 				where: {
-					user_id,
+					user_id: user,
 					// visibility: { not: "PRIVATE" },
 					active: true,
 				},
@@ -544,6 +556,13 @@ class postsController extends BaseController {
 					title: true,
 					description: true,
 					rank: true,
+					created_on: true,
+					group_id: true,
+					likes: {
+						where: {
+							user_id
+						}
+					},
 					groups: {
 						select: {
 							group_id: true,
@@ -579,6 +598,10 @@ class postsController extends BaseController {
 					}
 				}
 			}
+			if (user !== user_id) {
+				options.where.visibility =  "PUBLIC";
+			}
+
 			if (lastNumber > -1)
 				options.where.number = { lt: lastNumber };
 			console.log(options);
@@ -597,7 +620,9 @@ class postsController extends BaseController {
 			// const tokenFromHeader = auth.getJwtToken(req);
 			// const user = jwt.decode(tokenFromHeader).payload.id;
 			const user = req.decoded.payload.id;
-			const lastRank = req.body.lastRank;
+			// const lastRank = req.body.lastRank;
+			let lastRank = req.params.lastRank
+			lastNumber = parseInt(lastRank.replace("n", ""), 10);
 			// const group = req.params.id;
 			// const member_check = await super.isGroupMember(req, res, { group_id: group, user_id: user })
 			// console.log(member_check);

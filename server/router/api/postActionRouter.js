@@ -64,7 +64,7 @@ router.post('/like/id=:id', auth.isAuthunticated, postActionController.likePost)
 *         schema:
 *           $ref: '#/definitions/post_action'
 */
-router.get('/likes/id=:id', auth.isAuthunticated, postActionController.getLikes);
+router.get('/likes/id=:id/:lastNumber', auth.isAuthunticated, postActionController.getLikes);
 
 
 /**
@@ -193,7 +193,7 @@ router.put('/comment/id=:id', auth.isAuthunticated, postActionController.updateC
 *         schema:
 *           $ref: '#/definitions/post_action'
 */
-router.get('/comments/id=:id', auth.isAuthunticated, postActionController.getComments);
+router.get('/comments/id=:id/:lastNumber', auth.isAuthunticated, postActionController.getComments);
 
 
 /**

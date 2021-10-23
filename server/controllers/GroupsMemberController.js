@@ -82,6 +82,7 @@ class groupsMemberController extends BaseController {
 	static async addGroupMember(req, res) {
 		try {
 			// const data = req.body;
+			const user = req.decoded.payload
 			const schema = {
 				id: data_type.id,
 				// group_id: Joi.string().required(),
@@ -224,8 +225,10 @@ class groupsMemberController extends BaseController {
 	static async GroupMembers(req, res) {
 		try {
 			// console.log("take " + this.take);
-			const data = req.body;
-			const lastNumber = data.lastNumber;
+			const data = req.params;
+			console.log(data);
+			const lastNumber = parseInt(data.lastNumber.replace("n",""),10);
+			console.log("Lastnumber " + lastNumber);
 			const schema = {
 				// user_id: Joi.string().required(),
 				group_id: data_type.id,
@@ -237,7 +240,7 @@ class groupsMemberController extends BaseController {
 				lastNumber,
 				group_id: req.params.id,
 				// take: take,
-				is_admin: data.is_admin
+				is_admin: req.params.is_admin
 			}
 			const { error } = Joi.validate(validate, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
@@ -247,12 +250,13 @@ class groupsMemberController extends BaseController {
 				take: take,
 				where: {
 					group_id: req.params.id,
-					is_admin: data.is_admin
+					// is_admin: data.is_admin === 'true'
 				},
 				orderBy:{
 					number: "asc"
 				},
 				select: {
+					number: true,
 					id: true,
 					users: {
 						select: {
@@ -508,7 +512,8 @@ class groupsMemberController extends BaseController {
 			const user = req.decoded.payload.id;
 			const name = req.decoded.payload.name ;
 			console.log(user);
-			const group = data.group_id;
+			const group = req.params.id;
+			console.log("Group  "  + group);
 			const schema = {
 				request_sender: data_type.id,
 				group_id: data_type.id,
@@ -519,6 +524,8 @@ class groupsMemberController extends BaseController {
 				group_id: group,
 				request_reciever: data.request_reciever,
 			}
+			console.log("request reciever");
+			console.log(data.request_reciever);
 			const { error } = Joi.validate(options, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
@@ -566,6 +573,10 @@ class groupsMemberController extends BaseController {
 				}
 			});
 
+			console.log("reciever >>>>>>>>");
+			console.log(reciever_data);
+			console.log("sender >>>>>>>>>>>");
+			console.log(sender_data);
 			console.log(_.isUndefined(sender_data));
 			if (_.isUndefined(sender_data)) {
 				// if (sender_data.is_admin && _.isUndefined(reciever_data))
@@ -576,6 +587,7 @@ class groupsMemberController extends BaseController {
 					where: {
 						// OR: [
 							// {
+								active: true,
 								request_reciever: data.request_reciever,
 								request_sender: user,
 								group_id: group
@@ -601,12 +613,12 @@ class groupsMemberController extends BaseController {
 				options.id = uuid.v4();
 				// const obj = {};
 				console.log(options);
-				const result = await super.create(req, 'group_member_req', options);
-				const link_source = "/group/" + reciever_data.groups.group_id ;
+				const payload = await super.create(req, 'group_member_req', options);
+				const link_source = "/group/" + payload.group_id ;
 				const notify = nc.groupMembershipRequestNotification({id:user,name},data.request_reciever,link_source)
-				const payload = _.pick(result, ['id', 'created_on', 'updated_on', 'active'])
+				// const payload = _.pick(result, ['id', 'created_on', 'updated_on', 'active'])
 				console.log(payload);
-				return requestHandler.sendSuccess(res, 'Request to join group sent successfully successfully')({ payload,notify });;
+				return requestHandler.sendSuccess(res, 'Request to join group sent successfully')({ payload,notify });;
 			}
 			else if (_.isUndefined(reciever_data)) {
 				console.log('reciever data');
@@ -614,7 +626,8 @@ class groupsMemberController extends BaseController {
 				const req_data = await super.getByCustomOptions(req, "group_member_req", {
 					where: {
 						// OR: [
-						// 	{
+						// 	{	
+								active: true,
 								request_reciever: data.request_reciever,
 								request_sender: user,
 								group_id: group
@@ -638,10 +651,11 @@ class groupsMemberController extends BaseController {
 				options.id = uuid.v4();
 				// const obj = {};
 				console.log(options);
-				const result = await super.create(req, 'group_member_req', options);
-				const link_source = "/group/" + sender_data.groups.group_id ;
+				const payload = await super.create(req, 'group_member_req', options);
+
+				const link_source = "/group/" + payload.group_id ;
 				const notify = nc.groupMembershipRequestAdminNotification({id:user,name},data.request_reciever,link_source)
-				const payload = _.omit(result, ['created_on', 'updated_on', 'active'])
+				
 				console.log(payload);
 				return requestHandler.sendSuccess(res, 'Request to join group sent successfully successfully')({ payload, notify });;
 			}
@@ -652,7 +666,7 @@ class groupsMemberController extends BaseController {
 
 
 		} catch (err) {
-			// console.log(err);
+			console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -669,10 +683,13 @@ class groupsMemberController extends BaseController {
  */
 	static async deleteGroupMemberReq(req, res) {
 		try {
-			const data = req.body;
+			// const data = req.body;
 			const user = req.decoded.payload.id;
+			const request_sender = req.params.sen
+			const request_reciever = req.params.rec
 			const schema = {
 				id: data_type.id,
+				request_sender: data_type.id,
 				request_reciever: data_type.id
 				// group_id: Joi.string().required(),
 				// request_reciever: Joi.string().required(),
@@ -681,7 +698,8 @@ class groupsMemberController extends BaseController {
 			const validate = {
 				id: req.params.id,
 				// group_id: data.group_id,
-				request_reciever: data.request_reciever,
+				request_sender: request_sender,
+				request_reciever: request_reciever
 				// is_acceptor_admin: data.is_acceptor_admin
 			}
 			const options = {
@@ -703,26 +721,26 @@ class groupsMemberController extends BaseController {
 			console.log(user);
 			const is_admin = await super.getByCustomOptions(req, "group_member_map", {
 				where: {
-					group_id: data.group_id,
+					group_id: req_data.group_id,
 					user_id: user,
 					is_admin: true
 				}
 			})
 			console.log(is_admin);
-			if (!is_admin && user !== data.request_reciever) {
+			if (!is_admin && user !== request_sender && user !== request_reciever) {
 				requestHandler.throwError(400, 'bad request', 'You cannot delete data')();
 			}
 
 			const result = await super.deleteById(req, 'group_member_req');
-			const payload = _.pick(result, ['id', 'group_id', 'user_id']);
-			return requestHandler.sendSuccess(res, 'Request to join group deleted successfully')({ payload });
+			// const payload = _.pick(result, ['id', 'group_id', 'user_id']);
+			return requestHandler.sendSuccess(res, 'Request to join group deleted successfully')({ payload: result });
 
 			// options.id = uuid.v4();
 			// options.request_accepted = reciever_data.isAdmin;
 			// // const obj = {};
 
 		} catch (err) {
-			// console.log(err);
+			console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -740,7 +758,8 @@ class groupsMemberController extends BaseController {
  */
 	static async GroupMemberRequests(req, res) {
 		try {
-			const lastNumber = req.body.lastNumber;
+			let lastNumber = req.params.lastNumber;
+			lastNumber = parseInt(lastNumber.replace("n",""),10);
 			const schema = {
 				// user_id: Joi.string().required(),
 				group_id: data_type.id,
@@ -760,30 +779,34 @@ class groupsMemberController extends BaseController {
 				where: {
 					group_id: req.params.id,
 					request_accepted: false,
-					// active: true
+					active: true
 					// is_admin: data.is_admin
 				},
 				orderBy:{
-					number : "asc"
+					number : "desc"
 				},
 				select: {
+					number: true,
+					id: true,
 					request_reciever_user: {
 						select: {
+							id: true,
 							user_id: true,
 							name: true,
 							gender: true,
 							profile_photo: true,
-							// cover_photo: true,
+							cover_photo: true,
 							// bio: true,
 						}
 					},
 					request_sender_user: {
 						select: {
+							id: true,
 							user_id: true,
 							name: true,
 							gender: true,
 							profile_photo: true,
-							// cover_photo: true,
+							cover_photo: true,
 							// bio: true,
 						}
 					},
@@ -802,11 +825,12 @@ class groupsMemberController extends BaseController {
 
 			if (lastNumber > -1) {
 				options.where.number = {
-					gt: lastNumber
+					lt: lastNumber
 				}
 			}
 			// const obj = {};
 			const payload = await super.getList(req, 'group_member_req', options);
+			console.log(payload);
 			return requestHandler.sendSuccess(res, "Group's member requests fetched successfully")({ payload });;
 		} catch (err) {
 			console.log(err);
@@ -833,7 +857,7 @@ class groupsMemberController extends BaseController {
 	 */
 	static async GroupRequests(req, res) {
 		try {
-			const lastNumber = req.body.lastNumber;
+			const lastNumber = req.params.lastNumber;
 			const user = req.decoded.payload.id
 			const schema = {
 				// user_id: Joi.string().required(),
@@ -908,6 +932,7 @@ class groupsMemberController extends BaseController {
 			}
 			// const obj = {};
 			const payload = await super.getList(req, 'group_member_req', options);
+			console.log(payload);
 			return requestHandler.sendSuccess(res, "User's Group member requests fetched successfully")({ payload });;
 		} catch (err) {
 			// console.log(err);

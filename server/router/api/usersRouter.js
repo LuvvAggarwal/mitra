@@ -91,6 +91,8 @@ router.delete('/id=:id',auth.isAuthunticated, UsersController.deleteUserById);
 
  router.get('/profile/:user_id', auth.isAuthunticated, UsersController.getProfile)
 
+ router.get('/my_profile', auth.isAuthunticated, UsersController.getProfile)
+
 /**
  * @swagger
  * /users/user_profile/id={id}:
@@ -301,6 +303,6 @@ router.get('/counsaler_profile/id=:id', auth.isAuthunticated, UsersController.ge
  *           $ref: '#/definitions/users'
  */
  router.put('/update', auth.isAuthunticated,profile, UsersController.updateProfile);
-
+ router.get('/users/:q', auth.isAuthunticated, UsersController.getUsers);
 
 module.exports = router;

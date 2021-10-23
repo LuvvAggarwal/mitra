@@ -18,10 +18,13 @@ function getTokenFromHeader(req) {
 function verifyToken(req, res, next) {
 	// console.log(req);
 	try {
+		// console.log(req);
 		console.log("starting");
 		if (_.isUndefined(req.headers.authorization)) {
 			requestHandler.throwError(401, 'Unauthorized', 'Not Authorized to access this resource!')();
 		}
+		console.log("fuuu lll ");
+		// console.log(req.headers.authorization);
 		const Bearer = req.headers.authorization.split(' ')[0];
 
 		if (!Bearer || Bearer !== 'Bearer') {
@@ -29,27 +32,30 @@ function verifyToken(req, res, next) {
 		}
 
 		const token = req.headers.authorization.split(' ')[1];
+		console.log("token");
 		console.log(token);
-		if (!token) {
+		if (!token || token == "null") {
 			requestHandler.throwError(401, 'Unauthorized', 'Not Authorized to access this resource!')();
 		}
 
 		// verifies secret and checks exp
 		jwt.verify(token, config.auth.jwt_secret, async (err, decoded) => {
 			if (err) {
+				console.log(err);
 				requestHandler.throwError(401, 'Unauthorized', 'please provide a vaid token ,your token might be expired')();
 			}
+			const id = decoded.id ; 
 			//finding user based on access Token
-			const user = await getByCustomOptions(req, 'users', { where: { access_token: token, active: true } });
-			// console.log(user);
+			const user = await getByCustomOptions(req, 'users', { where: { id: id, active: true } });
+			console.log('user');
 			if (!user) {
 				const err = { status: 401, message: "user not found" }
-				requestHandler.sendError(req, res, err);
+				requestHandler.throwError(400, "bad request", "user not found")()
 			} else {
 				req.decoded = decoded;
 				next();
 			}
-
+			console.log("pass");
 		});
 		// console.log('authenticated');
 	} catch (err) {

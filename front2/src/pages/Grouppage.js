@@ -1,43 +1,38 @@
-import React, { Component , Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import Header from '../components/Header';
 import Leftnav from '../components/Leftnav';
 import Rightchat from '../components/Rightchat';
 import Appfooter from '../components/Appfooter';
 import Popupchat from '../components/Popupchat';
+import ProfileCardGroup from "../components/ProfilecardGroup";
+import AlertComp from "../components/Alert";
+// import {useParams} from "react-router-dom"
+// import { UserContext } from '../context/UserContext';
 
-import Profiledetail from '../components/Profiledetail';
-import Profilephoto from '../components/Profilephoto';
-import ProfilecardOne from '../components/ProfilecardOne';
-import Createpost from '../components/Createpost';
-import Events from '../components/Events';
-import Postview from '../components/Postview';
-import Load from '../components/Load';
-
-
-class Grouppage extends Component {
+class Userpage extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            showAlert: false,
+            alertConfig: {}
+        }
+    }
     render() {
+
         return (
-            <Fragment> 
+            <Fragment>
+                {this.state.showAlert && <AlertComp config={this.state.alertConfig} show={true}></AlertComp>}
                 <Header />
                 <Leftnav />
                 <Rightchat />
+
 
                 <div className="main-content right-chat-active">
                     <div className="middle-sidebar-bottom">
                         <div className="middle-sidebar-left pe-0">
                             <div className="row">
-                                <div className="col-xl-4 col-xxl-3 col-lg-4 pe-0">
-                                    <ProfilecardOne />
-                                    <Profiledetail />
-                                    <Profilephoto />
-                                    <Events />
-                                </div>
-                                <div className="col-xl-8 col-xxl-9 col-lg-8 mt-3">
-                                    <Createpost />
-                                    <Postview id="32" postvideo="" postimage="post.png" avater="user.png" user="Surfiya Zakir" time="22 min ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." />
-                                    <Postview id="31" postvideo="" postimage="post.png" avater="user.png" user="David Goria" time="22 min ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." />
-                                    <Postview id="33" postvideo="" postimage="post.png" avater="user.png" user="Anthony Daugloi" time="2 hour ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." />
-                                    <Load />
+                                <div className="col-xl-12 mb-3">
+                                    <ProfileCardGroup showAlert={()=>{this.setState({showAlert: true})}} alertConfig={(e)=>{this.setState({alertConfig: e})}}/>
                                 </div>
                             </div>
                         </div>
@@ -45,11 +40,12 @@ class Grouppage extends Component {
                 </div>
 
                 <Popupchat />
-                <Appfooter /> 
+                <Appfooter />
 
             </Fragment>
-        );
-    }
+
+        )
+    };
 }
 
-export default Grouppage;
+export default Userpage;

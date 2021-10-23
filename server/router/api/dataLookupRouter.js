@@ -95,7 +95,7 @@ router.get('/cities/:id', dataLookupController.getCities);
  *         schema:
  *           $ref: '#/definitions/data_lookup'
  */
-router.get('model/:model', dataLookupController.getDL);
+router.get('/model/:model', dataLookupController.getDL);
 
 
 /**

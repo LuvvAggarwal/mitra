@@ -46,5 +46,5 @@ module.exports = {
     // registration_code: Joi.string().max(100).required(),
     email: Joi.string().email().max(150).required(),
     type: Joi.string().regex(type),
-    password: Joi.string().required(),
+    password: Joi.string().required().min(8).max(15),
 }

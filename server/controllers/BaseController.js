@@ -122,7 +122,7 @@ class BaseController {
 				(async ()=>{
 					const workerPool = WorkerCon.get()
 					result = await workerPool.deleteChilds(reqParam,children) ;			
-					console.log(JSON.stringify(workerPool.stats())); 	
+					// console.log(JSON.stringify(workerPool.stats())); 	
 				})(),
 				errHandler.throwIf(r => r < 1, 404, 'not found', 'No record matches the Id provided'),
 				errHandler.throwError(500, 'server error'),
@@ -384,13 +384,13 @@ class BaseController {
 		let result;
 		try {
 			result = await prisma[modelName].count(options).then(
-				errHandler.throwIf(r => !r, 404, 'not found', 'Resource not found'),
+				errHandler.throwIf(r => {typeof r != "number" }, 404, 'not found', 'Problem in counting' ),
 				errHandler.throwError(500, 'server error ,some thing wrong with either the data base connection or schema'),
-			);
+			).then(count => {Promise.resolve(count) ;console.log(count);},console.log('resolve'));
 		} catch (err) {
 			return Promise.reject(err);
 		}
-		return json.parse(result);
+		return result;
 	}
 
 	static async raw(query) {

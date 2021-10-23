@@ -44,7 +44,7 @@ const auth = require('../../utils/auth');
  *         schema:
  *           $ref: '#/definitions/groupMember'
  */
-router.post('/groupMembers/id=:id', auth.isAuthunticated, GroupMemberController.GroupMembers);
+router.get('/groupMembers/id=:id/:lastNumber/:is_admin', auth.isAuthunticated, GroupMemberController.GroupMembers);
 /**
  * @swagger
  * /groupMember/addMember/id={Id}:
@@ -221,7 +221,7 @@ router.put('/update/id=:id', auth.isAuthunticated, GroupMemberController.updateG
 *         schema:
 *           $ref: '#/definitions/groupMember'
 */
-router.post('/addReq', auth.isAuthunticated, GroupMemberController.addGroupMemberReq);
+router.post('/addReq/:id', auth.isAuthunticated, GroupMemberController.addGroupMemberReq);
 /**
  * @swagger
  * /groupMember/req/{id}:
@@ -254,7 +254,7 @@ router.post('/addReq', auth.isAuthunticated, GroupMemberController.addGroupMembe
  *         schema:
  *           $ref: '#/definitions/groupMember'
  */
-router.delete('/req/id=:id', auth.isAuthunticated, GroupMemberController.deleteGroupMemberReq);
+router.delete('/req/id=:id/rec=:rec/sen=:sen', auth.isAuthunticated, GroupMemberController.deleteGroupMemberReq);
 /**
 * @swagger
 * /groupMember/groupMemberReq/id={Id}:
@@ -286,7 +286,7 @@ router.delete('/req/id=:id', auth.isAuthunticated, GroupMemberController.deleteG
 *         schema:
 *           $ref: '#/definitions/groupMember'
 */
-router.post('/groupMemberReq/id=:id', auth.isAuthunticated, GroupMemberController.GroupMemberRequests);
+router.get('/groupMemberReq/id=:id/ln=:lastNumber', auth.isAuthunticated, GroupMemberController.GroupMemberRequests);
 /**
 * @swagger
 * /groupMember/groupReq:

@@ -3,7 +3,7 @@ const path = require("path");
 const { v4 } = require('uuid');
 
 const storage = multer.diskStorage({
-    destination: './public/uploads/',
+    destination: '../front2/public/files',
     onFileUploadStart: function (file) {
         console.log(file.fieldname + ' is starting ...')
     },

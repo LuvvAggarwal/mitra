@@ -1,3 +1,5 @@
+// const { process } = require('joi/lib/errors');
+
 require('dotenv').config();	
 // console.log(require('dotenv').config())
 console.log('app >>>> ' + process.env.APP_NAME);
@@ -10,6 +12,9 @@ module.exports = {
 		port: process.env.DEV_APP_PORT || 3000,
 		appName: process.env.APP_NAME || 'mitra',
 		env: process.env.NODE_ENV || 'development',
+		front: "http://localhost:3000/",
+		mail: process.env.GMAIL_ACCOUNT,
+		mail_pswd: process.env.GMAIL_PSWD
 	},
 	db: {
 		port: process.env.DB_PORT || 5432,

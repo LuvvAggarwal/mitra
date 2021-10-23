@@ -201,7 +201,7 @@ class notificationController extends BaseController {
 			}
 			console.log("checking");
 			data.id = uuid.v4() ;
-			console.log(options);
+			// console.log(options);
 			const result = await super.create({}, 'notifications', data);
 			return result;
 		} catch (error) {

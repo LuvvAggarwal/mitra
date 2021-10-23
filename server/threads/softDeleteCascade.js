@@ -19,16 +19,16 @@ const { updateMany } = require("../controllers/BaseController");
 // }
 
 const deleteChildren = async (parent, children) => {
-    const data = [];
+    const deleted = [];
     children.forEach(e => {
        const model = e.model ;
        const data = e.data ;
        const softDelete = updateMany({},model,data);
        const obj = {} ;
        obj[model] = `${softDelete.length} records updated.`
-       data.push(obj)
+       deleted.push(obj)
     });
-    return data
+    return deleted
     
 }
 

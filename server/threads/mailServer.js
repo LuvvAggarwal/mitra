@@ -1,14 +1,15 @@
 // JAI SHREE SITARAM
-
+const app_config = require("../config/appconfig")
 const nodemailer = require('nodemailer');
 const { workerData, parentPort, isMainThread } = require("worker_threads");
+const { app } = require("../config/appconfig");
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'luvvaggarwal2002@gmail.com',
-        pass: 'luvv8979'
-    }
+        user: app_config.app.mail,
+        pass: app_config.app.mail_pswd
+        }
 });
 
 // if (!isMainThread) {

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Player, BigPlayButton, ForwardControl, ReplayControl, ControlBar } from 'video-react';
+import img_url from '../utils/imgURL';
 
-const FileViewer = ({ attachment, title, viewtype }) => {
+const FileViewer = ({ attachment, title, viewtype, css }) => {
     const renderAttachment = (attachment, title) => {
         console.log(attachment);
         console.log(title);
@@ -11,6 +12,7 @@ const FileViewer = ({ attachment, title, viewtype }) => {
             if (ext) return ext;
             else return "";
         }
+        const attachment_url = img_url(attachment.url)
         const extension = getType(attachment);
         const mime = attachment.mime_type;
         const regex = /application\/pdf|image|video|text|application/;// excel or doc mime type is text
@@ -20,13 +22,13 @@ const FileViewer = ({ attachment, title, viewtype }) => {
         if(viewtype == "postView"){
             switch (type) {
                 case "application/pdf":
-                    return <a href={`/attachments/${attachment.url}`} download={extension ? title + "." + extension : attachment.url} className="btn btn-danger">Download PDF</a>;
-                case "text": return <a href={`/attachments/${attachment.url}`} download={title + "." + extension} className="btn btn-primary">Download Document</a>;
-                case "application": return <a href={`/attachments/${attachment.url}`} download={title + "." + extension} className="btn btn-primary">Download Document</a>;
+                    return <a href={`${attachment_url}`} download={extension ? title + "." + extension : attachment.url} className="btn btn-danger">Download PDF</a>;
+                case "text": return <a href={`${attachment_url}`} download={title + "." + extension} className="btn btn-primary">Download Document</a>;
+                case "application": return <a href={`${attachment_url}`} download={title + "." + extension} className="btn btn-primary">Download Document</a>;
                 case "image":
-                    return <img src={`/attachments/${attachment.url}`} className="rounded-3 w-100" alt={title} />;
+                    return <img className={`rounded-3 ${css}`} src={`${attachment_url}`} alt={title} />;
                 case "video":
-                    return <Player src={`/attachments/${attachment.url}`}>
+                    return <Player className={css} src={`${attachment_url}`}>
                         <ControlBar autoHide={true}>
                             <BigPlayButton position="right"></BigPlayButton>
                             <ReplayControl seconds={5} order={2.1} />
@@ -41,9 +43,9 @@ const FileViewer = ({ attachment, title, viewtype }) => {
                 case "text": return <a href={attachment.url} download={title + "." + extension} className="btn btn-primary">Download Document</a>;
                 case "application": return <a href={attachment.url} download={title + "." + extension} className="btn btn-primary">Download Document</a>;
                 case "image":
-                    return <img src={attachment.url} className="rounded-3 w-100" alt={title} />;
+                    return <img src={attachment.url} className={`rounded-3 ${css}`} alt={title} />;
                 case "video":
-                    return <Player src={attachment.url}>
+                    return <Player className={css} src={attachment.url}>
                         <ControlBar autoHide={true}>
                             <BigPlayButton position="right"></BigPlayButton>
                             <ReplayControl seconds={5} order={2.1} />

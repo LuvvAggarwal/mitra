@@ -1,7 +1,8 @@
 // JAI SHREE SITARAM
 
 module.exports = {
-    posts: 5,
+    posts: 25,
+    users: 25,
     groups: 10,
     follower_following: 10,
     group_member: 10,

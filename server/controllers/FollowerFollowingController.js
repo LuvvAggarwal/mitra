@@ -29,6 +29,8 @@ class followerFollowingController extends BaseController {
 			const name = req.decoded.payload.name
 			const user_id = req.decoded.payload.user_id
 			const following  = req.params.id;
+			console.log(follower);
+			console.log(following);
 			const schema = {
 				follower: data_type.id,
 				following: data_type.id,
@@ -36,19 +38,20 @@ class followerFollowingController extends BaseController {
 			const { error } = Joi.validate({ follower, following }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
 			if (follower === following)
-				requestHandler.throwError(400, 'bad request', 'You cannot follow yourself')
+				requestHandler.throwError(400, 'bad request', 'You cannot follow yourself')()
 			
 			const count = await super.count(req,"follower_following",{where: {follower,active: true}})
 			if (count > 1000)
-				requestHandler.throwError(400, 'bad request', 'You are already following 1000 people')
+				requestHandler.throwError(400, 'bad request', 'You are already following 1000 people')()
 			
 			const id = v4()
 			const query = {
 				follower, following, active: true
 			}
+			console.log(query);
 			const record = await super.getByCustomOptions(req, "follower_following", { where: query });
 			if (record)
-				requestHandler.throwError(400, 'bad request', 'You are already following')
+				requestHandler.throwError(400, 'bad request', 'You are already following')()
 			const payload = await super.create(req, 'follower_following', { id, follower, following });
 			// const update = await super.raw()
 			// const updateFollowCount = await super.updateById(r)
@@ -120,13 +123,15 @@ class followerFollowingController extends BaseController {
 	static async getFollowing(req, res) {
 		// console.log(req);
 		try {
-			const follower = req.decoded.payload.id
-			const { lastNumber } = req.body;
+			const follower = req.params.user
+			let lastNumber = req.params.lastNumber
+			console.log(lastNumber);
+			lastNumber = parseInt(lastNumber.replace("n", ""), 10);
 			const schema = {
 				follower: data_type.id,
 				lastNumber: data_type.integer
 			};
-			const { error } = Joi.validate({ follower }, schema);
+			const { error } = Joi.validate({ follower, lastNumber }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
 			const options = {
 				// skip: skip,
@@ -141,11 +146,12 @@ class followerFollowingController extends BaseController {
 				select: {
 					id: true,
 					number: true,
-					follower_user: {
+					following_user: {
 						select: {
 							id: true,
 							user_id: true,
 							name: true,
+							cover_photo: true,
 							profile_photo: true
 						}
 					}
@@ -154,10 +160,12 @@ class followerFollowingController extends BaseController {
 			if (lastNumber > -1) {
 				options.where.number = { gt: lastNumber }
 			}
-			const result = await super.getList(req, 'follower_following', options);
+			const payload = await super.getList(req, 'follower_following', options);
 			// console.log(userProfile);
 			// const userProfileParsed = userProfile
-			const payload = _.omit(result, ['created_on', 'updated_on',]);
+			// let payload = _.omit(result, ['created_on', 'updated_on',]);
+
+			console.log(payload);
 			return requestHandler.sendSuccess(res, 'User following fetched Successfully')({ payload });
 		} catch (err) {
 			console.log('error');
@@ -191,13 +199,15 @@ class followerFollowingController extends BaseController {
 	static async getFollowers(req, res) {
 		// console.log(req);
 		try {
-			const following = req.decoded.payload.id
-			const { lastNumber } = req.body;
+			const following = req.params.user
+			// console.log(following);
+			let lastNumber = req.params.lastNumber
+			lastNumber = parseInt(lastNumber.replace("n", ""), 10);
 			const schema = {
 				following: data_type.id,
 				lastNumber: data_type.integer,
 			};
-			const { error } = Joi.validate({ following, skip }, schema);
+			const { error } = Joi.validate({ following, lastNumber }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
 			const options = {
 				// skip: skip,
@@ -212,11 +222,12 @@ class followerFollowingController extends BaseController {
 				select: {
 					id: true,
 					number: true,
-					following_user: {
+					follower_user: {
 						select: {
 							id: true,
 							user_id: true,
 							name: true,
+							cover_photo: true,
 							profile_photo: true
 						}
 					}
@@ -225,10 +236,11 @@ class followerFollowingController extends BaseController {
 			if (lastNumber > -1) {
 				options.where.number = { gt: lastNumber }
 			}
-			const result = await super.getList(req, 'follower_following', options);
+			const payload = await super.getList(req, 'follower_following', options);
 			// console.log(userProfile);
 			// const userProfileParsed = userProfile
-			const payload = _.omit(result, ['created_on', 'updated_on',]);
+			// const payload = _.omit(result, ['created_on', 'updated_on',]);
+			console.log(payload);
 			return requestHandler.sendSuccess(res, 'User followers fetched Successfully')({ payload });
 		} catch (err) {
 			console.log('error');

@@ -3,17 +3,18 @@ const Joi = require('joi');
 const uuid = require('uuid')
 const _ = require('lodash');
 // const BaseController = require('./BaseController');
-const {isGroupMember} = require("./GroupsMemberController");
+const { isGroupMember } = require("./GroupsMemberController");
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
 const data_type = require("../config/validations/dataTypes")
 const auth = require('../utils/auth');
 // const json = require('../utils/jsonUtil');
 const { createId } = require('../utils/idUtil');
-const {group_children} = require("../config/softDeleteCascade")
+const { group_children } = require("../config/softDeleteCascade")
 const take_config = require("../config/takeConfig");
 const BaseController = require('./BaseController');
 const take = take_config.groups;
+const queryString = require("querystring")
 
 // const { profile } = require('winston');
 const logger = new Logger();
@@ -46,7 +47,7 @@ class groupsController extends BaseController {
 					id: reqParam,
 					// active: req.body.is_active
 				},
-				
+
 				include: {
 					_count: {
 						select: {
@@ -56,7 +57,7 @@ class groupsController extends BaseController {
 						},
 					},
 					created_by_user: {
-						select : {
+						select: {
 							user_id: true,
 							name: true,
 							gender: true,
@@ -75,7 +76,7 @@ class groupsController extends BaseController {
 			};
 			console.log("checking");
 			// const member_check = await isGroupMember(req, res, { group_id: reqParam, user_id: req.decoded.payload.id });
-	
+
 			console.log(options);
 			const result = await super.getByCustomOptions(req, 'groups', options);
 			const payload = result
@@ -110,7 +111,7 @@ class groupsController extends BaseController {
 				// 	active: false, updated_by: user
 				// });
 				const children_data = group_children()
-				const result = await super.deleteByIdCascade(req, 'groups',children_data)
+				const result = await super.deleteByIdCascade(req, 'groups', children_data)
 				console.log("result");
 				console.log(result);
 				const payload = result
@@ -126,7 +127,7 @@ class groupsController extends BaseController {
 		}
 	}
 
-	
+
 
 	/*********************************************
  * Param - req - group_id: req.params.id | Member Request Id
@@ -170,7 +171,7 @@ class groupsController extends BaseController {
 				},
 				include: {
 					created_by_user: {
-						select : {
+						select: {
 							user_id: true,
 							name: true,
 							gender: true,
@@ -215,9 +216,9 @@ class groupsController extends BaseController {
 		// OVERVIEW OF PROFILE
 		try {
 			const reqParam = req.params.id;
-			// const user = req.decoded.payload.id;
+			const user = req.decoded.payload.id;
 			const schema = {
-				id: data_type.id,
+				id: data_type.str_250_req,
 			};
 			const { error } = Joi.validate({ id: reqParam }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
@@ -225,12 +226,12 @@ class groupsController extends BaseController {
 			// EFFECTIVE QUERY HANDLING
 			const options = {
 				where: {
-					id: reqParam,
+					group_id: reqParam,
 					active: true
 				},
 				include: {
 					created_by_user: {
-						select : {
+						select: {
 							user_id: true,
 							name: true,
 							gender: true,
@@ -245,11 +246,48 @@ class groupsController extends BaseController {
 							description: true
 						}
 					},
-					_count: {
-						select: {
-							members: true,
-							// requests: true,
-							posts: true
+					members: {
+						where: {
+							user_id: user,
+							active: true
+						}
+					},
+					requests: {
+						where: {
+							active: true,
+							OR: [{
+								request_sender: user
+							},
+							{ request_reciever: user }
+							],
+							request_accepted: false	
+						}
+					},
+					posts: {
+						take: 5,
+						where: {
+							active: true
+						},
+						include: {
+							atachments: true,
+							users: {
+								select: {
+									name: true,
+									profile_photo: true
+								}
+							},
+							likes: {
+								where: {
+									user_id: user
+								}
+							},
+							_count: {
+								select: {
+									comments: true,
+									likes: true,
+									shares: true,
+								},
+							},
 						}
 					}
 				},
@@ -339,6 +377,7 @@ class groupsController extends BaseController {
 			const user = req.decoded.payload.id;
 			const ph_number = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
 			console.log(req.files.profile_photo[0].path);
+			console.log(data.email);
 			// res.json({req})
 			const visibility = /PUBLIC|PRIVATE|FRIENDS/;
 			const schema = {
@@ -373,7 +412,7 @@ class groupsController extends BaseController {
 			console.log(options);
 			const groupProfile = await super.create(req, 'groups', options);
 			// ADDING MEMBER DIRECTLY ~ LEAVING IT AS IT IS BUT MAY BE BUG 
-			const addMember = await super.create(req, "group_member_map", { id: uuid.v4(), user_id: user, group_id: groupProfile.id, is_admin: true });
+			const addMember = await super.create(req, "group_member_map", { id: uuid.v4(), user_id: user, group_id: groupProfile.id, is_admin: true, active: true });
 			const profile = _.omit(groupProfile, ['created_on', 'updated_on', 'active']);
 			const payload = { profile, addMember }
 			return requestHandler.sendSuccess(res, 'Group created Successfully')({ payload });
@@ -411,7 +450,8 @@ class groupsController extends BaseController {
 			// const tokenFromHeader = auth.getJwtToken(req);
 			// const user = jwt.decode(tokenFromHeader).payload.id;
 			const user = req.params.id;
-			const lastNumber = req.body.lastNumber
+			let lastNumber = req.body.lastNumber;
+			lastNumber = parseInt(lastNumber.replace("n", ""), 10)
 			// const group = req.params.id;
 			// const member_check = await isGroupMember(req, res, { group_id: group, user_id: user })
 			// console.log(member_check);
@@ -430,10 +470,12 @@ class groupsController extends BaseController {
 					user_id: user,
 					active: true,
 				},
-				orderBy:{
+				orderBy: {
 					number: "asc"
 				},
 				select: {
+					id: true,
+					number: true, 
 					groups: {
 						select: {
 							id: true,
@@ -446,13 +488,111 @@ class groupsController extends BaseController {
 				}
 			}
 			if (lastNumber > -1) {
-				options.where.number = {gt: lastNumber}
+				options.where.number = { gt: lastNumber }
 			}
 			console.log(options);
 			const user_grp_map = await super.getList(req, 'group_member_map', options);
 			const payload = user_grp_map;
 			console.log(payload);
 			return requestHandler.sendSuccess(res, "User's Groups Fetched Successfully")({ payload });
+		} catch (err) {
+			console.log(err);
+			return requestHandler.sendError(req, res, err);
+		}
+	}
+
+	static async getGroups(req, res) {
+		try {
+			// const tokenFromHeader = auth.getJwtToken(req);
+			// const user = jwt.decode(tokenFromHeader).payload.id;
+			const user = req.decoded.payload.id;
+			const q = req.params.q; // query
+			// const lastNumber = req.body.lastNumber
+			// const group = req.params.id;
+			// const member_check = await isGroupMember(req, res, { group_id: group, user_id: user })
+			// console.log(member_check);
+			// console.log(JSON.stringify(member_check));
+			const schema = {
+				q: data_type.text,
+				// lastNumber: data_type.integer
+			}
+			const { error } = Joi.validate({ q: q }, schema);
+			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			console.log('GETTING');
+			const urlSearchParams = new URLSearchParams(q);
+			const query = Object.fromEntries(urlSearchParams.entries());
+			console.log(query);
+			let where;
+			if (query.keyword == "" && query.problem == "") {
+				where = {
+					active: true
+				}
+			} else if (query.keyword == "" && query.problem != "") {
+				where = {
+					problem_category: query.problem,
+					active: true,
+				}
+			} else if (query.keyword != "" && query.problem == "") {
+				where = {
+					name: {
+						contains: query.keyword,
+						mode: 'insensitive',
+					}
+				}
+			} else {
+				where = {
+					name: {
+						contains: query.keyword,
+						mode: 'insensitive',
+					},
+					problem_category: query.problem,
+					active: true
+				}
+			}
+
+			const lastNumber = parseInt(query.lastNumber.replace("n", ""), 10)
+			if (lastNumber > -1)
+				where.number = { lt: lastNumber };
+			//WE COULD DIRECTLY SEARCH ON GROUP MEMBER MAP BUT FINE AS OF NOW
+			const options = {
+				// take: take,
+				where: where,
+				orderBy: {
+					number: "asc"
+				},
+
+				include: {
+					requests: {
+						where: {
+							request_sender: user,
+							active: true,
+							request_accepted: false
+						}
+					},
+					members: {
+						where: {
+							user_id: user,
+							active: true
+						}
+					}
+				}
+				// select: {
+				// 	groups: {
+				// 		select: {
+				// 			id: true,
+				// 			group_id: true,
+				// 			name: true,
+				// 			profile_photo: true,
+				// 			cover_photo: true,
+				// 		}
+				// 	}
+				// }
+			}
+			console.log(options);
+			const groups = await super.getList(req, 'groups', options);
+			const payload = groups;
+			console.log(payload);
+			return requestHandler.sendSuccess(res, "Groups Fetched Successfully")({ payload });
 		} catch (err) {
 			console.log(err);
 			return requestHandler.sendError(req, res, err);

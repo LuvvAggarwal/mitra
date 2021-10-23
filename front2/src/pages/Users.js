@@ -1,106 +1,176 @@
-import React, { Component , Fragment } from "react";
+import React, { Fragment, useState, useEffect, useRef, } from "react";
 import Header from '../components/Header';
 import Leftnav from '../components/Leftnav';
 import Rightchat from '../components/Rightchat';
 import Pagetitle from '../components/Pagetitle';
 import Appfooter from '../components/Appfooter';
 import Popupchat from '../components/Popupchat';
+import { UserContext } from "../context/UserContext";
 import Load from '../components/Load';
+import * as queryString from 'query-string';
+import users from "../api/users"
+// import follower_following from "../api/follow"
+import useFetch from "../hooks/useFetch";
+import InfoCard from "../components/InfoCard";
+// import InfiniteScroll from "react-infinite-scroller"
+import AlertComp from "../components/Alert";
+import InfiniteScroll from 'react-infinite-scroll-component';
+// import { required } from "joi";
+// import AlertDiv from "../components/Alert";+
+// const alertDiv = require("../components/Alert")
+const access_token = localStorage.getItem("access_token");
+const AuthStr = 'Bearer '.concat(access_token);
 
-const groupList = [
-    {
-        imageUrl: 'user.png',
-        name: 'Aliqa Macale',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-    {
-        imageUrl: 'user.png',
-        name: 'Hendrix Stamp',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-    {
-        imageUrl: 'user.png',
-        name: 'Stephen Grider',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-    {
-        imageUrl: 'user.png',
-        name: 'Mohannad Zitoun',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-    {
-        imageUrl: 'user.png',
-        name: 'Aliqa Macale',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-    {
-        imageUrl: 'user.png',
-        name: 'Surfiya Zakir',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },    
-    
-]
+const User = () => {
+    const [data, setData] = useState([])
+    // const { User } = useContext(UserContext);
+    // const listInnerRef = useRef()
+    // const [id, setId] = useState("");
 
-class Badge extends Component {
-    
-    render() {
-        return (
-            <Fragment> 
-                <Header />
-                <Leftnav />
-                <Rightchat />
+    // const [items, setItems] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [lastNumber, setLastNumber] = useState(-1)
+    const [hasMore, setHasMore] = useState(true)
+    // const [loadMore, setLoadMore] = useState(false)
+    const [problemCategory, setProblemCategory] = useState("")
+    const [search, setSearch] = useState("")
+    const [triggerSearch, setTriggerSearch] = useState(false);
+    // const { loading, error, list } = useFetch(query, page);
+    const loader = useRef(null);
+    const [showAlert, setShowAlert] = useState(false)
+    const [alertConfig, setAlertConfig] = useState({})
+    // const [btnText, setBtnText] = useState("")
+    // const [btnCSS, setBtnCSS] = useState("")
+    // const [TriggerSearchFalse, setTriggerSearchFalse] = useState(false)// to continue flow normally
+    const items = []
 
-                <div className="main-content right-chat-active">
-                    <div className="middle-sidebar-bottom">
-                        <div className="middle-sidebar-left pe-0">
-                            <div className="row">
-                                <div className="col-xl-12">
-                                    
-                                    <Pagetitle title="Users"/>
-                                    
-                                    <div className="row ps-2 pe-1">
-                                        {groupList.map((value , index) => (
-                                        
-                                        <div key={index} className="col-md-6 col-sm-6 pe-2 ps-2">
-                                            <div className="card d-block border-0 shadow-xss rounded-3 overflow-hidden mb-0 mt-2">
-                                                <div className="card-body position-relative h100 bg-image-cover bg-image-center" style={{backgroundImage: `url("assets/images/${value.bgImage}")`}}></div>
-                                                <div className="card-body d-block w-100 pl-10 pe-4 pb-4 pt-0 text-left position-relative">
-                                                    <a href="/groupProfile" ><figure className="avatar position-absolute w75 z-index-1 left-15" style={{marginTop: `-40px` }}><img src={`assets/images/${value.imageUrl}`} alt="avater" className="float-right p-1 bg-white rounded-circle w-100 " /></figure></a>
-                                                    <div className="clearfix"></div>
-                                                    <h4 className="fw-700 font-xsss mt-3 mb-1">{value.name}</h4>
-                                                    <p className="fw-500 font-xsssss text-grey-500 mt-0 mb-3 lh-3">{value.email}</p>
-                                                    <span className="position-absolute right-15 top-0 d-flex align-items-center">
-                                                        <button className="btn text-center p-2 lh-24 w100 ms-1 ls-3 d-inline-block rounded-xl bg-current font-xsss fw-700 ls-lg text-white">Join</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        ))}
 
-                                        <Load />
-                                        
+    const getData = async () => {
 
-                                        
-                                    </div>
-                                </div>               
+        const stringifiedQuery = queryString.stringify({
+            lastNumber: lastNumber,
+            type: "USER",
+            problem: problemCategory,
+            keyword: search,
+        });
+        console.log("teszt");
+        if ((hasMore || triggerSearch) && !showAlert) {
+            setIsLoading(true)
+            // alert("data");
+
+            await users.get("/users/" + stringifiedQuery,
+                { headers: { 'Authorization': AuthStr } }
+            ).then((res) => {
+                const payload = res.data.data.payload
+                if (payload.length > 0) {
+                    // console.log(payload);
+                    if (Array.isArray(payload)) {
+                        setData(data.concat(payload))
+                    }
+                    // else if (Array.isArray(payload)) {
+                    //     setData(data.concat(payload));
+                    // }
+                    const newLastNumber = payload[payload.length - 1].number;
+                    console.log(">>>>>>> " + newLastNumber);
+                    setLastNumber(newLastNumber)
+                    setHasMore(true)
+                }
+                else {
+                    setHasMore(false)
+                }
+                setIsLoading(false)
+            }).catch((e) => {
+                setShowAlert(true)
+                setAlertConfig({ variant: "danger", text: "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+            })
+        }
+    }
+
+    // const handleObserver = useCallback((entries) => {
+    //     const target = entries[0];
+    //     if (target.isIntersecting) {
+    //         setPage((prev) => prev + 1);
+    //     }
+    // }, []);
+
+    // useEffect(() => {
+    //     const option = {
+    //         root: null,
+    //         rootMargin: "20px",
+    //         threshold: 0
+    //     };
+    //     const observer = new IntersectionObserver(handleObserver, option);
+    //     if (loader.current) observer.observe(loader.current);
+    // }, [handleObserver]);
+
+
+    // const scrollHandler = (event) => {
+    //     console.log("scroolllll");
+    //     if (listInnerRef.current) {
+    //         const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+    //         if (scrollTop + clientHeight === scrollHeight) {
+    //             getData()
+    //             console.log("getting");
+    //         }
+    //     }
+    // }
+
+    useEffect(() => {
+        // setId(User.then((res) => {return res.id})) ;
+        // console.log("user>>>>>> " + id);
+        getData()
+        // document.getElementById("data-displayer").addEventListener("scroll", scrollHandler)
+    }, [])
+
+    useEffect(() => {
+        console.log("changed " + triggerSearch);
+        getData()
+        // document.getElementById("data-displayer").addEventListener("scroll", scrollHandler)
+    }, [triggerSearch])
+    // useEffect(() => {
+
+    // }, [data])
+    // window.addEventListener("scroll", scrollHandler)
+    return (
+        <Fragment>
+            {showAlert && <AlertComp config={alertConfig} show={true}></AlertComp>}
+            <Header />
+            <Leftnav />
+            <Rightchat />
+
+            <div className="main-content right-chat-active">
+                <div className="middle-sidebar-bottom">
+                    <div className="middle-sidebar-left pe-0">
+                        <div className="row">
+                            <div className="col-xl-12">
+
+                                <Pagetitle title="USER" showlink={false} problemState={setProblemCategory} searchState={setSearch} searchVal={search} triggerSearch={setTriggerSearch} setLastNumber={setLastNumber} />
+
+                                <InfiniteScroll className="row infinite-scroll"
+                                    dataLength={data.length}
+                                    next={getData}
+                                    hasMore={hasMore}
+                                    loader={<Load />}
+                                >
+                                    {data.map((value, index) => {
+                                        return <InfoCard key={index} value={value} AuthStr={AuthStr} variant="USER" showAlert={setShowAlert} alertConfig={setAlertConfig}></InfoCard>
+                                    })
+                                    }
+                                    {/* {isLoading && <Load />} */}
+                                </InfiniteScroll>
+                                {!hasMore && data.length == 0 && <h2 className="text-grey-500">No Results Found</h2>}
                             </div>
                         </div>
-                        
                     </div>
-                </div>
 
-                <Popupchat />
-                <Appfooter /> 
-            </Fragment>
-        );
-    }
+                </div>
+            </div>
+
+            <Popupchat />
+            <Appfooter />
+        </Fragment>
+    );
 }
 
-export default Badge;
+export default User

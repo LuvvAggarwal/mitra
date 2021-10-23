@@ -749,6 +749,18 @@
   height: 20px !important;
 }
 
+.h30 {
+  height: 30px !important;
+}
+
+.h40 {
+  height: 40px !important;
+}
+
+.h45 {
+  height: 45px !important;
+}
+
 .h55 {
   height: 55px !important;
 }
@@ -1263,6 +1275,10 @@
   border-bottom: 2px #333 solid;
 }
 
+.border-bottom-auto {
+  border-bottom: 2px #333 solid;
+}
+
 .border-bottom-blue {
   border-bottom: 1px #1254a1 solid;
 }
@@ -1556,7 +1572,6 @@
 }
 
 .theme-dark {
-  background-color: #132977;
   /*CUSTOM*/
   /*MODAL*/
   /*******/
@@ -1743,6 +1758,9 @@
 }
 .theme-dark .border-auto {
   border: 1px transparent solid;
+}
+.theme-dark .border-bottom-auto {
+  border-bottom: 2px #eee solid !important;
 }
 .theme-dark .border-auto-md {
   border: 2px transparent solid;
@@ -14964,7 +14982,6 @@ body:not(.theme-full) .main-content .middle-sidebar-bottom.header-padding {
 }
 
 .form-control {
-  line-height: 50px;
   height: 50px;
   font-size: 14px;
   display: inline-block;
@@ -16751,6 +16768,42 @@ select.sort {
 
 input[type=file] {
   display: none;
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.btn-primary:hover, .btn-primary:active {
+  color: #fff !important;
+}
+
+#filters {
+  position: absolute;
+  top: 69px;
+  right: 20px;
+  z-index: 1;
+  font-size: small;
+  background: white;
+}
+
+.alert-custom {
+  z-index: 10000000;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  width: -webkit-fill-available;
+  margin: 0;
+}
+
+.infinite-scroll {
+  margin-left: -5px;
+  margin-right: -5px;
+  overflow-x: hidden !important;
 }
 
 /*# sourceMappingURL=style.css.map */

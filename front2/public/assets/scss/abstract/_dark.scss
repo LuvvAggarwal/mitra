@@ -4,7 +4,7 @@
 }
 
 .theme-dark {
-  background-color: #132977;
+  // background-color: #132977;
   /*CUSTOM*/
   .nav-top {
     background: #293145 !important;
@@ -213,6 +213,7 @@
   .border-auto {
     border: 1px transparent solid;
   }
+  .border-bottom-auto {border-bottom: 2px #eee solid !important;}
   .border-auto-md {
     border: 2px transparent solid;
   }

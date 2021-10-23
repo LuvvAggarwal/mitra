@@ -1,16 +1,89 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal } from "react-bootstrap";
+import post_action from "../../api/postAction";
+import Load from '../Load';
+import InfiniteScroll from 'react-infinite-scroll-component';
+const img_url = require("../../utils/imgURL");
 
-
-const LikeModal = ({like}) => {
+const LikeModal = ({ id, count, isLiked, showAlert, alertConfig }) => {
+    const access_token = localStorage.getItem("access_token");
+    const AuthStr = 'Bearer '.concat(access_token);
+    const [likeCounter, setLikeCounter] = useState(count)
     const [show, setShow] = useState(false);
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(isLiked.length > 0 ? true : false);
+    const [lastNumber, setLastNumber] = useState(-1)
+    const [hasMore, setHasMore] = useState(true)
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false)
+
+    const like = async () => {
+        await post_action.post(`/like/id=${id}`, {}, { headers: { 'Authorization': AuthStr } }).then((res) => {
+            const payload = res.data.data.payload;
+            isLiked = payload;
+            setLiked(true)
+            setLikeCounter(likeCounter + 1);
+        }).catch((e) => {
+            showAlert()
+            alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+        })
+    }
+
+    const disLike = async () => {
+        await post_action.delete(`/unlike/id=${isLiked[0].id}`, { headers: { 'Authorization': AuthStr } }).then((res) => {
+            isLiked.pop();
+            setLiked(false)
+            setLikeCounter(likeCounter - 1);
+        }).catch((e) => {
+            showAlert()
+            alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+        })
+    }
+
+    const toggleLike = () => {
+        if (liked) disLike()
+        else like()
+    }
+
+    const getLikes = async () => {
+        if (hasMore) {
+            setLoading(true)
+            await post_action.get(`/likes/id=${id}/${lastNumber}`, { headers: { 'Authorization': AuthStr } }).then((res) => {
+                setLoading(false)
+                const payload = res.data.data.payload;
+                if (payload.length > 0) {
+                    // console.log(payload);
+                    if (Array.isArray(payload)) {
+                        setData(data.concat(payload))
+                    }
+                    // else if (Array.isArray(payload)) {
+                    //     setData(data.concat(payload));
+                    // }
+                    const newLastNumber = payload[payload.length - 1].number;
+                    console.log(">>>>>>> " + newLastNumber);
+                    setLastNumber(newLastNumber)
+                    setHasMore(true)
+                }
+                else {
+                    setHasMore(false)
+                }
+                // setIsLoading(false)
+            }).catch((e) => {
+                setLoading(false)
+                showAlert()
+                alertConfig({ variant: "danger", text: "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+            })
+        }
+    }
+
     const likeClass = liked ? " text-white bg-primary-gradiant" : " text-current bg-grey"
     return (
         <span>
             <div className="emoji-bttn pointer d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss me-2">
-                <i className={`feather-thumbs-up cursor-pointer me-1 ${likeClass} btn-round-xs font-xss`} onClick={() => { setLiked(!liked)}}></i>
-                <span onClick={() => { setShow(true) }}>2,400,000 </span></div>
+                <i className={`feather-thumbs-up cursor-pointer me-1 ${likeClass} btn-round-xs font-xss`} onClick={toggleLike}></i>
+                <span className={"cursor-pointer"} onClick={(e) => {
+                    setShow(true)
+                    getLikes()
+                }}>{likeCounter} likes</span></div>
 
             < Modal
                 show={show}
@@ -30,18 +103,26 @@ const LikeModal = ({like}) => {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="ps-0 pe-0 pt-0">
-                        <div className="max-h400 oy-auto scroll-bar">
-                            {like != undefined ? like.map((e, i) => {
-                                // {console.log(e)}
-                                return (<div className="card-body d-flex align-items-center justify-content-between pt-1 ps-4 pe-4 pb-1 border-bottom-grey">
-                                    <div className="d-flex align-items-center">
-                                        <figure className="avatar me-2 mb-0"><img src={`assets/images/${e.img}`} alt="avater" className="shadow-sm rounded-circle w45" /></figure>
-                                        <h4 className="fw-700 text-grey-900 font-xssss mt-1">{e.user_name} </h4>
-                                    </div>
-                                    <Button variant="primary" className="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl">Follow</Button>
-                                </div>)
-                            }) : ""}
-                        </div>
+                        <InfiniteScroll className="row infinite-scroll"
+                            dataLength={data.length}
+                            next={getLikes}
+                            hasMore={hasMore}
+                            loader={loading ? <Load /> : ""}>
+                            <div className="max-h400 oy-auto scroll-bar">
+                                {data.map((e, i) => {
+                                    // {console.log(e)}
+                                    const profile_photo = e.users.profile_photo ? img_url(e.users.profile_photo) : "user.png"
+                                    return (<div key={i} className="card-body d-flex align-items-center justify-content-between pt-1 ps-4 pe-4 pb-1 border-bottom-grey">
+                                        <div className="d-flex align-items-center">
+                                            <figure className="avatar me-2 mb-0"><img src={`${profile_photo}`} alt="avater" className="shadow-sm rounded-circle w45 h45" /></figure>
+                                            <h4 className="fw-700 text-grey-900 font-xssss mt-1">{e.users.name} </h4>
+                                        </div>
+                                        <a href={`/userProfile/${e.users.user_id}`} className="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl">View Profile</a>
+                                    </div>)
+                                })}
+                            </div>
+                        </InfiniteScroll>
+
                     </Modal.Body>
                 </Modal.Dialog>
             </Modal >

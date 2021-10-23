@@ -1,23 +1,83 @@
 import React, { Component } from 'react';
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import ReactDOM from "react-dom"
 import FileViewer from './FileViewer';
 import Slider from "react-slick";
+import img_url from '../utils/imgURL';
+import dl from "../api/dl";
+import post from "../api/posts"
+import posts from '../api/posts';
+
 class Createpost extends Component {
     state = {
         isOpen: false,
-        showModal: false
+        showModal: false,
+        cat: [],
+        cat_value: "",
+        attachments: '',
+        title: "",
+        description: "",
+        disable: false,
+        visiblity: "PUBLIC"
     };
+
+    // files = '';
+
+    post_cat = async () => {
+        const cat = await dl.get("/model/post_category")
+        this.setState({ cat: cat.data.data.payload });
+    }
 
     toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
 
+    profile_photo = this.props.profile_photo ? img_url(this.props.profile_photo) : "user.png"
+
+    createPost = async (e) => {
+        e.preventDefault();
+        this.setState({disable: true})
+        console.log(this.files)
+        // alert(">>>>>>>>")
+        let type = this.state.attachments.length > 0 ? 'MULTIMEDIA' : 'TEXT' ;
+        const formData = new FormData();
+        formData.append("title", this.state.title);
+        formData.append("description", this.state.description);
+        for (const key of Object.keys(this.state.attachments)) {
+            formData.append('attachments', this.state.attachments[key])
+        }
+        formData.append("visibility", this.state.visiblity);
+        formData.append("category", this.state.cat_value);  
+        formData.append("type", type);  
+        if (this.props.group) formData.append("group_id", this.props.group)
+
+        const access_token = localStorage.getItem("access_token");
+        const AuthStr = 'Bearer '.concat(access_token);
+
+        await posts.post('/create', formData,
+            { headers: { 'Authorization': AuthStr, 'Content-Type': 'multipart/form-data' } }
+        ).then((res) => {
+            const message = res.data.message;
+            this.props.showAlert()
+            this.props.alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
+            this.setState({disable: false})
+            window.location.reload()
+        }).catch((e) => {
+            this.props.showAlert()
+            this.props.alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+            this.setState({disable: false})
+        })
+    }
+
+    componentDidMount() {
+        this.post_cat()
+    }
+
     attachmentController = (e) => {
-        const title = document.getElementById("title").value; 
+        const title = document.getElementById("title").value;
         // console.log(title);
         const files = e.target.files;
-        let attachments = [] ;
+        let attachments = [];
         const settings = {
-            asNavFor:null,
+            asNavFor: null,
             dots: true,
             infinite: false,
             speed: 500,
@@ -32,38 +92,41 @@ class Createpost extends Component {
             return;
         }
         else {
-            Array.from(files).forEach((file,i) => {
+            Array.from(files).forEach((file, i) => {
                 let extension = file.name.toLowerCase().split('.').pop();
                 const filetypes = /jpeg|jpg|png|gif|mkv|mp4|pdf|xlsx|docx/;
                 if (!filetypes.test(extension)) {
                     alert("Attachment file type supported - .jpeg,.jpg,.png,.gif,.mkv,..mp4,.pdf,.xlsx,.docs")
                     e.target.value = "";
                     return;
-                }else{
-                    var obj = {} ;
-                    obj.id = i ;
+                } else {
+                    var obj = {};
+                    obj.id = i;
                     obj.url = URL.createObjectURL(file);
-                    obj.mime_type = file.type ;
+                    obj.mime_type = file.type;
                     // console.log(obj);
                     attachments.push(obj)
                 }
             });
-
+            
         }
+        this.setState({attachments: files});
+        console.log("attt>>>>>>>>>>>>>>>>>>>>>>>");
+        console.log(this.state.attachments);
         const FileViewerWrapper = document.getElementById("display-files");
         const FileView = attachments ?
-            <Slider {...settings} className="mb-3" ref={slider => (this.slider1 = slider)}>
+            <Slider {...settings} className="mb-3  max-h200" ref={slider => (this.slider1 = slider)}>
                 {attachments.map(e => {
                     // console.log(e);s
-                    return (<div key={e.id}><FileViewer viewtype="createPost" attachment={e} title={title} /></div>)
+                    return (<div key={e.id}><FileViewer css="max-h200 w-100" viewtype="createPost" attachment={e} title={title} /></div>)
 
                 })}
             </Slider>
 
-            : '' ;
-        ReactDOM.render(FileView,FileViewerWrapper)
+            : '';
+        ReactDOM.render(FileView, FileViewerWrapper)
         // console.log(e);
-
+        // this.setState({ attachments: attachments })
     }
 
     render() {
@@ -76,7 +139,7 @@ class Createpost extends Component {
                 </div> */}
                 <div className="card-body p-0 mt-3 position-relative rounded-xxl border-auto-md">
                     {/* <figure className="avatar position-relative ms-2 me-2 mt-1 top-8"></figure> */}
-                    <figure className="avatar position-absolute ms-2 mt-1 top-8"><img src="assets/images/user.png" alt="icon" className="shadow-sm rounded-circle w30" /></figure>
+                    <figure className="avatar position-absolute ms-2 mt-1 top-8"><img src={this.profile_photo} alt="icon" className="shadow-sm rounded-circle w30 h30" /></figure>
                     <Button
                         variant="none"
                         className="d-flex bor-0 mb-2 h55 w-100 rounded-xxl text-left p-2 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg"
@@ -106,15 +169,44 @@ class Createpost extends Component {
                         </Modal.Header>
                         <Modal.Body>
                             <div className="card-body p-0 mt-0 position-relative">
-                                <input id="title" className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" name="title" placeholder="Title of post" />
-                                <textarea id="description" name="message" className="h100 bor-0 w-100 rounded-xxl p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" cols="30" rows="10" placeholder="What's on your mind?"></textarea>
+                                <div className="row">
+                                    <div className="col-lg-6 mb-3">
+                                        <select value={this.state.visiblity} className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" onChange={(e) => {
+                                            this.setState({ visiblity: e.target.value })
+                                        }} aria-label="Default select example">
+                                            {/* <option className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" value="" disabled>Visibility</option> */}
+                                            <option className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" value="PUBLIC" >Public</option>
+                                            <option className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" value="FRIENDS" >Friends</option>
+                                            <option className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" value="PRIVATE" >Private</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-lg-6 mb-3">
+                                        <select value={this.state.cat_value} className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" onChange={(e) => {
+                                            this.setState({ cat_value: e.target.value })
+                                        }} aria-label="Default select example">
+                                            <option className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" value="" disabled>Select Post Category</option>
+                                            {this.state.cat.map((e) => {
+                                                return <option className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" value={e.id}>{e.name}</option>
+                                            })}
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <input id="title" className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" name="title" value={this.state.title} onChange={(e) => {
+                                    this.setState({ title: e.target.value })
+                                }} placeholder="Title of post" />
+                                <textarea id="description" name="message" className="h100 bor-0 w-100 rounded-xxl p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" cols="30" rows="10" placeholder="What's on your mind?" value={this.state.description} onChange={(e) => {
+                                    this.setState({ description: e.target.value })
+                                }}></textarea>
                             </div>
                             <div className="card-body d-flex flex-column p-0 mt-1">
                                 <div><label className="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4"><i className="font-md text-danger feather-file-text me-2"></i><span className="d-none-xs">Attachments</span>
                                     <input id="file-upload" type="file" multiple onChange={this.attachmentController} />
                                 </label>
-                                {/* <input type="file" className="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4"><i className="font-md text-success feather-image me-2"></i><span className="d-none-xs">Photo/Video</span></input> */}
                                 </div>
+
+                                {/* <input type="file" className="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4"><i className="font-md text-success feather-image me-2"></i><span className="d-none-xs">Photo/Video</span></input> */}
+
                                 <div id="display-files" className="w100per mx-3">
 
                                 </div>
@@ -122,12 +214,12 @@ class Createpost extends Component {
                         </Modal.Body>
                         <Modal.Footer className="py-1 d-flex justify-content-center">
                             <div>
-                                <Button variant="primary" className="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl">Post</Button>
+                                <Button variant="primary" className="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl" disabled={this.state.disable} onClick={this.createPost}>Post</Button>
                             </div>
                         </Modal.Footer>
                     </Modal.Dialog>
                 </Modal>
-            </div>
+            </div >
         );
     }
 }

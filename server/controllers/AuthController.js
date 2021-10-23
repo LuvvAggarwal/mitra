@@ -22,6 +22,7 @@ const auth = require('../utils/auth');
 const uuid = require('uuid');
 const { createId } = require('../utils/idUtil');
 const { sendEmail, transporter } = require('../threads/mailServer');
+const { process } = require('joi/lib/errors');
 // const { Console } = require('winston/lib/winston/transports');
 // const {createId} = require("../utils/idUtil");
 const logger = new Logger();
@@ -90,7 +91,8 @@ class AuthController extends BaseController {
 				req.params.id = user.id;
 				// console.log('updating');
 				const updatedData = await super.updateById(req, 'users', data);
-				requestHandler.sendSuccess(res, 'User logged in Successfully')({ token });
+				const userData = _.omit(updatedData, ['created_on', 'updated_on', 'last_login', 'password', 'gender',]);
+				requestHandler.sendSuccess(res, 'User logged in Successfully')({ payload: userData });
 
 			}
 		} catch (error) {
@@ -143,7 +145,6 @@ class AuthController extends BaseController {
 			}
 			const payload = await super.updateById(req, "users", data)
 			requestHandler.sendSuccess(res, 'User verified Successfully')({ payload });
-
 		} catch (error) {
 			requestHandler.sendError(req, res, error);
 		}
@@ -171,42 +172,47 @@ class AuthController extends BaseController {
 			// const ph_number = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
 			const schema = {
 				email: data_type.email,
-				// first_name: data_type.name,
+				name: data_type.str_250_req,
 				// middle_name: data_type.name,
 				// last_name: data_type.name,
 				// middle_name : Joi.string(),
-				type: data_type.type,
-				problem_category: data_type.id,
+				// type: data_type.type,
+				// problem_category: data_type.id,
 				password: data_type.password,
-				ph_number: data_type.ph_number
+				// ph_number: data_type.ph_number
 			};
 
 			const validate = {
-				ph_number: data.ph_number,
+				// ph_number: data.ph_number,
 				email: data.email,
+				name: data.name,
 				// first_name: data.first_name,
 				// last_name: data.last_name,
 				// middle_name: data.middle_name,
-				type: data.type,
-				problem_category: data.problem_category,
+				// type: data.type,
+				// problem_category: data.problem_category,
 				password: data.password
 			}
-			if (data.type === "USER" || "COUNSALER") {
-				schema.first_name = data_type.str_100_req;
-				schema.middle_name = data_type.str_100;
-				// data.middle_name.length !== 100 ? "" : requestHandler.throwError(400,"bad request","Middle name cannot be more than 100 char")(); 
-				schema.last_name = data_type.str_100_req;
-				validate.first_name = data.first_name
-				validate.middle_name = data.middle_name
-				validate.last_name = data.last_name
 
-				data.name = data.middle_name.length > 0 ? data.first_name + ' ' + data.middle_name + ' ' + data.last_name : data.first_name + " " + data.last_name;
-			}
-			if (data.type === 'NGO') {
-				schema.name = data_type.str_250_req;
-				validate.name = data.name;
-			}
+			// COMMENTING - NEW SIGN UP 
+			// -----------------
+			// if (data.type === "USER" || "COUNSALER") {
+			// 	// schema.first_name = data_type.str_100_req;
+			// 	// schema.middle_name = data_type.str_100;
+			// 	// data.middle_name.length !== 100 ? "" : requestHandler.throwError(400,"bad request","Middle name cannot be more than 100 char")(); 
+			// 	schema.last_name = data_type.str_100_req;
+			// 	validate.first_name = data.first_name
+			// 	validate.middle_name = data.middle_name
+			// 	validate.last_name = data.last_name
+
+			// 	data.name = data.middle_name.length > 0 ? data.first_name + ' ' + data.middle_name + ' ' + data.last_name : data.first_name + " " + data.last_name;
+			// }
+			// if (data.type === 'NGO') {
+			// 	schema.name = data_type.str_250_req;
+			// 	validate.name = data.name;
+			// }
 			// console.log(schema);
+			// ----------------------------------
 			console.log(validate);
 			const { error } = Joi.validate(validate, schema);
 
@@ -225,7 +231,7 @@ class AuthController extends BaseController {
 			// data.password = otp ;
 			const randomString = stringUtil.generateString();
 
-			data.user_id = createId(data.first_name)
+			data.user_id = createId(data.name)
 			const hashedPass = bcrypt.hashSync(data.password, config.auth.saltRounds);
 			data.password = hashedPass;
 			data.id = uuid.v4();
@@ -245,19 +251,24 @@ class AuthController extends BaseController {
 					subject: 'Email Verification Mitra',
 					html: `
 					<h2>Hello ${createdUser.name}</h2> <br>
-					<a href="http://localhost:3000/verify/${uniqueString}">Click To Verify</a>
+					<a href="${config.app.front}/verify/${uniqueString}">Click To Verify</a>
 					`
 				};
 				let msg = "";
-				const workerPool = WorkerCon.get()
-				const message = await workerPool.sendVerifyEmail(mailOptions, msg)
+				let message;
+				(async () => {
+					const workerPool = WorkerCon.get()
+					console.log(JSON.stringify(workerPool));
+					message = await workerPool.sendVerifyEmail(mailOptions, msg)
+					console.log(message);
+					const payload = {
+						user: createdUser,
+						message
+					}
+					requestHandler.sendSuccess(res, message, 200)({ payload });
+				})()
 
-				console.log(message);
-				const payload = {
-					user: createdUser,
-					message
-				}
-				requestHandler.sendSuccess(res, message, 200)({ payload });
+
 			} else {
 				requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
 			}
@@ -266,6 +277,113 @@ class AuthController extends BaseController {
 			requestHandler.sendError(req, res, err);
 		}
 	}
+
+	static async ssoGoogle(req, res) {
+		try {
+			const data = req.body;
+			// const type = /USER|NGO|COUNSALER/;
+			// const ph_number = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
+			const schema = {
+				email: data_type.email,
+				name: data_type.str_250_req,
+				user_id: data_type.str_250_req,
+				profile_photo: data_type.img_url
+				// middle_name: data_type.name,
+				// last_name: data_type.name,
+				// middle_name : Joi.string(),
+				// type: data_type.type,
+				// problem_category: data_type.id,
+				// password: data_type.password,
+				// ph_number: data_type.ph_number
+			};
+
+			const validate = {
+				// ph_number: data.ph_number,
+				email: data.email,
+				name: data.name,
+				user_id: data.user_id,
+				profile_photo: data.profile_photo
+				// first_name: data.first_name,
+				// last_name: data.last_name,
+				// middle_name: data.middle_name,
+				// type: data.type,
+				// problem_category: data.problem_category,
+				// password: data.password
+			}
+
+			// COMMENTING - NEW SIGN UP 
+			// -----------------
+			// if (data.type === "USER" || "COUNSALER") {
+			// 	// schema.first_name = data_type.str_100_req;
+			// 	// schema.middle_name = data_type.str_100;
+			// 	// data.middle_name.length !== 100 ? "" : requestHandler.throwError(400,"bad request","Middle name cannot be more than 100 char")(); 
+			// 	schema.last_name = data_type.str_100_req;
+			// 	validate.first_name = data.first_name
+			// 	validate.middle_name = data.middle_name
+			// 	validate.last_name = data.last_name
+
+			// 	data.name = data.middle_name.length > 0 ? data.first_name + ' ' + data.middle_name + ' ' + data.last_name : data.first_name + " " + data.last_name;
+			// }
+			// if (data.type === 'NGO') {
+			// 	schema.name = data_type.str_250_req;
+			// 	validate.name = data.name;
+			// }
+			// console.log(schema);
+			// ----------------------------------
+			console.log(validate);
+			const { error } = Joi.validate(validate, schema);
+
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+
+
+			console.log(data.user_id);
+			const options = { where: { email: data.email } };
+			const user = await super.getByCustomOptions(req, 'users', options);
+			console.log(user);
+
+			if (user && !user.sso) {
+				requestHandler.throwError(400, 'bad request', 'Invalid email account,email already existed')();
+			} else if (user && user.sso) {
+				console.log("my sso");
+				
+				requestHandler.sendSuccess(res, "User is signed in", 200)({ access_token: user.access_token });
+			} else if(!user) {
+				data.id = uuid.v4();
+				data.active = true;
+				data.verified = true
+				data.sso = true
+				const obj = _.pick(data, "active", "id", "user_id", "first_name", "middle_name", "last_name", "name", "email", "password", "type", "ph_number", "problem_category", "profile_photo","sso")
+				const createdUser = await super.create(req, 'users', obj);
+				console.log(createdUser);
+				if (!(_.isNull(createdUser))) {
+
+					const payload = _.omit(createdUser, ['created_on', 'updated_on', 'last_login', 'password', 'gender', 'access_token']);
+					console.log("payload");
+					console.log(payload);
+					// const payload = json.parse(payloadData)
+					const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
+					console.log("token");
+					console.log(token);
+					const token_data = {
+						last_login: new Date().toISOString(),
+						access_token: token
+					};
+					req.params.id = data.id;
+					// console.log('updating');
+					const updatedData = await super.updateById(req, 'users', token_data);
+					requestHandler.sendSuccess(res,  "User is signed in", 200)({ access_token: token });
+
+				} else {
+					requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+				}
+			}
+
+		} catch (err) {
+			console.log(err);
+		return	requestHandler.sendError(req, res, err);
+		}
+	}
+
 
 	/**
 	 * Param - req - email

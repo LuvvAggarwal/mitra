@@ -317,14 +317,14 @@ model users {
   created_on              DateTime             @default(now()) @db.Timestamp(6)
   updated_on              DateTime             @default(now()) @db.Timestamp(6)
   user_id                 String               @unique @db.VarChar(100)
-  type                    User_Type
+  type                    User_Type?
   first_name              String?              @default("") @db.VarChar(100)
   middle_name             String?              @default("") @db.VarChar(100)
   last_name               String?              @default("") @db.VarChar(100)
-  name                    String?              @default("") @db.VarChar(250)
+  name                    String              @default("") @db.VarChar(250)
   occupation              String?              @default("") @db.VarChar(100)
   experience              Int?                 @default(0)
-  problem_category        String               @db.Uuid
+  problem_category        String?               @db.Uuid
   registration_code       String?              @db.VarChar(100)
   help_type               String?              @db.Uuid
   ph_number               String?              @unique @db.VarChar(15)
@@ -338,12 +338,13 @@ model users {
   visibility              Visibility           @default(FRIENDS)
   theme                   Theme                @default(LIGHT)
   notification            Notifcation          @default(STANDARD)
-  password                String
+  password                String?
+  sso                     Boolean?             @default(false)
   gender                  Gender?              @default(MALE)
   city                    String?              @db.Uuid
   cities                  cities?              @relation(fields: [city], references: [id])
   help                    help_type?           @relation(fields: [help_type], references: [id])
-  problem                 problem_category     @relation(fields: [problem_category], references: [id])
+  problem                 problem_category?     @relation(fields: [problem_category], references: [id])
   comment_post            comment_post[]
   follower                follower_following[] @relation("follower_following_followerTousers")
   following               follower_following[] @relation("follower_following_followingTousers")

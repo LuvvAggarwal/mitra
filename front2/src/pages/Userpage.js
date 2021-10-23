@@ -4,19 +4,20 @@ import Leftnav from '../components/Leftnav';
 import Rightchat from '../components/Rightchat';
 import Appfooter from '../components/Appfooter';
 import Popupchat from '../components/Popupchat';
-
-import Profiledetail from '../components/Profiledetail';
-import Profilephoto from '../components/Profilephoto';
-import ProfilecardThree from '../components/ProfilecardThree';
-import Createpost from '../components/Createpost';
-import Events from '../components/Events';
-import Postview from '../components/Postview';
-import Load from '../components/Load';
-
+import ProfileCardUser from "../components/ProfilecardUser";
+import AlertComp from "../components/Alert";
 class Userpage extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            showAlert: false,
+            alertConfig: {}
+        }
+    }
     render() {
         return (
             <Fragment> 
+                {this.state.showAlert && <AlertComp config={this.state.alertConfig} show={true}></AlertComp>}
                 <Header />
                 <Leftnav />
                 <Rightchat />
@@ -27,19 +28,7 @@ class Userpage extends Component {
                         <div className="middle-sidebar-left pe-0">
                             <div className="row">
                                 <div className="col-xl-12 mb-3">
-                                    <ProfilecardThree />
-                                </div>
-                                <div className="col-xl-4 col-xxl-3 col-lg-4 pe-0">
-                                    <Profiledetail />
-                                    <Profilephoto />
-                                    <Events />
-                                </div>
-                                <div className="col-xl-8 col-xxl-9 col-lg-8">
-                                    <Createpost />
-                                    <Postview id="32" postvideo="" postimage="post.png" avater="user.png" user="Surfiya Zakir" time="22 min ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." />
-                                    <Postview id="31" postvideo="" postimage="post.png" avater="user.png" user="David Goria" time="22 min ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." />
-                                    <Postview id="33" postvideo="" postimage="post.png" avater="user.png" user="Anthony Daugloi" time="2 hour ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." />
-                                    <Load />
+                                    <ProfileCardUser  showAlert={()=>{this.setState({showAlert: true})}} alertConfig={(e)=>{this.setState({alertConfig: e})}}/>
                                 </div>
                             </div>
                         </div>

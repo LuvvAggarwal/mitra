@@ -20,8 +20,9 @@ class Leftnav extends Component {
                                 <li className="logo d-none d-xl-block d-lg-block"></li>
                                 <li><Link to="/home" className="nav-content-bttn open-font"><i className="feather-tv btn-round-md bg-blue-gradiant me-3"></i><span>Feed</span></Link></li>
                                 <li><Link to="/groups" className="nav-content-bttn open-font"><i className="feather-users btn-round-md bg-red-gradiant me-3"></i><span>Groups</span></Link></li>
-                                <li><Link to="/users" className="nav-content-bttn open-font"><i className="feather-globe btn-round-md bg-green-gradiant me-3"></i><span>Followers</span></Link></li>
-                                <li><Link to="/users" className="nav-content-bttn open-font"><i className="feather-zap btn-round-md bg-mini-gradiant me-3"></i><span>Followings</span></Link></li>
+                                <li><Link to="/users" className="nav-content-bttn open-font"><i className="feather-globe btn-round-md bg-green-gradiant me-3"></i><span>Users</span></Link></li>
+                                <li><Link to="/counsalers" className="nav-content-bttn open-font"><i className="feather-zap btn-round-md bg-mini-gradiant me-3"></i><span>Counsalers</span></Link></li>
+                                <li><Link to="/ngos" className="nav-content-bttn open-font"><i className="feather-sunrise btn-round-md bg-secondary me-3"></i><span>NGOs</span></Link></li>
                                 <li><Link to="/notifications" className="nav-content-bttn open-font"><i className="feather-bell btn-round-md bg-primary-gradiant me-3"></i><span>Notifications </span></Link></li>                        
                                 <li><Link to="/userpage" className="nav-content-bttn open-font"><i className="feather-message-square btn-round-md bg-purple-gradiant me-3"></i><span>Chat </span></Link></li>                        
                                 <li><Link to="/setting" className="nav-content-bttn open-font"><i className="feather-settings btn-round-md bg-gold-gradiant me-3"></i><span>

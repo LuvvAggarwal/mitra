@@ -149,7 +149,7 @@ class postsActionController extends BaseController {
 			}
 
 			if (record.user_id === user) {
-				const result = await super.deleteById(req, 'like_post')
+				const result = await super.deleteByIdPermanent(req, 'like_post')
 				console.log("result");
 				console.log(result);
 				// const payload = result;
@@ -183,7 +183,8 @@ class postsActionController extends BaseController {
 	static async getLikes(req, res) {
 		try {
 			const post = req.params.id;
-			const lastNumber = req.body.lastNumber
+			let lastNumber = req.params.lastNumber;
+			lastNumber = parseInt(lastNumber.replace("n", ""), 10)
 			const schema = {
 				post: data_type.id,
 				lastNumber: data_type.integer
@@ -204,7 +205,8 @@ class postsActionController extends BaseController {
 					number: true,
 					posts: {
 						select: {
-							id: true
+							id: true,
+							// number: true,
 						}
 					},
 					users: {
@@ -380,7 +382,7 @@ class postsActionController extends BaseController {
 			}
 
 			if (record.user_id === user) {
-				const result = await super.deleteById(req, 'comment_post')
+				const result = await super.deleteByIdPermanent(req, 'comment_post')
 				console.log("result");
 				console.log(result);
 				const rank = parseFloat((parseFloat(record.posts.rank) - parseFloat((2 / (record.posts.post_category.value * 1000)).toFixed(3))).toFixed(5))
@@ -413,7 +415,8 @@ class postsActionController extends BaseController {
 	static async getComments(req, res) {
 		try {
 			const post = req.params.id;
-			const lastNumber = req.body.lastNumber
+			let lastNumber = req.params.lastNumber;
+			lastNumber = parseInt(lastNumber.replace("n", ""), 10)
 			const schema = {
 				post: data_type.id,
 				lastNumber: data_type.integer

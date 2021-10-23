@@ -92,7 +92,7 @@ router.delete('/id=:id', auth.isAuthunticated, GroupsController.deleteGroupById)
  *         schema:
  *           $ref: '#/definitions/groups'
  */
- router.get('/profile/:group_id', auth.isAuthunticated, GroupsController.getProfile)
+//  router.get('/profile/:group_id', auth.isAuthunticated, GroupsController.getProfile)
 
 
 /**
@@ -283,7 +283,7 @@ router.post('/create', auth.isAuthunticated, profile, GroupsController.createGro
 /**
  * @swagger
  * /groups/user/id={id}:
- *   post:
+ *   get:
  *     tags:
  *       - groups
  *     description: Return groups of user
@@ -311,7 +311,9 @@ router.post('/create', auth.isAuthunticated, profile, GroupsController.createGro
  *         schema:
  *           $ref: '#/definitions/group'
  */
-router.post('/user/id=:id', auth.isAuthunticated, GroupsController.groupsList);
+router.get('/user/id=:id', auth.isAuthunticated, GroupsController.groupsList);
+
+router.get('/groups/:q', auth.isAuthunticated, GroupsController.getGroups);
 
 
 module.exports = router;

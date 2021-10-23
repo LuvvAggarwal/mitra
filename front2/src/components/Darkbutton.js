@@ -22,6 +22,7 @@ const DarkMode = (props) => {
       body.classList.replace(darkTheme, lightTheme)
       e.target.classList.remove(clickedClass)
       localStorage.setItem("theme", "theme-light")
+
       // console.log(e.target);
       theme = lightTheme
       document.getElementById(`theme_icon_${props.screen}`).classList.replace("feather-sun", "feather-moon")

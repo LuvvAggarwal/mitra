@@ -29,7 +29,7 @@ const { upload } = require('../../utils/multerUtil');
 *         schema:
 *           $ref: '#/definitions/post'
 */
-router.post('/feed', auth.isAuthunticated, postController.getFeed);
+router.get('/feed/:lastRank', auth.isAuthunticated, postController.getFeed);
 
 /**
 * @swagger
@@ -55,7 +55,7 @@ router.post('/feed', auth.isAuthunticated, postController.getFeed);
 *         schema:
 *           $ref: '#/definitions/post'
 */
-router.post('/myPosts', auth.isAuthunticated, postController.getMyPosts);
+router.get('/user/id=:id/ln=:lastNumber', auth.isAuthunticated, postController.getUserPosts);
 
 /**
 * @swagger
@@ -115,7 +115,7 @@ router.post('/popular', auth.isAuthunticated, postController.getPopular);
 *           $ref: '#/definitions/post'
 */
 
-router.post('/group/id=:id', auth.isAuthunticated, postController.getGroupPosts);
+router.get('/group/id=:id/:lastNumber', auth.isAuthunticated, postController.getGroupPosts);
 
 
 /**

@@ -20,7 +20,9 @@ const { createMany } = require("../controllers/BaseController");
 
 const createAttachmentRecord = async (post, attachments) => {
     const data = [];
-    attachments.forEach(e => {
+    attachments.forEach((e,i) => {
+        console.log(i);
+        console.log(e);
         let url = e.path;
         let id = e.filename.split("_")[0]
         let mime_type = e.mimetype;
@@ -32,7 +34,10 @@ const createAttachmentRecord = async (post, attachments) => {
         }
         data.push(record)
     });
-    return createMany(attachments, "atachment_post_map", data);
+    const payload =  createMany(attachments, "atachment_post_map", data);
+    console.log("attachments>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    console.log(payload);
+    return payload;
 }
 
 module.exports = {createAttachmentRecord}

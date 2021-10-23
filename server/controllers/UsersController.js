@@ -7,7 +7,9 @@ const Logger = require('../utils/logger');
 const auth = require('../utils/auth');
 const json = require('../utils/jsonUtil');
 const { getRelation } = require('./FollowerFollowingController');
-const { query } = require('winston');
+// const { query } = require('winston');
+const takeConfig = require("../config/takeConfig");
+const take = takeConfig.users
 const data_type = require("../config/validations/dataTypes")
 const { user_children } = require("../config/softDeleteCascade")
 // const { profile } = require('winston');
@@ -46,7 +48,7 @@ class usersController extends BaseController {
 				}
 			};
 			const result = await super.getByCustomOptions(req, 'users', options);
-			const payload = _.omit(result, ['access_token', 'password', 'theme', 'visibility', 'notification', ])
+			const payload = _.omit(result, ['access_token', 'password', 'theme', 'visibility', 'notification',])
 			return requestHandler.sendSuccess(res, 'User Data Extracted')({ payload });
 		} catch (error) {
 			return requestHandler.sendError(req, res, error);
@@ -105,7 +107,7 @@ class usersController extends BaseController {
 			console.log('getting profile');
 			// const tokenFromHeader = auth.getJwtToken(req);
 			const current_user = req.decoded.payload.id;
-			const user_id = req.params.user_id;
+			const user_id = !req.params.user_id ? req.decoded.payload.user_id : req.params.user_id;
 			console.log(user_id);
 			const schema = {
 				user_id: data_type.str_100_req,
@@ -121,13 +123,14 @@ class usersController extends BaseController {
 				},
 				include: {
 					cities: {
-						select: {
-							name: true,
+						include: {
+							// name: true,
 							states: {
-								select: {
-									name: true,
+								include: {
+									// name: true,
 									countries: {
 										select: {
+											id: true,
 											name: true
 										}
 									}
@@ -137,37 +140,73 @@ class usersController extends BaseController {
 					},
 					problem: {
 						select: {
+							id: true,
 							name: true,
 							description: true,
 						}
 					},
 					help: {
 						select: {
+							id: true,
 							name: true,
 							description: true,
 						}
 					},
+					following: {
+						where: {
+							follower: current_user
+						}
+					},
+					posts: {
+						take: 5,
+						where: {
+							active: true,
+							visibility: "PUBLIC",
+							group_id: null
+						},
+						include: {
+							atachments: true,
+							users: {
+								select: {
+									name: true,
+									profile_photo: true
+								}
+							},
+							likes: {
+								where: {
+									user_id: current_user
+								}
+							},
+							_count: {
+								select: {
+									comments: true,
+									likes: true,
+									shares: true,
+								},
+							},
+						}
+					}
 				}
 			};
 
 			let payload;
 			const profile = await super.getByCustomOptions(req, 'users', options);
 			if (!profile) {
-				requestHandler.throwError(400, "bad request", "User not found")() ;
+				requestHandler.throwError(400, "bad request", "User not found")();
 			}
-			if (current_user !== profile.id) {
+			if (current_user !== profile.id && current_user !== profile.user_id) {
 				console.log(profile.id);
 				const relation = await getRelation(req, res, profile.id);
 				if (relation == 'No-Friend') {
 					// HUME ABHI ZAROORAT H ISKI
 					if (profile.type === "COUNSALER") {
-						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password", "notification", "theme", "visibility", "email", "ph_number"])
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password", "notification", "theme", "visibility",])
 					}
 					if (profile.type === "NGO") {
 						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "last_login", "access_token", "password", "notification", "theme", "visibility", "gender"])
 					}
 					if (profile.type === "USER") {
-						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password", "notification", "theme", "visibility", "email", "ph_number"])
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password", "notification", "theme", "visibility"])
 					}
 				}
 				if (relation == 'Follower' || 'Following') {
@@ -179,7 +218,7 @@ class usersController extends BaseController {
 						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "last_login", "access_token", "password", "notification", "theme", "visibility", "gender"])
 					}
 					if (profile.type === "USER") {
-						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password", "notification", "theme", "visibility", "email", "ph_number"])
+						payload = _.omit(profile, ["created_on", "updated_on", "deleted_on", "deleted", "registration_code", "last_login", "access_token", "password", "notification", "theme", "visibility",])
 					}
 				}
 				if (relation == "Friend") {
@@ -200,12 +239,14 @@ class usersController extends BaseController {
 			}
 			// const newOptions = { ...options, ...additionalOptions }
 
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, 'Profile fetched Successfully', 200)({ payload });
 		} catch (err) {
 			return requestHandler.sendError(req, res, err);
 		}
 	}
+
+
 
 	// TYPE === USER
 	/*********************************************
@@ -387,7 +428,7 @@ class usersController extends BaseController {
 			const userProfile = await super.getByCustomOptions(req, 'users', newOptions);
 			console.log(userProfile);
 			if (!userProfile) {
-				requestHandler.throwError(400, "bad request", "User not found")() ;
+				requestHandler.throwError(400, "bad request", "User not found")();
 			}
 			// const count = await super.raw()
 			// const userProfileParsed = userProfile
@@ -569,7 +610,7 @@ class usersController extends BaseController {
 			const userProfile = await super.getByCustomOptions(req, 'users', newOptions);
 			console.log(userProfile);
 			if (!userProfile) {
-				requestHandler.throwError(400, "bad request", "User not found")() ;
+				requestHandler.throwError(400, "bad request", "User not found")();
 			}
 			// const userProfileParsed = userProfile
 			const payload = _.omit(userProfile, ['created_on', 'updated_on', 'number', 'last_login', 'password', 'access_token']);
@@ -755,7 +796,7 @@ class usersController extends BaseController {
 			const userProfile = await super.getByCustomOptions(req, 'users', newOptions);
 			console.log(userProfile);
 			if (!userProfile) {
-				requestHandler.throwError(400, "bad request", "User not found")() ;
+				requestHandler.throwError(400, "bad request", "User not found")();
 			}
 			// const userProfileParsed = userProfile
 			const payload = _.omit(userProfile, ['created_on', 'updated_on', 'number', 'last_login', 'password', 'access_token']);
@@ -782,9 +823,9 @@ class usersController extends BaseController {
 			console.log(req.files);
 			const schema = {
 				user: {
-					first_name: data_type.str_100_req,
-					last_name: data_type.str_100_req,
-					middle_name: data_type.str_100,
+					// first_name: data_type.str_100_req,
+					// last_name: data_type.str_100_req,
+					// middle_name: data_type.str_100,
 					name: data_type.str_250_req,
 					address: data_type.str_200,
 					city: data_type.id_opt,
@@ -792,12 +833,13 @@ class usersController extends BaseController {
 					profile_photo: data_type.img_url,
 					cover_photo: data_type.img_url,
 					bio: data_type.text,
-					occupation: data_type.text,
-					gender: data_type.gender,
+					type: data_type.type,
+					// occupation: data_type.text,
+					// gender: data_type.gender,
 					problem_category: data_type.id,
-					visibility: data_type.visibility,
-					theme: data_type.theme,
-					notification: data_type.notification,
+					// visibility: data_type.visibility,
+					// theme: data_type.theme,
+					// notification: data_type.notification,
 				},
 				ngo: {
 					name: data_type.str_250_req,
@@ -809,15 +851,16 @@ class usersController extends BaseController {
 					bio: data_type.text,
 					problem_category: data_type.id,
 					help_type: data_type.id_opt,
-					registration_code: data_type.str_100_req,
-					visibility: data_type.visibility,
-					theme: data_type.theme,
-					notification: data_type.notification,
+					type: data_type.type,
+					// registration_code: data_type.str_100_req,
+					// visibility: data_type.visibility,
+					// theme: data_type.theme,
+					// notification: data_type.notification,
 				},
 				counsaler: {
-					first_name: data_type.str_100_req,
-					last_name: data_type.str_100_req,
-					middle_name: data_type.str_100_req,
+					// first_name: data_type.str_100_req,
+					// last_name: data_type.str_100_req,
+					// middle_name: data_type.str_100_req,
 					name: data_type.str_250_req,
 					address: data_type.str_200,
 					ph_number: data_type.ph_number,
@@ -825,35 +868,37 @@ class usersController extends BaseController {
 					profile_photo: data_type.img_url,
 					cover_photo: data_type.img_url,
 					bio: data_type.text,
-					occupation: data_type.text,
-					experience: data_type.integer,
-					gender: data_type.gender,
+					// occupation: data_type.text,
+					// experience: data_type.integer,
+					// gender: data_type.gender,
 					problem_category: data_type.id,
 					help_type: data_type.id_opt,
-					visibility: data_type.visibility,
-					theme: data_type.theme,
-					notification: data_type.notification,
+					type: data_type.type,
+					// visibility: data_type.visibility,
+					// theme: data_type.theme,
+					// notification: data_type.notification,
 				}
 			};
 
 			const validate = {
 				user: {
-					first_name: req.body.first_name,
-					last_name: req.body.last_name,
-					middle_name: req.body.middle_name,
+					// first_name: req.body.first_name,
+					// last_name: req.body.last_name,
+					// middle_name: req.body.middle_name,
 					name: req.body.name,
 					address: req.body.address,
 					ph_number: req.body.ph_number,
 					profile_photo: req.files.profile_photo[0].path,
 					cover_photo: req.files.cover_photo[0].path,
-					gender: req.body.gender,
+					// gender: req.body.gender,
 					bio: req.body.bio,
-					occupation: req.body.occupation,
+					// occupation: req.body.occupation,
 					city: req.body.city,
 					problem_category: req.body.problem_category,
-					visibility: req.body.visibility,
-					theme: req.body.theme,
-					notification: req.body.notification,
+					type: req.body.type
+					// visibility: req.body.visibility,
+					// theme: req.body.theme,
+					// notification: req.body.notification,
 				},
 				ngo: {
 					name: req.body.name,
@@ -865,37 +910,39 @@ class usersController extends BaseController {
 					problem_category: req.body.problem_category,
 					// occupation: req.body.occupation,
 					city: req.body.city,
-					registration_code: req.body.registration_code,
+					// registration_code: req.body.registration_code,
 					help_type: req.body.help_type,
-					visibility: req.body.visibility,
-					theme: req.body.theme,
-					notification: req.body.notification,
+					type: req.body.type
+					// visibility: req.body.visibility,
+					// theme: req.body.theme,
+					// notification: req.body.notification,
 				},
 				counsaler: {
-					first_name: req.body.first_name,
-					last_name: req.body.last_name,
-					middle_name: req.body.middle_name,
+					// first_name: req.body.first_name,
+					// last_name: req.body.last_name,
+					// middle_name: req.body.middle_name,
 					name: req.body.name,
 					address: req.body.address,
 					ph_number: req.body.ph_number,
 					profile_photo: req.files.profile_photo[0].path,
 					cover_photo: req.files.cover_photo[0].path,
-					gender: req.body.gender,
+					// gender: req.body.gender,
 					bio: req.body.bio,
-					occupation: req.body.occupation,
-					experience: req.body.experience,
+					// occupation: req.body.occupation,
+					// experience: req.body.experience,
 					problem_category: req.body.problem_category,
 					city: req.body.city,
 					help_type: req.body.help_type,
-					visibility: req.body.visibility,
-					theme: req.body.theme,
-					notification: req.body.notification,
+					type: req.body.type
+					// visibility: req.body.visibility,
+					// theme: req.body.theme,
+					// notification: req.body.notification,
 				}
 			}
 
 			console.log("req > ");
 			console.log(req.body);
-			const type = user.type.toLowerCase();
+			const type = req.body.type.toLowerCase();
 			const { error } = Joi.validate(validate[type], schema[type]);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			const options = {
@@ -909,6 +956,14 @@ class usersController extends BaseController {
 			// if(user === user_data.id){
 			req.params.id = user.id
 			const userProfile = await super.updateById(req, 'users', validate[type]);
+			// const cityData = await super.getByCustomOptions(req,"cities", {
+			// 	where: {
+			// 		id: userProfile.city
+			// 	},
+			// 	include: {
+
+			// 	}
+			// })
 			const payload = _.omit(userProfile, ['created_on', 'updated_on', 'last_login_date', 'password', 'access_token']);
 			return requestHandler.sendSuccess(res, 'User Profile updated Successfully')({ payload });
 			// }
@@ -920,6 +975,176 @@ class usersController extends BaseController {
 		}
 	}
 
+	static async getUsers(req, res) {
+		try {
+			// const tokenFromHeader = auth.getJwtToken(req);
+			// const user = jwt.decode(tokenFromHeader).payload.id;
+			const id = req.decoded.payload.id
+			const q = req.params.q; // query
+			// const lastNumber = req.body.lastNumber
+			// const group = req.params.id;
+			// const member_check = await isGroupMember(req, res, { group_id: group, user_id: user })
+			// console.log(member_check);
+			// console.log(JSON.stringify(member_check));
+			const schema = {
+				q: data_type.text,
+				// lastNumber: data_type.integer
+			}
+			const { error } = Joi.validate({ q: q }, schema);
+			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
+			console.log('GETTING');
+			const urlSearchParams = new URLSearchParams(q);
+			const query = Object.fromEntries(urlSearchParams.entries());
+			console.log(query);
+			let where;
+			if (query.keyword == "" && query.problem == "") {
+				where = {
+					type: query.type,
+					active: true
+				}
+			} else if (query.keyword == "" && query.problem != "") {
+				where = {
+					type: query.type,
+					problem_category: query.problem,
+					active: true,
+				}
+			} else if (query.keyword != "" && query.problem == "") {
+				where = {
+					type: query.type,
+					OR: [
+						{
+							name: {
+								contains: query.keyword,
+								mode: 'insensitive',
+							}
+						}, {
+							cities: {
+								OR: [
+									{
+										name: {
+											contains: query.keyword,
+											mode: 'insensitive',
+										}
+									},
+									{
+										states: {
+											OR: [
+												{
+													name: {
+														contains: query.keyword,
+														mode: 'insensitive',
+													}
+												},
+												{
+													countries: {
+														name: {
+															contains: query.keyword,
+															mode: 'insensitive',
+														}
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						}
+					]
+
+				}
+			} else {
+				where = {
+					type: query.type,
+					OR: [
+						{
+							name: {
+								contains: query.keyword,
+								mode: 'insensitive',
+							}
+						}, {
+							cities: {
+								OR: [
+									{
+										name: {
+											contains: query.keyword,
+											mode: 'insensitive',
+										}
+									},
+									{
+										states: {
+											OR: [
+												{
+													name: {
+														contains: query.keyword,
+														mode: 'insensitive',
+													}
+												},
+												{
+													countries: {
+														name: {
+															contains: query.keyword,
+															mode: 'insensitive',
+														}
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						}
+					],
+					problem_category: query.problem,
+					active: true
+				}
+			}
+
+
+			//WE COULD DIRECTLY SEARCH ON GROUP MEMBER MAP BUT FINE AS OF NOW
+			const lastNumber = parseInt(query.lastNumber.replace("n",""),10)
+			if (lastNumber > -1)
+				where.number = { lt: lastNumber };
+			const options = {
+				take: 5,
+				where: where,
+				orderBy: {
+					number: "desc"
+				},
+				include: {
+					following: {
+						where: {
+							follower : id,
+							active: true
+						}
+					},
+				}
+				// select: {
+				// 	groups: {
+				// 		select: {
+				// 			id: true,
+				// 			group_id: true,
+				// 			name: true,
+				// 			profile_photo: true,
+				// 			cover_photo: true,
+				// 		}
+				// 	}
+				// }
+			}
+			console.log(options);
+			const users = await super.getList(req, 'users', options);
+			// const omit = _.omitBy(user, ['created_on', 'updated_on', 'last_login_date', 'password', 'access_token']);
+			console.log("omit");
+			// console.log(omit);
+			const payload = _.map(users,(row)=>{
+				return _.omit(row,['created_on', 'updated_on', 'last_login_date', 'password', 'access_token'])
+			})
+			console.log(payload);
+			return requestHandler.sendSuccess(res, "Users Fetched Successfully")({ payload });
+		} catch (err) {
+			console.log(err);
+			return requestHandler.sendError(req, res, err);
+		}
+	}
 
 }
 
