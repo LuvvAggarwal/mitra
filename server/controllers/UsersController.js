@@ -981,11 +981,7 @@ class usersController extends BaseController {
 			// const user = jwt.decode(tokenFromHeader).payload.id;
 			const id = req.decoded.payload.id
 			const q = req.params.q; // query
-			// const lastNumber = req.body.lastNumber
-			// const group = req.params.id;
-			// const member_check = await isGroupMember(req, res, { group_id: group, user_id: user })
-			// console.log(member_check);
-			// console.log(JSON.stringify(member_check));
+			
 			const schema = {
 				q: data_type.text,
 				// lastNumber: data_type.integer
@@ -996,6 +992,9 @@ class usersController extends BaseController {
 			const urlSearchParams = new URLSearchParams(q);
 			const query = Object.fromEntries(urlSearchParams.entries());
 			console.log(query);
+			if(query.type != undefined && query.type.indexOf("{") == "0"){
+				query.type = JSON.parse(query.type)
+			}
 			let where;
 			if (query.keyword == "" && query.problem == "") {
 				where = {
@@ -1011,6 +1010,7 @@ class usersController extends BaseController {
 			} else if (query.keyword != "" && query.problem == "") {
 				where = {
 					type: query.type,
+					active: true,
 					OR: [
 						{
 							name: {
@@ -1055,6 +1055,7 @@ class usersController extends BaseController {
 			} else {
 				where = {
 					type: query.type,
+					active: true,
 					OR: [
 						{
 							name: {
@@ -1104,8 +1105,9 @@ class usersController extends BaseController {
 			const lastNumber = parseInt(query.lastNumber.replace("n",""),10)
 			if (lastNumber > -1)
 				where.number = { lt: lastNumber };
+			const limit = query.take ? parseInt(query.take, 10): take;
 			const options = {
-				take: 5,
+				take: limit,
 				where: where,
 				orderBy: {
 					number: "desc"

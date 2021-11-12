@@ -4,44 +4,56 @@ import post_action from "../../api/postAction";
 import Load from '../Load';
 import InfiniteScroll from 'react-infinite-scroll-component';
 const img_url = require("../../utils/imgURL");
-
-const LikeModal = ({ id, count, isLiked, showAlert, alertConfig }) => {
+const errorSetter = require("../../utils/errorSetter")
+const LikeModal = (props) => {
+    const { id, count, showAlert, alertConfig } = props
+    const isLikedProp = props.isLiked
     const access_token = localStorage.getItem("access_token");
     const AuthStr = 'Bearer '.concat(access_token);
     const [likeCounter, setLikeCounter] = useState(count)
     const [show, setShow] = useState(false);
+    const [isLiked, setIsLiked] = useState(isLikedProp)
     const [liked, setLiked] = useState(isLiked.length > 0 ? true : false);
     const [lastNumber, setLastNumber] = useState(-1)
     const [hasMore, setHasMore] = useState(true)
     const [data, setData] = useState([]);
+    const [disable, setDisable] = useState("false")
     const [loading, setLoading] = useState(false)
 
     const like = async () => {
-        await post_action.post(`/like/id=${id}`, {}, { headers: { 'Authorization': AuthStr } }).then((res) => {
-            const payload = res.data.data.payload;
-            isLiked = payload;
-            setLiked(true)
-            setLikeCounter(likeCounter + 1);
-        }).catch((e) => {
-            showAlert()
-            alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
-        })
+        
+            await post_action.post(`/like/id=${id}`, {}, { headers: { 'Authorization': AuthStr } }).then((res) => {
+                const payload = res.data.data.payload;
+                const arr = []
+                arr[0] = payload
+                setIsLiked(arr);
+                setLiked(true)
+                setLikeCounter(likeCounter + 1);
+            }).catch((e) => {
+                showAlert()
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
+            })
+    
     }
 
     const disLike = async () => {
-        await post_action.delete(`/unlike/id=${isLiked[0].id}`, { headers: { 'Authorization': AuthStr } }).then((res) => {
-            isLiked.pop();
-            setLiked(false)
-            setLikeCounter(likeCounter - 1);
-        }).catch((e) => {
-            showAlert()
-            alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
-        })
+        
+            await post_action.delete(`/unlike/id=${isLiked[0].id}`, { headers: { 'Authorization': AuthStr } }).then((res) => {
+                setIsLiked([])
+                setLiked(false)
+                setLikeCounter(likeCounter - 1);
+            }).catch((e) => {
+                showAlert()
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
+            })
+        
     }
 
     const toggleLike = () => {
+        setDisable("true")
         if (liked) disLike()
         else like()
+        setDisable("false")
     }
 
     const getLikes = async () => {
@@ -59,7 +71,7 @@ const LikeModal = ({ id, count, isLiked, showAlert, alertConfig }) => {
                     //     setData(data.concat(payload));
                     // }
                     const newLastNumber = payload[payload.length - 1].number;
-                    console.log(">>>>>>> " + newLastNumber);
+                    // console.log(">>>>>>> " + newLastNumber);
                     setLastNumber(newLastNumber)
                     setHasMore(true)
                 }
@@ -70,7 +82,7 @@ const LikeModal = ({ id, count, isLiked, showAlert, alertConfig }) => {
             }).catch((e) => {
                 setLoading(false)
                 showAlert()
-                alertConfig({ variant: "danger", text: "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         }
     }
@@ -80,7 +92,7 @@ const LikeModal = ({ id, count, isLiked, showAlert, alertConfig }) => {
         <span>
             <div className="emoji-bttn pointer d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss me-2">
                 <i className={`feather-thumbs-up cursor-pointer me-1 ${likeClass} btn-round-xs font-xss`} onClick={toggleLike}></i>
-                <span className={"cursor-pointer"} onClick={(e) => {
+                <span className={"cursor-pointer"} disable={disable} onClick={(e) => {
                     setShow(true)
                     getLikes()
                 }}>{likeCounter} likes</span></div>

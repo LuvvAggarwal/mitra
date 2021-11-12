@@ -6,7 +6,7 @@ import post_action from "../../api/postAction";
 import Load from '../Load';
 import InfiniteScroll from 'react-infinite-scroll-component';
 const img_url = require("../../utils/imgURL");
-
+const errorSetter = require("../../utils/errorSetter")
 const CommentModal = ({ id, count, showAlert, alertConfig }) => {
     const { User } = useContext(UserContext);
     const access_token = localStorage.getItem("access_token");
@@ -31,7 +31,7 @@ const CommentModal = ({ id, count, showAlert, alertConfig }) => {
         }).catch((e) => {
             setComment("")
             showAlert()
-            alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+            alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
         })
     }
 
@@ -50,7 +50,7 @@ const CommentModal = ({ id, count, showAlert, alertConfig }) => {
                     //     setData(data.concat(payload));
                     // }
                     const newLastNumber = payload[payload.length - 1].number;
-                    console.log(">>>>>>> " + newLastNumber);
+                    // console.log(">>>>>>> " + newLastNumber);
                     setLastNumber(newLastNumber)
                     setHasMore(true)
                 }
@@ -61,7 +61,7 @@ const CommentModal = ({ id, count, showAlert, alertConfig }) => {
             }).catch((e) => {
                 setLoading(false)
                 showAlert()
-                alertConfig({ variant: "danger", text: "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         }
     }

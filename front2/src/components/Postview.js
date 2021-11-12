@@ -20,9 +20,9 @@ class Postview extends Component {
 
     render() {
 
-        const { user, time, title, des, avatar, attachment, id, like,group, comment, count, isLiked,showAlert, alertConfig} = this.props;
+        const { user, user_id, time, title, des, avatar, attachment, id, like,group, comment, count, isLiked,showAlert, alertConfig} = this.props;
         // alert(time);
-        console.log(this.props);
+        // console.log(this.props);
         const settings = {
             asNavFor:null,
             dots: true,
@@ -33,7 +33,7 @@ class Postview extends Component {
             adaptiveHeight: true
         };
 
-        const profile_photo = avatar ? img_url(avatar) : "user.png"
+        const profile_photo = avatar ? img_url(avatar) : "/files/user.png"
         // const getType = (e)=>{return e.split('.').pop()}
         // const type = attachment? getType(attachment.url) : '' ;
         // const menuClass = `${this.state.isOpen ? " show" : ""}`;
@@ -44,7 +44,9 @@ class Postview extends Component {
             
             <div className="card w-100 shadow-xss rounded-xxl border-0 p-4 mb-3">
                 <div className="card-body p-0 d-flex">
+                    <a href={`/userProfile/${user_id}`}>
                     <figure className="avatar me-3"><img src={`${profile_photo}`} alt="avater" className="shadow-sm rounded-circle w40 h40" /></figure>
+                    </a>
                     <h4 className="fw-700 text-grey-900 font-xssss mt-1"> {user}  {group ? ` -  ${group} group` : ''} <span className="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500"> {time.split("T")[0]}</span></h4>
                     <div className="ms-auto pointer"><i className="ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss"></i></div>
 

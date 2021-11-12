@@ -4,7 +4,7 @@ import auth from "../api/auth";
 import AlertComp from "../components/Alert";
 const Joi = require("joi")
 const data_type = require("../validation/dataTypes");
-
+const errorSetter = require("../utils/errorSetter")
 
 class Register extends Component {
     constructor(props) {
@@ -36,15 +36,15 @@ class Register extends Component {
             terms: terms
         }
         const { error } = schema.validate(validate)
-        console.log(JSON.stringify(error));
+        // console.log(JSON.stringify(error));
         if (error) {
             this.setState({ showAlert: true })
             // this.setState({ error: error.details[0].message })
-            this.setState({alertConfig : {variant: "danger", text: error.details[0].message, icon:"alert-octagon", strongText: "Error:"}})
+            this.setState({ alertConfig: { variant: "danger", text: error.details[0].message, icon: "alert-octagon", strongText: "Error:" } })
         } else if (password !== confirm_password) {
             // this.setState({ showError: true })
             this.setState({ showAlert: true })
-            this.setState({alertConfig : {variant: "danger", text: "Password should match confirm password.", icon:"alert-octagon", strongText: "Error:"}})
+            this.setState({ alertConfig: { variant: "danger", text: "Password should match confirm password.", icon: "alert-octagon", strongText: "Error:" } })
             // this.setState({ error: "Password should match confirm password." })
         } else {
             this.setState({ disable: true }, async () => {
@@ -56,16 +56,19 @@ class Register extends Component {
                         this.setState({ disable: false })
                         // this.setState({ showSuccess: true })
                         this.setState({ showAlert: true })
-                        this.setState({alertConfig : {variant: "success", text:e.response.data.message, icon:"check", strongText: "Success:"}})
+                        this.setState({ alertConfig: { variant: "success", text: res.data.message, icon: "check", strongText: "Success:" } })
                     }).catch((e) => {
                         this.setState({ disable: false })
                         // this.setState({ showError: true })
                         this.setState({ showAlert: true })
                         // this.setState({ error: e.response.data.message })
-                        this.setState({alertConfig : {variant: "danger", text:e.response.data.message, icon:"alert-octagon", strongText: "Error:"}})
+                        this.setState({ alertConfig: { variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" } })
                     })
 
                 } catch (e) {
+                    this.setState({ showAlert: true })
+                    // this.setState({ error: e.response.data.message })
+                    this.setState({ alertConfig: { variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" } })
                 }
             })
 

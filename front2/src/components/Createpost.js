@@ -7,19 +7,24 @@ import img_url from '../utils/imgURL';
 import dl from "../api/dl";
 import post from "../api/posts"
 import posts from '../api/posts';
-
+import socket from '../utils/socket';
+const errorSetter = require("../utils/errorSetter")
 class Createpost extends Component {
-    state = {
-        isOpen: false,
-        showModal: false,
-        cat: [],
-        cat_value: "",
-        attachments: '',
-        title: "",
-        description: "",
-        disable: false,
-        visiblity: "PUBLIC"
-    };
+    constructor(props) {
+        super(props)
+        this.state = {
+            isOpen: false,
+            showModal: false,
+            cat: [],
+            cat_value: "",
+            attachments: '',
+            title: "",
+            description: "",
+            disable: false,
+            visiblity: "PUBLIC",
+            profile_photo: this.props.profile_photo ? img_url(this.props.profile_photo) : "/files/user.png"
+        };
+    }
 
     // files = '';
 
@@ -30,14 +35,14 @@ class Createpost extends Component {
 
     toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
 
-    profile_photo = this.props.profile_photo ? img_url(this.props.profile_photo) : "user.png"
-
+    // this.setState({profile_photo = this.state.profile_photo ? img_url(this.state.profile_photo) : "/files/user.png"}) ;
+    // const profile_photo= this.props.profile_photo ? img_url(this.props.profile_photo) : "/files/user.png";
     createPost = async (e) => {
         e.preventDefault();
-        this.setState({disable: true})
-        console.log(this.files)
+        this.setState({ disable: true })
+        // console.log(this.files)
         // alert(">>>>>>>>")
-        let type = this.state.attachments.length > 0 ? 'MULTIMEDIA' : 'TEXT' ;
+        let type = this.state.attachments.length > 0 ? 'MULTIMEDIA' : 'TEXT';
         const formData = new FormData();
         formData.append("title", this.state.title);
         formData.append("description", this.state.description);
@@ -45,8 +50,8 @@ class Createpost extends Component {
             formData.append('attachments', this.state.attachments[key])
         }
         formData.append("visibility", this.state.visiblity);
-        formData.append("category", this.state.cat_value);  
-        formData.append("type", type);  
+        formData.append("category", this.state.cat_value);
+        formData.append("type", type);
         if (this.props.group) formData.append("group_id", this.props.group)
 
         const access_token = localStorage.getItem("access_token");
@@ -58,17 +63,24 @@ class Createpost extends Component {
             const message = res.data.message;
             this.props.showAlert()
             this.props.alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
-            this.setState({disable: false})
+            this.setState({ disable: false })
+            socket.emit("post-created", res.data.data.payload.user_id)
             window.location.reload()
         }).catch((e) => {
             this.props.showAlert()
-            this.props.alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
-            this.setState({disable: false})
+            this.props.alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
+            this.setState({ disable: false })
         })
     }
 
-    componentDidMount() {
-        this.post_cat()
+    componentDidMount(prev) {
+        this._isMounted = true;
+        if (this._isMounted)
+            this.post_cat()
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     attachmentController = (e) => {
@@ -85,7 +97,7 @@ class Createpost extends Component {
             slidesToScroll: 1,
             adaptiveHeight: true
         };
-        console.log(files);
+        // console.log(files);
         if (files.length > 5) {
             alert("You can only upload 5 files")
             e.target.value = "";
@@ -108,11 +120,11 @@ class Createpost extends Component {
                     attachments.push(obj)
                 }
             });
-            
+
         }
-        this.setState({attachments: files});
-        console.log("attt>>>>>>>>>>>>>>>>>>>>>>>");
-        console.log(this.state.attachments);
+        this.setState({ attachments: files });
+        // console.log("attt>>>>>>>>>>>>>>>>>>>>>>>");
+        // console.log(this.state.attachments);
         const FileViewerWrapper = document.getElementById("display-files");
         const FileView = attachments ?
             <Slider {...settings} className="mb-3  max-h200" ref={slider => (this.slider1 = slider)}>
@@ -139,7 +151,7 @@ class Createpost extends Component {
                 </div> */}
                 <div className="card-body p-0 mt-3 position-relative rounded-xxl border-auto-md">
                     {/* <figure className="avatar position-relative ms-2 me-2 mt-1 top-8"></figure> */}
-                    <figure className="avatar position-absolute ms-2 mt-1 top-8"><img src={this.profile_photo} alt="icon" className="shadow-sm rounded-circle w30 h30" /></figure>
+                    <figure className="avatar position-absolute ms-2 mt-1 top-8"><img src={this.props.profile_photo ? img_url(this.props.profile_photo) : "/files/user.png"} alt="icon" className="shadow-sm rounded-circle w30 h30" /></figure>
                     <Button
                         variant="none"
                         className="d-flex bor-0 mb-2 h55 w-100 rounded-xxl text-left p-2 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg"
@@ -185,8 +197,8 @@ class Createpost extends Component {
                                             this.setState({ cat_value: e.target.value })
                                         }} aria-label="Default select example">
                                             <option className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" value="" disabled>Select Post Category</option>
-                                            {this.state.cat.map((e) => {
-                                                return <option className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" value={e.id}>{e.name}</option>
+                                            {this.state.cat.map((e, i) => {
+                                                return <option key={i} className="bor-0 w-100 rounded-xxl mb-2 p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" value={e.id}>{e.name}</option>
                                             })}
 
                                         </select>

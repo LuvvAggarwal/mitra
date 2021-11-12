@@ -14,11 +14,12 @@ import Popupchat from '../components/Popupchat';
 const img_url = require("../utils/imgURL") ;
 const Joi = require("joi")
 const data_type = require("../validation/dataTypes");
+const errorSetter = require("../utils/errorSetter")
 // import { ph_number } from "../../../server/config/validations/dataTypes";
 
 
 
-const UpdateProfile = () => {
+const UpdateGroupProfile = () => {
 
     const { setCurrentUser, User } = useContext(UserContext);
     // if(User == undefined) window.location.replace("/login")
@@ -63,7 +64,7 @@ const UpdateProfile = () => {
             setCountryList(countries);
             // setRestaurants(countries.data.data.restaurant);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
     useEffect(() => {
@@ -71,9 +72,9 @@ const UpdateProfile = () => {
         fetchData()
         if (User) {
             User.then((res) => {
-                console.log(res);
+                // console.log(res);
                 if (res) {
-                    console.log("my");
+                    // console.log("my");
                     setEmail(() => { if (res.email != null) return res.email; else return ""; })
                     setName(() => { if (res.name != null) return res.name; else return ""; })
                     setPh_number(() => { if (res.ph_number != null) return res.ph_number; else return ""; })
@@ -122,7 +123,7 @@ const UpdateProfile = () => {
 
     const getStates = async () => {
         const stateResponse = await dl.get(`/states/${country}`);
-        console.log(country);
+        // console.log(country);
         const states = stateResponse.data.data.payload
         setStateList(states);
     }
@@ -139,10 +140,10 @@ const UpdateProfile = () => {
 
     const updateProfile = async (e) => {
         e.preventDefault()
-        console.log(e.target);
+        // console.log(e.target);
         setDisable(true)
-        console.log(e);
-        console.log('starte');
+        // console.log(e);
+        // console.log('starte');
         const schema = Joi.object({
             name: data_type.str_250_req,
             email: data_type.email,
@@ -173,16 +174,16 @@ const UpdateProfile = () => {
         }
 
         const { error } = schema.validate(validate)
-        console.log(JSON.stringify(error));
+        // console.log(JSON.stringify(error));
         if (error) {
             setShowError(true)
-            console.log(error);
+            // console.log(error);
             setError(error.details[0].message)
         } else {
             // this.setDisable(true);
             try {
                 const updateProfileForm = document.getElementById("updateProfileForm")
-                console.log(updateProfileForm);
+                // console.log(updateProfileForm);
                 let formData = new FormData();
                 formData.append("name", name);
                 formData.append("ph_number", ph_number);
@@ -194,26 +195,26 @@ const UpdateProfile = () => {
                 formData.append("help_type", help_type);
                 formData.append("profile_photo", profile_img);
                 formData.append("cover_photo", cover_img)
-                console.log(formData.getAll("keys"));
+                // console.log(formData.getAll("keys"));
 
                 const access_token = localStorage.getItem("access_token");
                 const AuthStr = 'Bearer '.concat(access_token);
-                console.log(AuthStr);
+                // console.log(AuthStr);
                 const response = await users.put("/update", formData,
                     { headers: { 'Authorization': AuthStr, 'Content-Type': 'multipart/form-data' } }
                 ).then((res) => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     setDisable(false)
                     setShowSuccess(true)
                     setSuccess(res.data.message)
                 }).catch((e) => {
                     setDisable(false)
                     setShowError(true)
-                    setError(e.response.data.message)
+                    setError(errorSetter(e))
                 })
 
             } catch (e) {
-                console.log(e);
+                // console.log(e);
             }
         }
 
@@ -264,7 +265,7 @@ const UpdateProfile = () => {
                                                         // console.log(e);
                                                         const url = URL.createObjectURL(e.target.files[0])
                                                         setProfileImgURL(url)
-                                                        console.log(url);
+                                                        // console.log(url);
                                                     }} />
                                                 </label>
 
@@ -340,7 +341,7 @@ const UpdateProfile = () => {
 
                                             <div className="row">
                                                 <div className="col-lg-4 mb-3">
-                                                    {/* <div className="form-group"> */}
+                                                    <div className="form-group">
                                                     <label className="mont-font fw-600 font-xsss mb-2">Country</label>
                                                     <select className="form-control" value={country} onChange={(e) => { setCountry(e.target.value) }}>
                                                         <option value="" disabled>Please Select</option>
@@ -350,7 +351,7 @@ const UpdateProfile = () => {
                                                             )
                                                         })}
                                                     </select>
-                                                    {/* </div> */}
+                                                    </div>
                                                 </div>
 
                                                 <div className="col-lg-4 mb-3">
@@ -385,13 +386,13 @@ const UpdateProfile = () => {
                                                 <div className="col-lg-6 mb-3">
                                                     <div className="form-group">
                                                         <label htmlFor="address">Address</label>
-                                                        <textarea className="form-control h75 scroll-bar bor-0 w-100 rounded-xxl p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" id="address" rows="3" value={address} onChange={(e) => { setAddress(e.target.value) }}></textarea>
+                                                        <textarea className="form-control h75 scroll-bar w-100 rounded-xxl p-2 ps-2 font-xssss text-grey-500 fw-500  theme-dark-bg" id="address" rows="3" value={address} onChange={(e) => { setAddress(e.target.value) }}></textarea>
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-6 mb-3">
                                                     <div className="form-group">
                                                         <label htmlFor="bio">Bio</label>
-                                                        <textarea className="form-control h75 scroll-bar bor-0 w-100 rounded-xxl p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" id="bio" rows="3" value={bio} onChange={(e) => { setBio(e.target.value) }}></textarea>
+                                                        <textarea className="form-control h75 scroll-bar w-100 rounded-xxl p-2 ps-2 font-xssss text-grey-500 fw-500  theme-dark-bg" id="bio" rows="3" value={bio} onChange={(e) => { setBio(e.target.value) }}></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -449,4 +450,4 @@ const UpdateProfile = () => {
 }
 
 
-export default UpdateProfile;
+export default UpdateGroupProfile;

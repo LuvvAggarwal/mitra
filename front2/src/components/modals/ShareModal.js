@@ -15,6 +15,7 @@ import {
   LinkedinIcon,
 } from "react-share";
 import post_action from "../../api/postAction";
+const errorSetter = require("../../utils/errorSetter")
 
 const ShareModal = ({ id, title, des, showAlert, alertConfig }) => {
   const [show, setShow] = useState(false);
@@ -43,7 +44,7 @@ const ShareModal = ({ id, title, des, showAlert, alertConfig }) => {
         showAlert();
         alertConfig({
           variant: "danger",
-          text: e.response ? e.response.data.message : "Problem in processing",
+          text: errorSetter(e),
           icon: "alert-octagon",
           strongText: "Error:",
         });

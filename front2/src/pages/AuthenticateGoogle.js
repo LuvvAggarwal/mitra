@@ -18,10 +18,10 @@ const AuthenticateGoogle = () => {
     const [alertConfig, setAlertConfig] = useState({})
 
     if(User) {User.then((res)=>{
-       console.log("user");
-       console.log(res.problem_category);
+    //    console.log("user");
+    //    console.log(res.problem_category);
         if(res.problem_category && res.problem_category != "" && res.problem_category != null && res.problem_category != undefined){
-            console.log("iffffffff");
+            // console.log("iffffffff");
             setRedirect("/home")
         }
             
@@ -34,23 +34,23 @@ const AuthenticateGoogle = () => {
         const urlParams = queryString.parse(window.location.search);
 
         if (urlParams.error) {
-            console.log(`An error occurred: ${urlParams.error}`);
+            // console.log(`An error occurred: ${urlParams.error}`);
         } else {
-            console.log(`The code is: ${urlParams.code}`);
+            // console.log(`The code is: ${urlParams.code}`);
         }
         const code = urlParams.code;
-        console.log(code);
+        // console.log(code);
 
         const ssoGoogle = async(name,email,user_id,profile_photo)=>{
             const data = await auth.post("/ssoGoogle", {
                 name, email, user_id, profile_photo
             }).then((res) => {
-                console.log("res");
-                console.log(res);
-                console.log(res.data.data.access_token);
+                // console.log("res");
+                // console.log(res);
+                // console.log(res.data.data.access_token);
                 setCurrentUser(res.data.data.access_token)
                 localStorage.setItem("access_token", res.data.data.access_token)
-                console.log(User);
+                // console.log(User);
             }).catch((e) => {
                setShowAlert(true)
                     setAlertConfig({ variant: "danger", text: "Problem in signing in", icon: "alert-octagon", strongText: "Error:" })
@@ -67,7 +67,7 @@ const AuthenticateGoogle = () => {
                     Authorization: `Bearer ${access_token}`,
                 },
             }).then(async(res) => {
-                console.log(res);
+                // console.log(res);
                 const { name, email, picture, id } = res.data;
                 const user_id = name + "_" + id;
                 ssoGoogle(name, email,user_id, picture)

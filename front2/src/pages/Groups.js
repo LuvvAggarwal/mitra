@@ -20,14 +20,9 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 // const alertDiv = require("../components/Alert")
 const access_token = localStorage.getItem("access_token");
 const AuthStr = 'Bearer '.concat(access_token);
-
+const errorSetter = require("../utils/errorSetter")
 const Groups = () => {
     const [data, setData] = useState([])
-    // const { User } = useContext(UserContext);
-    // const listInnerRef = useRef()
-    // const [id, setId] = useState("");
-
-    // const [items, setItems] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [lastNumber, setLastNumber] = useState(-1)
     const [hasMore, setHasMore] = useState(true)
@@ -47,17 +42,14 @@ const Groups = () => {
 
 
     const getData = async () => {
-
         const stringifiedQuery = queryString.stringify({
             lastNumber: lastNumber,
             problem: problemCategory,
             keyword: search,
         });
-        // console.log("teszt");
-        if ((hasMore || triggerSearch) && !showAlert) {
-            setIsLoading(true)
-            // alert("data");
 
+        if ((hasMore || triggerSearch) && !showAlert) {
+           
             await groups.get("/groups/" + stringifiedQuery,
                 { headers: { 'Authorization': AuthStr } }
             ).then((res) => {
@@ -71,17 +63,17 @@ const Groups = () => {
                     //     setData(data.concat(payload));
                     // }
                     const newLastNumber = payload[payload.length - 1].number;
-                    console.log(">>>>>>> " + newLastNumber);
+                    // console.log(">>>>>>> " + newLastNumber);
                     setLastNumber(newLastNumber)
                     setHasMore(true)
                 }
                 else {
                     setHasMore(false)
                 }
-                setIsLoading(false)
+                // setIsLoading(false)
             }).catch((e) => {
                 setShowAlert(true)
-                setAlertConfig({ variant: "danger", text: "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                setAlertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         }
     }
@@ -92,10 +84,11 @@ const Groups = () => {
     }, [])
 
     useEffect(() => {
-        console.log("changed " + triggerSearch);
-        getData()
+        if (triggerSearch.toString().startsWith("true")) {
+            getData()
+        }
     }, [triggerSearch])
-   
+
     return (
         <Fragment>
             {showAlert && <AlertComp config={alertConfig} show={true}></AlertComp>}
@@ -109,7 +102,7 @@ const Groups = () => {
                         <div className="row">
                             <div className="col-xl-12">
 
-                            <Pagetitle title="Groups" showlink={true} link={{url:"/createGroup", text: "Create a new group"}} problemState={setProblemCategory} searchState={setSearch} searchVal={search} triggerSearch={setTriggerSearch} setLastNumber={setLastNumber} />
+                                <Pagetitle title="Groups" showlink={true} link={{ url: "/createGroup", text: "New" }} problemState={setProblemCategory} searchState={setSearch} searchVal={search} triggerSearch={setTriggerSearch} setLastNumber={setLastNumber} dataSet={setData} hasMore={setHasMore} />
 
                                 <InfiniteScroll className="row infinite-scroll"
                                     dataLength={data.length}

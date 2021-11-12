@@ -14,45 +14,7 @@ import users from '../api/users';
 import InfoCardMultiBtn from './InfoCardMultiBtn';
 import InfiniteScroll from 'react-infinite-scroll-component';
 const img_url = require("../utils/imgURL");
-const groupList = [
-    {
-        imageUrl: 'user.png',
-        name: 'Aliqa Macale',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-    {
-        imageUrl: 'user.png',
-        name: 'Hendrix Stamp',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-    {
-        imageUrl: 'user.png',
-        name: 'Stephen Grider',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-    {
-        imageUrl: 'user.png',
-        name: 'Mohannad Zitoun',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-    {
-        imageUrl: 'user.png',
-        name: 'Aliqa Macale',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-    {
-        imageUrl: 'user.png',
-        name: 'Surfiya Zakir',
-        email: 'support@gmail.com',
-        bgImage: 'group.png',
-    },
-
-]
+const errorSetter = require("../utils/errorSetter")
 const ProfileCardUser = (props) => {
     const { showAlert, alertConfig } = props;
 
@@ -98,8 +60,8 @@ const ProfileCardUser = (props) => {
     const [btnCSS, setBtnCSS] = useState("")
 
     // if(data != {}){
-    const profile_photo = data.profile_photo ? img_url(data.profile_photo) : "user.png"
-    const cover_photo = data.cover_photo ? img_url(data.cover_photo) : "group.png"
+    const profile_photo = data.profile_photo ? img_url(data.profile_photo) : "/files/user.png"
+    const cover_photo = data.cover_photo ? img_url(data.cover_photo) : "/files/group.png"
     // }
 
     const showAbout = () => {
@@ -150,19 +112,19 @@ const ProfileCardUser = (props) => {
         }).catch(e => {
             setIsLoading(false)
             showAlert()
-            alertConfig({ variant: "danger", text: "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+            alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
         })
     }
 
     const btnFunc = async (i) => {
         const following = data.following
         if (following.length > 0) {
-            console.log(following);
+            // console.log(following);
             await follow.delete("/" + following[0].id, { headers: { 'Authorization': AuthStr } }
             ).then((res) => {
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert()
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
                 let obj = data;
@@ -172,15 +134,15 @@ const ProfileCardUser = (props) => {
                 setBtnCSS("btn-primary");
             }).catch((e) => {
                 showAlert()
-                alertConfig({ variant: "danger", text: e.data.data.message, icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         } else {
             await follow.post("/" + data.id, {}, { headers: { 'Authorization': AuthStr } }
             ).then((res) => {
                 const payload = res.data.data.payload;
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert()
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
                 // following.push(payload);
@@ -190,9 +152,9 @@ const ProfileCardUser = (props) => {
                 setBtnText("Unfollow")
                 setBtnCSS("btn-danger");
             }).catch((e) => {
-                console.log(e.request);
+                // console.log(e.request);
                 showAlert()
-                alertConfig({ variant: "danger", text: e.response.data.message, icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         }
     }
@@ -204,7 +166,7 @@ const ProfileCardUser = (props) => {
                 .then((res) => {
                     const payload = res.data.data.payload
                     if (payload.length > 0) {
-                        console.log(payload);
+                        // console.log(payload);
                         if (Array.isArray(payload)) {
                             setPostData(postData.concat(payload))
                         }
@@ -212,7 +174,7 @@ const ProfileCardUser = (props) => {
                         //     setData(data.concat(payload));
                         // }
                         const newLastNumber = payload[payload.length - 1].number;
-                        console.log(">>>>>>> " + newLastNumber);
+                        // console.log(">>>>>>> " + newLastNumber);
                         setPostLastNumber(newLastNumber)
                         setPostHasMore(true)
                     }
@@ -221,11 +183,11 @@ const ProfileCardUser = (props) => {
                     }
                     setIsLoading(false)
                 }).catch(e => {
-                    console.log(e.request);
-                    console.log(e.response);
+                    // console.log(e.request);
+                    // console.log(e.response);
                     setIsLoading(false)
                     showAlert()
-                    alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                    alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
                 })
         }
     }
@@ -237,7 +199,7 @@ const ProfileCardUser = (props) => {
                 .then((res) => {
                     const payload = res.data.data.payload
                     if (payload.length > 0) {
-                        console.log(payload);
+                        // console.log(payload);
                         if (Array.isArray(payload)) {
                             setFollowerData(followerData.concat(payload))
                         }
@@ -245,7 +207,7 @@ const ProfileCardUser = (props) => {
                         //     setData(data.concat(payload));
                         // }
                         const newLastNumber = payload[payload.length - 1].number;
-                        console.log(">>>>>>> " + newLastNumber);
+                        // console.log(">>>>>>> " + newLastNumber);
                         setFollowerLastNumber(newLastNumber)
                         setFollowerHasMore(true)
                     }
@@ -254,11 +216,11 @@ const ProfileCardUser = (props) => {
                     }
                     setIsLoading(false)
                 }).catch(e => {
-                    console.log(e.request);
-                    console.log(e.response);
+                    // console.log(e.request);
+                    // console.log(e.response);
                     setIsLoading(false)
                     showAlert()
-                    alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                    alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
                 })
         }
     }
@@ -270,7 +232,7 @@ const ProfileCardUser = (props) => {
                 .then((res) => {
                     const payload = res.data.data.payload
                     if (payload.length > 0) {
-                        console.log(payload);
+                        // console.log(payload);
                         if (Array.isArray(payload)) {
                             setFollowingData(followingData.concat(payload))
                         }
@@ -278,7 +240,7 @@ const ProfileCardUser = (props) => {
                         //     setData(data.concat(payload));
                         // }
                         const newLastNumber = payload[payload.length - 1].number;
-                        console.log(">>>>>>> " + newLastNumber);
+                        // console.log(">>>>>>> " + newLastNumber);
                         setFollowingLastNumber(newLastNumber)
                         setFollowingHasMore(true)
                     }
@@ -287,11 +249,11 @@ const ProfileCardUser = (props) => {
                     }
                     setIsLoading(false)
                 }).catch(e => {
-                    console.log(e.request);
-                    console.log(e.response);
+                    // console.log(e.request);
+                    // console.log(e.response);
                     setIsLoading(false)
                     showAlert()
-                    alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                    alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
                 })
         }
     }
@@ -299,11 +261,11 @@ const ProfileCardUser = (props) => {
     const getGroups = async () => {
         if (groupHasMore) {
             // setIsLoading(true)
-            await group.get(`/user/${data.id}/`, { headers: { 'Authorization': AuthStr } })
+            await group.get(`/user/${data.id}/${groupLastNumber}`, { headers: { 'Authorization': AuthStr } })
                 .then((res) => {
                     const payload = res.data.data.payload
                     if (payload.length > 0) {
-                        console.log(payload);
+                        // console.log(payload);
                         if (Array.isArray(payload)) {
                             setGroupData(followingData.concat(payload))
                         }
@@ -311,7 +273,7 @@ const ProfileCardUser = (props) => {
                         //     setData(data.concat(payload));
                         // }
                         const newLastNumber = payload[payload.length - 1].number;
-                        console.log(">>>>>>> " + newLastNumber);
+                        // console.log(">>>>>>> " + newLastNumber);
                         setGroupLastNumber(newLastNumber)
                         setGroupHasMore(true)
                     }
@@ -320,16 +282,16 @@ const ProfileCardUser = (props) => {
                     }
                     setIsLoading(false)
                 }).catch(e => {
-                    console.log(e.request);
-                    console.log(e.response);
+                    // console.log(e.request);
+                    // console.log(e.response);
                     setIsLoading(false)
                     showAlert()
-                    alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                    alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
                 })
         }
     }
 
-    const viewProfile = (url)=>{
+    const viewProfile = (url) => {
         window.location.href = `${process.env.PUBLIC_URL}/${url}`
     }
 
@@ -340,8 +302,32 @@ const ProfileCardUser = (props) => {
         User.then((res) => {
             setUser(res)
         })
-        console.log(user);
+        // console.log(user);
     }, [])
+
+    useEffect(() => {
+        if (post == "show") {
+            getPosts()
+        }
+    }, [post])
+
+    useEffect(() => {
+        if (follower == "show") {
+            getFollowers()
+        }
+    }, [follower])
+
+    useEffect(() => {
+        if (following == "show") {
+            getFollowing()
+        }
+    }, [following])
+
+    useEffect(() => {
+        if (groups == "show") {
+            getGroups()
+        }
+    }, [groups])
 
     return (
         <div className="card w-100 border-0 p-0 bg-white shadow-xss rounded-xxl">
@@ -350,14 +336,15 @@ const ProfileCardUser = (props) => {
                 <figure className="avatar position-absolute w100 h100 z-index-1" style={{ top: '-40px', left: '30px' }}><img src={`${profile_photo}`} alt="avater" className="float-right p-1 bg-white h100 rounded-circle w-100" /></figure>
                 <h4 className="fw-700 font-sm mt-2 mb-lg-5 mb-4 pl-15">{data.name}<span className="fw-500 font-xssss text-grey-500 mt-1 mb-3 d-block">{data.email}</span></h4>
                 <div className="d-flex align-items-center justify-content-center position-absolute-md right-15 top-0 me-2">
-                    {data.id !== user.id && <button className={`btn d-none d-lg-block ${btnCSS} p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3`} onClick={btnFunc}>{btnText}</button>}
+                    {data.id !== user.id && <button className={`btn ${btnCSS} mb-4 p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3`} onClick={btnFunc}>{btnText}</button>}
                     {/* https://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript?rq=1  SEND MAIL*/}
-                    <a href={`mailto:${data.email}`} className="d-none d-lg-block bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700"><i className="feather-mail font-md"></i></a>
+                    {data.id === user.id && <a className={`btn bg-primary mb-4 p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3`} href="/updateProfile"><span className="feather-edit-2"></span>Edit</a>}
+                    <a href={`mailto:${data.email}`} className="bg-greylight mb-4 btn-round-lg ms-2 rounded-3 text-grey-700"><i className="feather-mail font-md"></i></a>
                 </div>
             </div>
 
             <div className="card-body d-block w-100 shadow-none mb-0 p-0 border-top-xs">
-                <ul className="nav nav-tabs h55 d-flex theme-dark-bg product-info-tab border-bottom-0 ps-4" id="pills-tab" role="tablist">
+                <ul className="nav nav-tabs h55 d-flex theme-dark-bg product-info-tab border-bottom-0 ps-4" id="pills-tab" role="tablist" style={{ overflowX: "auto", flexWrap: "nowrap" }}>
                     <li className={`cursor-pointer list-inline-item me-5 fw-700 font-xssss text-grey-500 pt-3 mb-3 ls-1 ${about == "show" ? "border-bottom-auto" : ""}`} onClick={showAbout}>About</li>
                     <li className={`cursor-pointer list-inline-item me-5 fw-700 font-xssss text-grey-500 pt-3 mb-3 ls-1 ${post == "show" ? "border-bottom-auto" : ""}`} onClick={showPost}>Posts</li>
                     <li className={`cursor-pointer list-inline-item me-5 fw-700 font-xssss text-grey-500 pt-3 mb-3 ls-1 ${follower == "show" ? "border-bottom-auto" : ""}`} onClick={showFollower}>Followers</li>
@@ -365,7 +352,7 @@ const ProfileCardUser = (props) => {
                     <li className={`cursor-pointer list-inline-item me-5 fw-700 font-xssss text-grey-500 pt-3 mb-3 ls-1 ${groups == "show" ? "border-bottom-auto" : ""}`} onClick={showGroup}>Groups</li>
                 </ul>
             </div>
-            <div class="tab-content theme-dark-bg" id="detail-section">
+            <div className="tab-content theme-dark-bg" id="detail-section">
                 {about == "show" && <div id="about" className={about == "show" ? "d-block" : "d-none"} role="tabpanel" aria-labelledby="about-tab-1">
                     <div className="row">
                         <div className="col-xl-4 col-xxl-3 col-lg-4 pe-0">
@@ -379,8 +366,8 @@ const ProfileCardUser = (props) => {
                                 return <Postview key={e.id} id={e.id} attachment={e.atachments} avatar={e.users.profile_photo} user={e.users.name} time={e.created_on} des={e.description} title={e.title} count={e._count} isLiked={e.likes} showAlert={showAlert} alertConfig={alertConfig} group={e.groups ? e.groups.name : ""} />
                             })}
                             {data.posts && data.posts.length == 0 ?
-                                <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-500">No Posts Available</h2> :
-                                <Button variant="outline-primary" className="w-100 mb-2" size="lg" onClick={showPost}>See All</Button>
+                                <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-700">No Posts Available</h2> :
+                                <Button variant="outline-primary" className="w-100 mb-2 white-hover" size="lg" onClick={showPost}>See All</Button>
                             }
                             {isLoading && <Load />}
                         </div>
@@ -397,11 +384,11 @@ const ProfileCardUser = (props) => {
                         // scrollableTarget="post-cont"
                         >
                             {postData.map((e, index) => {
-                                return <Postview key={e.id} id={e.id} attachment={e.atachments} avatar={e.users.profile_photo} user={e.users.name} time={e.created_on} des={e.description} title={e.title} count={e._count} isLiked={e.likes} showAlert={showAlert} alertConfig={alertConfig} group={e.groups ? e.groups.name : ""} />
+                                return <Postview key={e.id} id={e.id} attachment={e.atachments} avatar={e.users.profile_photo} user_id={e.users.user_id} user={e.users.name} time={e.created_on} des={e.description} title={e.title} count={e._count} isLiked={e.likes} showAlert={showAlert} alertConfig={alertConfig} group={e.groups ? e.groups.name : ""} />
                             })}
 
                         </InfiniteScroll>
-
+                        {postData.length == 0 && <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-700">No Posts Available</h2> }
 
 
                     </div>
@@ -418,16 +405,14 @@ const ProfileCardUser = (props) => {
                             {followerData.map((value, index) => {
                                 return <InfoCardMultiBtn key={index} value={value.follower_user} page={`userProfile/${value.follower_user.user_id}`} btns={[
                                     {
-                                        css: 'bg-grey',
-                                        func: viewProfile(`userProfile/${value.follower_user.user_id}`),
+                                        css: 'bg-primary',
+                                        func: () => viewProfile(`userProfile/${value.follower_user.user_id}`),
                                         text: "View Profile"
                                     }
                                 ]} showAlert={showAlert} alertConfig={alertConfig}></InfoCardMultiBtn>
                             })}
                         </InfiniteScroll>
-
-
-
+                        {followerData.length == 0 && <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-700">No Followera Available</h2> }
                     </div>
                 </div>}
                 {following == "show" && <div id="following" className={following == "show" ? "d-block" : "d-none"} role="tabpanel" aria-labelledby="following-tab-1">
@@ -442,39 +427,39 @@ const ProfileCardUser = (props) => {
                             {followingData.map((value, index) => {
                                 return <InfoCardMultiBtn key={index} value={value.following_user} page={`userProfile/${value.following_user.user_id}`} btns={[
                                     {
-                                        css: 'bg-grey',
-                                        func: viewProfile(`userProfile/${value.following_user.user_id}`),
+                                        css: 'bg-primary',
+                                        func: () => viewProfile(`userProfile/${value.following_user.user_id}`),
                                         text: "View Profile"
                                     }
                                 ]} showAlert={showAlert} alertConfig={alertConfig}></InfoCardMultiBtn>
                             })}
                         </InfiniteScroll>
-
+                        {followingData.length == 0 && <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-700">No Following Available</h2> }
                     </div>
                 </div>}
                 {groups == "show" && <div id="group" className={groups == "show" ? "d-block" : "d-none"} role="tabpanel" aria-labelledby="group-tab-1">
-                <div className="row ps-2 pe-1">
-                    <InfiniteScroll className="row infinite-scroll"
-                        dataLength={groupData.length}
-                        next={getGroups}
-                        hasMore={groupHasMore}
-                        loader={<Load />}
-                    // scrollableTarget="post-cont"
-                    >
-                        {followingData.map((value, index) => {
-                            return <InfoCardMultiBtn key={index} value={value.groups} page={`groupProfile/${value.groups.group_id}`} btns={[
-                                {
-                                    css: 'bg-grey',
-                                    func: viewProfile(`groupProfile/${value.groups.group_id}`),
-                                    text: "View Profile"
-                                }
-                            ]} showAlert={showAlert} alertConfig={alertConfig}></InfoCardMultiBtn>
-                        })}
-                    </InfiniteScroll>
-                </div>
+                    <div className="row ps-2 pe-1">
+                        <InfiniteScroll className="row infinite-scroll"
+                            dataLength={groupData.length}
+                            next={getGroups}
+                            hasMore={groupHasMore}
+                            loader={<Load />}
+                        // scrollableTarget="post-cont"
+                        >
+                            {groupData.map((value, index) => {
+                                return <InfoCardMultiBtn key={index} value={value.groups} page={`groupProfile/${value.groups.group_id}`} btns={[
+                                    {
+                                        css: 'bg-primary',
+                                        func: () => viewProfile(`groupProfile/${value.groups.group_id}`),
+                                        text: "View Profile"
+                                    }
+                                ]} showAlert={showAlert} alertConfig={alertConfig}></InfoCardMultiBtn>
+                            })}
+                        </InfiniteScroll>
+                        {groupData.length == 0 && <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-700">No Groups Available</h2> }
+                    </div>
                 </div>}
-        </div>
-
+            </div>
         </div >
 
     );

@@ -1,10 +1,14 @@
 const img_url = (url) => {
-    console.log(url);
+    // console.log(url);
     if (url.indexOf("blob") <= -1 && url.indexOf("https") <= -1) {
         const uArr = url.split("files\\");
-        console.log(uArr);
+        // console.log(uArr);
         url = uArr[1];
-        return "/files/" + url
+        if (url != undefined) {
+            return "/files/" + url;
+        }else{
+            return "/files/user.png";
+        }
     }
     else
         return url

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import grpMember from "../api/groupMember"
 const img_url = require("../utils/imgURL");
-
+const errorSetter = require("../utils/errorSetter")
 const InfoCardGroup = (props) => {
     // const [profile_img_url, set_profile_img_url] = useState(data.profile_photo)
     // const [cover_img_url, set_cover_img_url] = useState(data.cover_photo)
@@ -51,8 +51,8 @@ const InfoCardGroup = (props) => {
             await grpMember.delete(`/req/id=${req[0].id}/rec=${req[0].request_reciever}/sen=${req[0].request_sender}`,{ headers: { 'Authorization': AuthStr } }
             ).then((res) => {
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert(true)
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
                 let obj = data;
@@ -62,19 +62,19 @@ const InfoCardGroup = (props) => {
                 setBtnText("Request To Join");
                 setBtnCSS("btn-primary");
             }).catch((e) => {
-                console.log("error>>>>>>>>>>>>>>>>>>");
-                console.log(e);
-                console.log(e.response);
+                // console.log("error>>>>>>>>>>>>>>>>>>");
+                // console.log(e);
+                // console.log(e.response);
                 showAlert(true)
-                alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         } else if(mem.length > 0){
             await grpMember.delete("/id=" + mem[0].id ,{ headers: { 'Authorization': AuthStr } }
             ).then((res) => {
                 const payload = res.data.data.payload;
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert(true)
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
                 // following.push(payload);
@@ -84,19 +84,19 @@ const InfoCardGroup = (props) => {
                 setBtnText("Request To Join");
                 setBtnCSS("btn-primary");
             }).catch((e) => {
-                console.log("error>>>>>>>>>>>>>>>>>>");
-                console.log(e);
-                console.log(e.response);
+                // console.log("error>>>>>>>>>>>>>>>>>>");
+                // console.log(e);
+                // console.log(e.response);
                 showAlert(true)
-                alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         }else if(mem.length == 0 && req.length == 0){
             await grpMember.post("/addReq/" + data.id,{request_reciever: data.created_by} ,{ headers: { 'Authorization': AuthStr } }
             ).then((res) => {
                 const payload = res.data.data.payload;
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert(true)
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
                 // following.push(payload);
@@ -106,11 +106,11 @@ const InfoCardGroup = (props) => {
                 setBtnText("Cancel Request");
                 setBtnCSS("bg-grey text-grey-800");
             }).catch((e) => {
-                console.log("error>>>>>>>>>>>>>>>>>>");
-                console.log(e);
-                console.log(e.response);
+                // console.log("error>>>>>>>>>>>>>>>>>>");
+                // console.log(e);
+                // console.log(e.response);
                 showAlert(true)
-                alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         }
     }

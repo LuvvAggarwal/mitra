@@ -1,9 +1,11 @@
 import React, { useState, Fragment, useContext, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import { Link, NavLink } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import Darkbutton from '../components/Darkbutton';
 import Leftnav from './Leftnav';
 import { UserContext } from "../context/UserContext";
+// import { id_opt } from '../../../server/config/validations/dataTypes';
 const img_url = require("../utils/imgURL");
 const Header = () => {
     // state = {
@@ -11,12 +13,17 @@ const Header = () => {
     //     isActive: false,
     //     isNoti: false
     // };
+    let { q } = useParams()
+    q = q == undefined ? "" : q.replaceAll("%D", " ");
+    
     const { User } = useContext(UserContext);
+    const [id, setId] = useState("")
     const [isOpen, setIsOpen] = useState(false)
     const [isActive, setIsActive] = useState(false)
     const [isNoti, setIsNoti] = useState(false)
     const [redirect, setRedirect] = useState("");
     const [imgURL, setImgURL] = useState("")
+    const [search, setSearch] = useState(q)
     // const url = () => {
     //     if (User) {
     //         User.then((res) => {
@@ -25,13 +32,17 @@ const Header = () => {
     //             setImgURL(res.profile_photo);
     //         })
     //     }
-   
+
     // }
     // console.log(url);
-    console.log(imgURL);
+    // console.log(imgURL);
     const toggleOpen = () => setIsOpen(!isOpen)
     const toggleActive = () => setIsActive(!isActive)
     const toggleisNoti = () => setIsNoti(!isNoti)
+    // Search
+    const triggerSearch = () => {
+        window.location.href = "/search/" + search.replaceAll(" ", "%D")
+    }
 
     // const { setCurrentUser, User } = useContext(UserContext);
     // render() {
@@ -39,18 +50,19 @@ const Header = () => {
     const buttonClass = `${isOpen ? " active" : ""}`;
     const searchClass = `${isActive ? " show" : ""}`;
     const notiClass = `${isNoti ? " show" : ""}`;
-    console.log(navClass);
+    // console.log(navClass);
 
     const loc = window.location.href;
 
 
     if (User) {
         User.then((res) => {
-            console.log("user");
+            // console.log("user");
             setImgURL(res.profile_photo);
-            console.log(res.problem_category);
+            setId(res.user_id)
+            // console.log(res.problem_category);
             if (!res.problem_category) {
-                console.log("iffffffff");
+                // console.log("iffffffff");
                 setRedirect("/updateProfile")
             }
         })
@@ -64,8 +76,8 @@ const Header = () => {
         return (
             <div className="nav-header bg-white shadow-xs border-0">
                 <div className="nav-top">
-                    <Link to="/">
-                        <span className="d-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">Mitra </span>
+                    <Link to="/home">
+                        <span className="d-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">Meetra </span>
                     </Link>
                     <Link to="/defaultmessage" className="mob-menu ms-auto me-2 chat-active-btn"><i className="feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight"></i></Link>
                     <Darkbutton screen="mobile" />
@@ -73,11 +85,13 @@ const Header = () => {
                     <span onClick={toggleActive} className="me-2 menu-search-icon mob-menu"><i className="feather-search text-grey-900 font-sm btn-round-md bg-greylight"></i></span>
                     <button onClick={toggleOpen} className={`nav-menu me-0 ms-2 ${buttonClass}`}></button>
                 </div>
-
+                {/* Search */}
                 <form action="#" className="float-left header-search ms-3">
                     <div className="form-group mb-0 icon-input">
-                        <i className="feather-search font-sm text-grey-400"></i>
-                        <input type="text" placeholder="Start typing to search.." className="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 text-grey-500 rounded-xl w350 theme-dark-bg" />
+                        <i onClick={triggerSearch} className="cursor-pointer feather-search font-sm text-grey-400"></i>
+                        <input type="text" onChange={(e) => {
+                            setSearch(e.target.value)
+                        }} value={search} placeholder="Start typing to search..." className="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 text-grey-500 rounded-xl w350 theme-dark-bg" />
                     </div>
                 </form>
                 <NavLink activeClassName="active" to="/home" className="p-2 text-center ms-3 menu-icon center-menu-icon"><i className="feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "></i></NavLink>
@@ -114,53 +128,22 @@ const Header = () => {
                 </div>
                 <Link to="/defaultmessage" className="p-2 text-center ms-3 menu-icon chat-active-btn"><i className="feather-message-square font-xl text-current"></i></Link>
                 <Darkbutton screen="web" />
-                <Link to="/userProfile" className="p-0 ms-3 menu-icon"><img src={imgURL ? img_url(imgURL) : "assets/images/user.png"} alt="user" className="w40 h40 mt--1 rounded-circle" /></Link>
+                <Link to={"/userProfile/" + id} className="p-0 ms-3 menu-icon"><img src={imgURL ? img_url(imgURL) : "assets/images/user.png"} alt="user" className="w40 h40 mt--1 rounded-circle" /></Link>
 
                 <Leftnav navClass={`${navClass}`} />
-                {/* <nav className={`navigation scroll-bar ${navClass}`}>
-                    <div className="container ps-0 pe-0">
-                        <div className="nav-content">
-                            <div className="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2 mt-2">
-                                <div className="nav-caption fw-600 font-xssss text-grey-500"><span>New </span>Actions</div>
-                                <ul className="mb-1 top-content">
-                                    <li className="logo d-none d-xl-block d-lg-block"></li>
-                                    <li><Link to="/home" className="nav-content-bttn open-font"><i className="feather-tv btn-round-md bg-blue-gradiant me-3"></i><span>Newsfeed</span></Link></li>
-                                    <li><Link to="/defaultbadge" className="nav-content-bttn open-font"><i className="feather-award btn-round-md bg-red-gradiant me-3"></i><span>Badges</span></Link></li>
-                                    <li><Link to="/defaultstorie" className="nav-content-bttn open-font"><i className="feather-globe btn-round-md bg-gold-gradiant me-3"></i><span>Explore Stories</span></Link></li>
-                                    <li><Link to="/defaultgroup" className="nav-content-bttn open-font"><i className="feather-zap btn-round-md bg-mini-gradiant me-3"></i><span>Popular Groups</span></Link></li>
-                                    <li><Link to="/userpage" className="nav-content-bttn open-font"><i className="feather-user btn-round-md bg-primary-gradiant me-3"></i><span>Author Profile </span></Link></li>                        
-                                </ul>
-                            </div>
-
-                            <div className="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2">
-                                <div className="nav-caption fw-600 font-xssss text-grey-500"><span>More </span>Pages</div>
-                                <ul className="mb-3">
-                                    <li><Link to="/defaultemailbox" className="nav-content-bttn open-font"><i className="font-xl text-current feather-inbox me-3"></i><span>Email Box</span><span className="circle-count bg-warning mt-1">584</span></Link></li>
-                                    <li><Link to="/defaulthotel" className="nav-content-bttn open-font"><i className="font-xl text-current feather-home me-3"></i><span>Near Hotel</span></Link></li>
-                                    <li><Link to="/defaultevent" className="nav-content-bttn open-font"><i className="font-xl text-current feather-map-pin me-3"></i><span>Latest Event</span></Link></li>
-                                    <li><Link to="/defaultlive" className="nav-content-bttn open-font"><i className="font-xl text-current feather-youtube me-3"></i><span>Live Stream</span></Link></li>                        
-                                </ul>
-                            </div>
-                            <div className="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1">
-                                <div className="nav-caption fw-600 font-xssss text-grey-500"><span></span> Account</div>
-                                <ul className="mb-1">
-                                    <li className="logo d-none d-xl-block d-lg-block"></li>
-                                    <li><Link to="/defaultsettings" className="nav-content-bttn open-font h-auto pt-2 pb-2"><i className="font-sm feather-settings me-3 text-grey-500"></i><span>Settings</span></Link></li>
-                                    <li><Link to="/defaultanalytics" className="nav-content-bttn open-font h-auto pt-2 pb-2"><i className="font-sm feather-pie-chart me-3 text-grey-500"></i><span>Analytics</span></Link></li>
-                                    <li><Link to="/defaultmessage" className="nav-content-bttn open-font h-auto pt-2 pb-2"><i className="font-sm feather-message-square me-3 text-grey-500"></i><span>Chat</span><span className="circle-count bg-warning mt-0">23</span></Link></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-                 */}
+                {/* Search */}
                 <div className={`app-header-search ${searchClass}`}>
                     <form className="search-form">
                         <div className="form-group searchbox mb-0 border-0 p-1">
-                            <input type="text" className="form-control border-0" placeholder="Search..." />
+                            <input type="text" onChange={(e) => {
+                                setSearch(e.target.value)
+                            }} value={search} className="form-control border-0" placeholder="Search..." />
                             <i className="input-icon">
                                 <ion-icon name="search-outline" role="img" className="md hydrated" aria-label="search outline"></ion-icon>
                             </i>
+                            <span onClick={triggerSearch} className="me-2 mt-1 d-inline-block close searchbox-close">
+                                <i style={{ right: "40px" }} className="ti-search font-xs"></i>
+                            </span>
                             <span className="ms-1 mt-1 d-inline-block close searchbox-close">
                                 <i className="ti-close font-xs" onClick={toggleActive}></i>
                             </span>

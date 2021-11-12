@@ -14,7 +14,7 @@ import { Button } from 'react-bootstrap';
 import InfoCardMultiBtn from './InfoCardMultiBtn';
 import InfiniteScroll from 'react-infinite-scroll-component';
 const img_url = require("../utils/imgURL");
-
+const errorSetter = require("../utils/errorSetter")
 const ProfileCardGroup = (props) => {
 
     const { showAlert, alertConfig } = props;
@@ -80,8 +80,8 @@ const ProfileCardGroup = (props) => {
     const [btnText, setBtnText] = useState("");
     const [btnCSS, setBtnCSS] = useState("")
 
-    const profile_photo = data.profile_photo ? img_url(data.profile_photo) : "user.png"
-    const cover_photo = data.cover_photo ? img_url(data.cover_photo) : "group.png"
+    const profile_photo = data.profile_photo ? img_url(data.profile_photo) : "/files/user.png"
+    const cover_photo = data.cover_photo ? img_url(data.cover_photo) : "/files/group.png"
 
 
     const showAbout = () => {
@@ -121,7 +121,7 @@ const ProfileCardGroup = (props) => {
         }).catch(e => {
             setIsLoading(false)
             showAlert()
-            alertConfig({ variant: "danger", text: "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+            alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
         })
     }
 
@@ -132,7 +132,7 @@ const ProfileCardGroup = (props) => {
                 .then((res) => {
                     const payload = res.data.data.payload
                     if (payload.length > 0) {
-                        console.log(payload);
+                        // console.log(payload);
                         if (Array.isArray(payload)) {
                             setMemberData(memberData.concat(payload))
                         }
@@ -140,7 +140,7 @@ const ProfileCardGroup = (props) => {
                         //     setData(data.concat(payload));
                         // }
                         const newLastNumber = payload[payload.length - 1].number;
-                        console.log(">>>>>>> " + newLastNumber);
+                        // console.log(">>>>>>> " + newLastNumber);
                         setMemberLastNumber(newLastNumber)
                         setMemberHasMore(true)
                     }
@@ -149,11 +149,11 @@ const ProfileCardGroup = (props) => {
                     }
                     setIsLoading(false)
                 }).catch(e => {
-                    console.log(e.request);
-                    console.log(e.response);
+                    // console.log(e.request);
+                    // console.log(e.response);
                     setIsLoading(false)
                     showAlert()
-                    alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                    alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
                 })
         }
     }
@@ -165,7 +165,7 @@ const ProfileCardGroup = (props) => {
                 .then((res) => {
                     const payload = res.data.data.payload
                     if (payload.length > 0) {
-                        console.log(payload);
+                        // console.log(payload);
                         if (Array.isArray(payload)) {
                             setPostData(postData.concat(payload))
                         }
@@ -173,7 +173,7 @@ const ProfileCardGroup = (props) => {
                         //     setData(data.concat(payload));
                         // }
                         const newLastNumber = payload[payload.length - 1].number;
-                        console.log(">>>>>>> " + newLastNumber);
+                        // console.log(">>>>>>> " + newLastNumber);
                         setPostLastNumber(newLastNumber)
                         setPostHasMore(true)
                     }
@@ -182,11 +182,11 @@ const ProfileCardGroup = (props) => {
                     }
                     setIsLoading(false)
                 }).catch(e => {
-                    console.log(e.request);
-                    console.log(e.response);
+                    // console.log(e.request);
+                    // console.log(e.response);
                     setIsLoading(false)
                     showAlert()
-                    alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                    alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
                 })
         }
     }
@@ -198,7 +198,7 @@ const ProfileCardGroup = (props) => {
                 .then((res) => {
                     const payload = res.data.data.payload
                     if (payload.length > 0) {
-                        console.log(payload);
+                        // console.log(payload);
                         if (Array.isArray(payload)) {
                             setReqData(reqData.concat(payload))
                         }
@@ -206,7 +206,7 @@ const ProfileCardGroup = (props) => {
                         //     setData(data.concat(payload));
                         // }
                         const newLastNumber = payload[payload.length - 1].number;
-                        console.log(">>>>>>> " + newLastNumber);
+                        // console.log(">>>>>>> " + newLastNumber);
                         setReqLastNumber(newLastNumber)
                         setReqHasMore(true)
                     }
@@ -215,11 +215,11 @@ const ProfileCardGroup = (props) => {
                     }
                     setIsLoading(false)
                 }).catch(e => {
-                    console.log(e.request);
-                    console.log(e.response);
+                    // console.log(e.request);
+                    // console.log(e.response);
                     setIsLoading(false)
                     showAlert()
-                    alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                    alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
                 })
         }
     }
@@ -229,6 +229,26 @@ const ProfileCardGroup = (props) => {
 
     }, [])
 
+    useEffect(() => {
+        if (post == "show") {
+            getPosts()
+        }
+    }, [post])
+
+    useEffect(() => {
+        if (member == "show") {
+            getMembers()
+        }
+    }, [member])
+
+    useEffect(() => {
+        if (request == "show") {
+            getRequests()
+        }
+    }, [request])
+
+
+
     const btnFunc = async (i) => {
         const req = data.requests ;
         const mem = data.members ;
@@ -237,8 +257,8 @@ const ProfileCardGroup = (props) => {
             await grpMember.delete(`/req/id=${req[0].id}/rec=${req[0].request_reciever}/sen=${req[0].request_sender}`,{ headers: { 'Authorization': AuthStr } }
             ).then((res) => {
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert()
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
                 let obj = data;
@@ -248,19 +268,19 @@ const ProfileCardGroup = (props) => {
                 setBtnText("Request To Join");
                 setBtnCSS("bg-success");
             }).catch((e) => {
-                console.log("error>>>>>>>>>>>>>>>>>>");
-                console.log(e);
-                console.log(e.response);
+                // console.log("error>>>>>>>>>>>>>>>>>>");
+                // console.log(e);
+                // console.log(e.response);
                 showAlert()
-                alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         } else if(mem.length > 0){
             await grpMember.delete("/id=" + mem[0].id ,{ headers: { 'Authorization': AuthStr } }
             ).then((res) => {
                 const payload = res.data.data.payload;
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert()
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
                 // following.push(payload);
@@ -270,19 +290,19 @@ const ProfileCardGroup = (props) => {
                 setBtnText("Request To Join");
                 setBtnCSS("bg-success");
             }).catch((e) => {
-                console.log("error>>>>>>>>>>>>>>>>>>");
-                console.log(e);
-                console.log(e.response);
+                // console.log("error>>>>>>>>>>>>>>>>>>");
+                // console.log(e);
+                // console.log(e.response);
                 showAlert()
-                alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         }else if(mem.length == 0 && req.length == 0){
             await grpMember.post("/addReq/" + data.id,{request_reciever: data.created_by} ,{ headers: { 'Authorization': AuthStr } }
             ).then((res) => {
                 const payload = res.data.data.payload;
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert()
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
                 // following.push(payload);
@@ -292,11 +312,11 @@ const ProfileCardGroup = (props) => {
                 setBtnText("Cancel Request");
                 setBtnCSS("bg-light text-grey-800");
             }).catch((e) => {
-                console.log("error>>>>>>>>>>>>>>>>>>");
-                console.log(e);
-                console.log(e.response);
+                // console.log("error>>>>>>>>>>>>>>>>>>");
+                // console.log(e);
+                // console.log(e.response);
                 showAlert()
-                alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         }
     }
@@ -305,32 +325,32 @@ const ProfileCardGroup = (props) => {
         await grpMember.delete(`/req/id=${e.id}/rec=${e.request_reciever_user.id}/sen=${e.request_sender_user.id}}`, { headers: { 'Authorization': AuthStr } }
         ).then((res) => {
             const message = res.data.message;
-            console.log("res >>>>>>>>>>>");
-            console.log(res);
+            // console.log("res >>>>>>>>>>>");
+            // console.log(res);
             showAlert()
             alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
         }).catch((e) => {
-            console.log("error>>>>>>>>>>>>>>>>>>");
-            console.log(e);
-            console.log(e.response);
+            // console.log("error>>>>>>>>>>>>>>>>>>");
+            // console.log(e);
+            // console.log(e.response);
             showAlert()
-            alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+            alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
         })
     }
     const acceptReq = async (e) => {
         await grpMember.post(`/addMember/id=${e.id}`, {}, { headers: { 'Authorization': AuthStr } })
             .then((res) => {
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert()
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
             }).catch((e) => {
-                console.log("error>>>>>>>>>>>>>>>>>>");
-                console.log(e);
-                console.log(e.response);
+                // console.log("error>>>>>>>>>>>>>>>>>>");
+                // console.log(e);
+                // console.log(e.response);
                 showAlert()
-                alertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in processing", icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
     }
 
@@ -345,16 +365,16 @@ const ProfileCardGroup = (props) => {
                     <figure className="avatar position-absolute w100 h100 z-index-1" style={{ top: '-40px', left: '30px' }}><img src={`${profile_photo}`} alt="avater" className="float-right p-1 bg-white h100 rounded-circle w-100" /></figure>
                     <h4 className="fw-700 font-sm mt-2 mb-lg-5 mb-4 pl-15">{data.name}<span className="fw-500 font-xssss text-grey-500 mt-1 mb-3 d-block">{data.email}</span></h4>
                     <div className="d-flex align-items-center justify-content-center position-absolute-md right-15 top-0 me-2">
-                        <button className={`btn d-none d-lg-block ${btnCSS} p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3`} onClick={btnFunc}>{btnText}</button>
+                        <button className={`btn mb-4 ${btnCSS} p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3`} onClick={btnFunc}>{btnText}</button>
                         {/* https://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript?rq=1  SEND MAIL*/}
-                        <a href={`mailto:${data.email}`} className="d-none d-lg-block bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700"><i className="feather-mail font-md"></i></a>
+                        <a href={`mailto:${data.email}`} className="mb-4 bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700"><i className="feather-mail font-md"></i></a>
                         {/* https://www.callrail.com/blog/add-click-to-call-button-website-html/ */}
 
                     </div>
                 </div>
 
                 <div className="card-body d-block w-100 shadow-none mb-0 p-0 border-top-xs">
-                    <ul className="nav nav-tabs h55 d-flex theme-dark-bg product-info-tab border-bottom-0 ps-4" id="pills-tab" role="tablist">
+                    <ul className="nav nav-tabs h55 d-flex theme-dark-bg product-info-tab border-bottom-0 ps-4" id="pills-tab" role="tablist" style={{overflowX: "auto", flexWrap: "nowrap"}}>
                         <li className={`cursor-pointer list-inline-item me-5 fw-700 font-xssss text-grey-500 pt-3 mb-3 ls-1 ${about == "show" ? "border-bottom-auto" : ""}`} onClick={showAbout}>About</li>
                         <li className={`cursor-pointer list-inline-item me-5 fw-700 font-xssss text-grey-500 pt-3 mb-3 ls-1 ${post == "show" ? "border-bottom-auto" : ""}`} onClick={showPost}>Posts</li>
                         <li className={`cursor-pointer list-inline-item me-5 fw-700 font-xssss text-grey-500 pt-3 mb-3 ls-1 ${member == "show" ? "border-bottom-auto" : ""}`} onClick={(e) => {
@@ -378,8 +398,8 @@ const ProfileCardGroup = (props) => {
                                     return <Postview key={e.id} id={e.id} attachment={e.atachments} avatar={e.users.profile_photo} user={e.users.name} time={e.created_on} des={e.description} title={e.title} count={e._count} isLiked={e.likes} showAlert={showAlert} alertConfig={alertConfig}/>
                                 })}
                                 {data.posts && data.posts.length == 0 ?
-                                    <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-500">No Posts Available</h2> :
-                                    <Button variant="outline-primary" className="w-100 mb-2" size="lg" onClick={showPost}>See All</Button>
+                                    <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-700">No Posts Available</h2> :
+                                    <Button variant="outline-primary" className="w-100 mb-2 white-hover" size="lg" onClick={showPost}>See All</Button>
                                 }
                                 {isLoading && <Load />}
                             </div>
@@ -396,13 +416,11 @@ const ProfileCardGroup = (props) => {
                             // scrollableTarget="post-cont"
                             >
                                 {postData.map((e, index) => {
-                                    return <Postview key={e.id} id={e.id} attachment={e.atachments} avatar={e.users.profile_photo} user={e.users.name} time={e.created_on} des={e.description} title={e.title} count={e._count} isLiked={e.likes} showAlert={showAlert} alertConfig={alertConfig}/>
+                                    return <Postview key={e.id} id={e.id} attachment={e.atachments} avatar={e.users.profile_photo} user={e.users.name} user_id={e.users.user_id} time={e.created_on} des={e.description} title={e.title} count={e._count} isLiked={e.likes} showAlert={showAlert} alertConfig={alertConfig}/>
                                 })}
 
                             </InfiniteScroll>
-
-
-
+                            {postData.length == 0 && <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-700">No Posts Available</h2> }
                         </div>
                     </div>}
                     {member == "show" && <div id="member" className={member == "show" ? "d-block" : "d-none"} role="tabpanel" aria-labelledby="member-tab-1">
@@ -420,6 +438,7 @@ const ProfileCardGroup = (props) => {
                                 }
                                 {/* {isLoading && <Load />} */}
                             </InfiniteScroll>
+                            {memberData.length == 0 && <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-700">No Members Available</h2> }
                         </div>
                     </div>}
                     {request == "show" && <div id="request" className={`${request == "show" ? "d-block" : "d-none"}`} role="tabpanel" aria-labelledby="request-tab-1">
@@ -448,7 +467,7 @@ const ProfileCardGroup = (props) => {
                                 }
                                 {/* {isLoading && <Load />} */}
                             </InfiniteScroll>
-                            {reqData.length == 0 && <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-500">No Requests Available</h2> }
+                            {reqData.length == 0 && <h2 className="col-xl-8 col-xxl-9 col-lg-8 text-grey-700">No Requests Available</h2> }
                         </div>
                     </div>}
                 </div>

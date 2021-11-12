@@ -260,7 +260,7 @@ class groupsController extends BaseController {
 							},
 							{ request_reciever: user }
 							],
-							request_accepted: false	
+							request_accepted: false
 						}
 					},
 					posts: {
@@ -450,8 +450,9 @@ class groupsController extends BaseController {
 			// const tokenFromHeader = auth.getJwtToken(req);
 			// const user = jwt.decode(tokenFromHeader).payload.id;
 			const user = req.params.id;
-			let lastNumber = req.body.lastNumber;
+			let lastNumber = req.params.lastNumber;
 			lastNumber = parseInt(lastNumber.replace("n", ""), 10)
+			console.log(lastNumber);
 			// const group = req.params.id;
 			// const member_check = await isGroupMember(req, res, { group_id: group, user_id: user })
 			// console.log(member_check);
@@ -475,7 +476,7 @@ class groupsController extends BaseController {
 				},
 				select: {
 					id: true,
-					number: true, 
+					number: true,
 					groups: {
 						select: {
 							id: true,
@@ -554,8 +555,9 @@ class groupsController extends BaseController {
 			if (lastNumber > -1)
 				where.number = { lt: lastNumber };
 			//WE COULD DIRECTLY SEARCH ON GROUP MEMBER MAP BUT FINE AS OF NOW
+			const limit = query.take ? parseInt(query.take, 10) : take;
 			const options = {
-				// take: take,
+				take: limit,
 				where: where,
 				orderBy: {
 					number: "asc"

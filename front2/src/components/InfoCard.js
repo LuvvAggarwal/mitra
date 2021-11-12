@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import follow from "../api/follow"
 const img_url = require("../utils/imgURL");
-
+const errorSetter = require("../utils/errorSetter")
 const InfoCard = (props) => {
     // const [profile_img_url, set_profile_img_url] = useState(data.profile_photo)
     // const [cover_img_url, set_cover_img_url] = useState(data.cover_photo)
@@ -29,12 +29,12 @@ const InfoCard = (props) => {
 
         const following = data.following
         if (following.length > 0) {
-            console.log(following);
+            // console.log(following);
             await follow.delete("/" + following[0].id,{ headers: { 'Authorization': AuthStr } }
             ).then((res) => {
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert(true)
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
                 let obj = data;
@@ -44,15 +44,15 @@ const InfoCard = (props) => {
                 setBtnCSS("btn-primary");
             }).catch((e) => {
                 showAlert(true)
-                alertConfig({ variant: "danger", text: e.data.data.message, icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         } else {
             await follow.post("/" + data.id,{} ,{ headers: { 'Authorization': AuthStr } }
             ).then((res) => {
                 const payload = res.data.data.payload;
                 const message = res.data.message;
-                console.log("res >>>>>>>>>>>");
-                console.log(res);
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
                 showAlert(true)
                 alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
                 // following.push(payload);
@@ -64,7 +64,7 @@ const InfoCard = (props) => {
             }).catch((e) => {
                 console.log(e.request);
                 showAlert(true)
-                alertConfig({ variant: "danger", text: e.response.data.message, icon: "alert-octagon", strongText: "Error:" })
+                alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         }
     }

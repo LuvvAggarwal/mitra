@@ -53,8 +53,8 @@ const InfoCardMultiBtn = (props) => {
                     <h4 className="fw-700 font-xsss mt-3 mb-1">{data.name}</h4>
                     <p className="fw-500 font-xsssss text-grey-500 mt-0 mb-3 lh-3">{data.email}</p>
                     <div className="d-flex align-items-center">
-                        {btns.map((e)=>{
-                          return  <button className={`btn ${e.css} text-center p-2 pe-4 ps-4 lh-24 w_100 ms-1 ls-3 d-inline-block rounded-xl font-xsss fw-700 ls-lg text-white`} onClick={e.func}>{e.text}</button>
+                        {btns.map((e, i)=>{
+                          return  <button key={i} className={`btn ${e.css} text-center p-2 pe-4 ps-4 lh-24 w_100 ls-3 d-inline-block rounded-xl font-xsss fw-700 ls-lg text-white`} onClick={e.func}>{e.text}</button>
                         })}
                     </div>
                 </div>

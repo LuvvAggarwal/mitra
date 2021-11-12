@@ -4,8 +4,8 @@ import img_url from '../utils/imgURL';
 
 const FileViewer = ({ attachment, title, viewtype, css }) => {
     const renderAttachment = (attachment, title) => {
-        console.log(attachment);
-        console.log(title);
+        // console.log(attachment);
+        // console.log(title);
         const getType = (e) => {
             // console.log(e);
             var ext = e.url.split('.').pop()

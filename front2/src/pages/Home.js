@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useState, useEffect } from "react";
-
+import ReactDOM from 'react-dom'
 import Header from '../components/Header';
 import Leftnav from '../components/Leftnav';
 import Rightchat from '../components/Rightchat';
@@ -9,6 +9,7 @@ import posts from "../api/posts";
 import users from "../api/users";
 import groups from "../api/groups";
 
+import socket from '../utils/socket';
 import SuggestedFriends from '../components/SuggestedFriends';
 import SuggestedGroups from '../components/SuggestedGroups';
 import Advertisement from '../components/Advertisement';
@@ -20,136 +21,45 @@ import AdvertisementSlider from '../components/sliders/AdvertisementSlider';
 import Storyslider from '../components/Storyslider';
 import Postview from '../components/Postview';
 import Load from '../components/Load';
+import { UserContext } from "../context/UserContext";
 // import Profilephoto from '../components/Profilephoto';
 import InfiniteScroll from 'react-infinite-scroll-component';
-const { User } = useContext(UserContext);
+import * as queryString from 'query-string';
+import AlertComp from "../components/Alert";
 const access_token = localStorage.getItem("access_token");
 const AuthStr = 'Bearer '.concat(access_token);
+const errorSetter = require("../utils/errorSetter")
 // 
-const like = [
-    {
-        user_name: "luv",
-        img: "user.png"
-    },
-    {
-        user_name: "luv",
-        img: "user.png"
-    },
-    {
-        user_name: "luv",
-        img: "user.png"
-    },
-    {
-        user_name: "luv",
-        img: "user.png"
-    },
-    {
-        user_name: "luv",
-        img: "user.png"
-    },
-    {
-        user_name: "luv",
-        img: "user.png"
-    },
-    {
-        user_name: "luv",
-        img: "user.png"
-    },
-    {
-        user_name: "luv",
-        img: "user.png"
-    },
-]
-
-const comment = [
-    {
-        user_name: "luv",
-        img: "user.png",
-        comment: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
-    },
-    {
-        user_name: "luv",
-        img: "user.png",
-        comment: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
-    },
-    {
-        user_name: "luv",
-        img: "user.png",
-        comment: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
-    },
-    {
-        user_name: "luv",
-        img: "user.png",
-        comment: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
-    },
-    {
-        user_name: "luv",
-        img: "user.png",
-        comment: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
-    },
-]
-
-const attachment = [
-    {
-        id: 1,
-        mime_type: "image/png",
-        url: "post.png"
-    },
-    {
-        id: 2,
-        mime_type: "video/mp4",
-        url: "videoplayback.mp4"
-    },
-    {
-        id: 3,
-        mime_type: "application/pdf",
-        url: "sample.pdf"
-    },
-    {
-        id: 4,
-        mime_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        url: "JAI SIYARAM.docx"
-    },
-    {
-        id: 5,
-        mime_type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        url: "jai siyaram.xlsx"
-    }
-]
-
-const attachment1 = [
-    {
-        id: 3,
-        mime_type: "application/pdf",
-        url: "sample.pdf"
-    },
-]
 
 const Home = () => {
     const { User } = useContext(UserContext);
     const access_token = localStorage.getItem("access_token");
     const AuthStr = 'Bearer '.concat(access_token);
     const [user, setUser] = useState({});
+    const [socketState, setSocketState] = useState(socket)
+    const [profilePhoto, setProfilePhoto] = useState("")
     const [postLastRank, setPostLastRank] = useState(-1)
     const [postHasMore, setPostHasMore] = useState(true);
-    const [postData, setpostData] = useState([]);
+    const [postData, setPostData] = useState([]);
+    // const [groupLast, setgroupLast] = useState(initialState)
     const [userData, setUserData] = useState([]);
     const [groupData, setGroupData] = useState([]);
+    const [newPostData, setNewPostData] = useState([]);
+    let newPostDataCache = []
     // Advertisement
     // Alert
     const [showAlert, setShowAlert] = useState(false)
     const [alertConfig, setAlertConfig] = useState({})
     // Loader
     const [isLoading, setIsLoading] = useState(false)
-
-    const getFeed = () => {
+    const getFeed = async () => {
         if (postHasMore) {
             setIsLoading(true)
-            await posts.get(`/fees/${postLastRank}`, { headers: { 'Authorization': AuthStr } })
+            await posts.get(`/feed/${postLastRank}/-1`, { headers: { 'Authorization': AuthStr } })
                 .then((res) => {
                     const payload = res.data.data.payload
                     if (payload.length > 0) {
-                        console.log(payload);
+                        // console.log(payload);
                         if (Array.isArray(payload)) {
                             setPostData(postData.concat(payload))
                         }
@@ -157,7 +67,7 @@ const Home = () => {
                         //     setData(data.concat(payload));
                         // }
                         const newLastRank = payload[payload.length - 1].rank;
-                        console.log(">>>>>>> " + newLastRank);
+                        // console.log(">>>>>>> " + newLastRank);
                         setPostLastRank(newLastRank)
                         setPostHasMore(true)
                     }
@@ -166,14 +76,108 @@ const Home = () => {
                     }
                     setIsLoading(false)
                 }).catch(e => {
-                    console.log(e.request);
-                    console.log(e.response);
+                    // console.log(e.request);
+                    // console.log(e.response);
                     setIsLoading(false)
                     setShowAlert(true)
-                    setAlertConfig({ variant: "danger", text: e.response ? e.response.data.message : "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                    setAlertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
                 })
         }
     }
+
+    const getGroups = async () => {
+
+        const stringifiedQuery = queryString.stringify({
+            lastNumber: -1,
+            problem: user.problem_category,
+            take: 25
+            // keyword: search,
+        });
+
+        await groups.get("/groups/" + stringifiedQuery,
+            { headers: { 'Authorization': AuthStr } }
+        ).then((res) => {
+            const payload = res.data.data.payload
+            if (payload.length > 0) {
+                // console.log(payload);
+                if (Array.isArray(payload)) {
+                    setGroupData(groupData.concat(payload))
+                }
+                // else if (Array.isArray(payload)) {
+                //     setData(data.concat(payload));
+                // }
+            }
+        }).catch((e) => {
+            setShowAlert(true)
+            setAlertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
+        })
+    }
+
+    const getUsers = async () => {
+
+        const stringifiedQuery = queryString.stringify({
+            lastNumber: -1,
+            problem: user.problem_category,
+            take: 25,
+            type: JSON.stringify({ in: ["USER", "NGO", "COUNSALER"] }),
+            // keyword: "",
+        });
+
+        await users.get("/users/" + stringifiedQuery,
+            { headers: { 'Authorization': AuthStr } }
+        ).then((res) => {
+            const payload = res.data.data.payload
+            if (payload.length > 0) {
+                // console.log(payload);
+                if (Array.isArray(payload)) {
+                    setUserData(userData.concat(payload))
+                }
+                // else if (Array.isArray(payload)) {
+                //     setData(data.concat(payload));
+                // }
+            }
+        }).catch((e) => {
+            setShowAlert(true)
+            setAlertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
+        })
+    }
+
+    useEffect(() => {
+        User.then((res) => {
+            setUser(res)
+            setProfilePhoto(res.profile_photo)
+        })
+        getGroups();
+        getUsers();
+        getFeed();
+    }, [])
+    useEffect(() => {
+        socket.on("followers",async (list) => {
+            if (list.indexOf(user.id)) {
+                // (async () => {
+                    await posts.get(`/feed/-1/1`, { headers: { 'Authorization': AuthStr } })
+                        .then((res) => {
+                            const payload = res.data.data.payload;
+                            const data = payload[0]
+                            if (payload.length > 0) {
+                                newPostDataCache = [...payload, ...newPostDataCache];
+                                setNewPostData(newPostDataCache)
+                            }
+                        }).catch(e => {
+                            console.error(e);
+                            setShowAlert(true)
+                            setAlertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
+                        })
+                // })()
+            }
+        });
+        return ()=>{ 
+            socket.off("Unmounting");
+            socket.disconnect();
+        }
+
+    }, [socket])
+
     return (
         <Fragment>
             {showAlert && <AlertComp config={alertConfig} show={true}></AlertComp>}
@@ -187,29 +191,38 @@ const Home = () => {
                         <div className="row feed-body">
                             <div className="col-xl-8 col-xxl-9 col-lg-8">
                                 {/* <Storyslider /> */}
-                                <Createpost />
-                                <Postview id="32" attachment={attachment1} avater="user.png" user="Surfiya Zakir" time="22 min ago" title="There is something more in everything" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." like={like}
-                                    comment={comment}
-                                />
-                                <Postview id="31" attachment={attachment} avater="user.png" user="David Goria" time="22 min ago" title="There is something more in everything" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." like={like}
-                                    comment={comment}
-                                />
-                                <Postview id="33" attachment={attachment1} avater="user.png" user="Anthony Daugloi" time="2 hour ago" title="There is something more in everything" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." like={like}
-                                    comment={comment}
-                                />
-                                <Groupslider />
-                                <Postview id="35" attachment={attachment} avater="user.png" user="Victor Exrixon" time="3 hour ago" title="There is something more in everything" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." like={like} comment={comment}
-                                />
-                                <UserSlider />
-                                <Postview id="36" attachment={attachment} avater="user.png" user="Victor Exrixon" time="12 hour ago" title="There is something more in everything" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." like={like} comment={comment}
-                                />
-                                <AdvertisementSlider />
-                                <Load />
+                                <Createpost showAlert={() => setShowAlert(true)} alertConfig={setAlertConfig} profile_photo={profilePhoto} />
+                                <InfiniteScroll id="post-list" className="row infinite-scroll"
+                                    dataLength={postData.length}
+                                    next={getFeed}
+                                    hasMore={postHasMore}
+                                    loader={<Load />}
+                                // scrollableTarget="post-cont"
+                                >
+
+                                    {newPostData.map((e, index) => {
+                                        // const e = newPostData[key];
+                                        return <Postview key={e.id} id={e.id} attachment={e.atachments} avatar={e.users.profile_photo} user_id={e.users.user_id} user={e.users.name} time={e.created_on} des={e.description} title={e.title} count={e._count} isLiked={e.likes} showAlert={() => setShowAlert(true)} alertConfig={setAlertConfig} group={e.groups ? e.groups.name : ""} />
+
+                                    })}
+                                    {postData.map((e, index) => {
+                                        if (index % 3 == 0 && index % 6 != 0) {
+                                            return <UserSlider data={userData} showAlert={setShowAlert} alertConfig={setAlertConfig} />
+                                        } else if (index % 6 == 0 && index != 0) {
+                                            return <Groupslider data={groupData} showAlert={setShowAlert} alertConfig={setAlertConfig} />
+                                        }
+                                        else {
+                                            return <Postview key={e.id} id={e.id} attachment={e.atachments} avatar={e.users.profile_photo} user_id={e.users.user_id} user={e.users.name} time={e.created_on} des={e.description} title={e.title} count={e._count} isLiked={e.likes} showAlert={() => setShowAlert(true)} alertConfig={setAlertConfig} group={e.groups ? e.groups.name : ""} />
+                                        }
+                                    })}
+
+                                </InfiniteScroll>
                             </div>
-                            <div className="col-xl-4 col-xxl-3 col-lg-4 ps-lg-0">
-                                <SuggestedFriends />
-                                <SuggestedGroups />
-                                <Advertisement />
+                            <div
+                                className="col-xl-4 col-xxl-3 col-lg-4 ps-lg-0">
+                                <SuggestedFriends data={userData.slice(0, 4)} />
+                                <SuggestedGroups data={groupData.slice(0, 4)} />
+                                {/* <Advertisement /> */}
                                 {/* <Events />
                                     <Profilephoto /> */}
                             </div>

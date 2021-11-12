@@ -1,3 +1,14 @@
+/*
+लोकाभिरामं रणरंगधीरं राजीवनेत्रं रघुवंशनाथं ।
+कारुण्यरूपं करुणाकरं तं श्रीरामचन्द्रं शरणं प्रपद्ये ॥32॥
+
+मनोजवं मारुततुल्यवेगं जितेन्द्रियं बुद्धिमतां वरिष्ठम ।
+वातात्मजं वानरयूथमुख्यं श्रीराम दूतं शरणं प्रपद्ये ॥33॥
+
+|| श्री सीतारामचंद्र प्रीतिअर्थे समर्पणं अस्तु ||
+|| श्री सीतारामचंद्र अर्पणम अस्तु ||
+*/
+
 // JAI SHREE SITARAM
 const express = require('express');
 // const bodyParser = require('body-parser');
@@ -8,10 +19,21 @@ const uuid = require('uuid');
 const config = require('../config/appconfig');
 const Logger = require('../utils/logger.js');
 const cookieParser = require('cookie-parser');
-// const config = require("../config/appconfig");
+
+
+const app_config = require("../config/appconfig");
 const WorkerCon = require("../Worker/WorkerPoolController")
 const logger = new Logger();
 const app = express();
+const http = require('http')
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server, {
+	cors: {
+		origin: [app_config.app.front]
+	}
+});
+const {getList} = require("../controllers/BaseController")
 app.set('config', config); // the system configrationsx
 
 app.use(express.json());
@@ -53,6 +75,30 @@ app.use((req, res, next) => {
 	next(err);
 });
 
+io.on('connection', (socket) => {
+	console.log('a user connected ' + socket.id);
+
+	socket.on('post-created', async(id) => {
+		console.log(">>>>>>> " + id);
+		const opt = {
+			where: {
+				id: id
+			},
+			select: {
+				id: true
+			}
+		}
+		const followers = await getList(id, "follower_following", opt)
+		let result = [];
+		followers.map((e)=>{
+			result.push(e.id) ;
+		})
+		console.log(result);
+		socket.broadcast.emit("followers" ,result.toString());
+	  });
+  });
+  
+
 (async () => {
 	// Init Worker Pool
 	if (worker.enabled === '1') {
@@ -61,7 +107,7 @@ app.use((req, res, next) => {
 	}
 
 	// Start Server
-	app.listen(port, () => {
+	server.listen(port, () => {
 		console.log('Server is listening on: ', port)
 	})
 })()

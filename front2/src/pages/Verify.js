@@ -2,14 +2,14 @@ import React, { Component, Fragment } from "react";
 import { Redirect } from "react-router";
 // import { Link } from 'react-router-dom';
 import auth from "../api/auth"
-
+const errorSetter = require("../utils/errorSetter")
 class Verify extends Component {
     constructor(props) {
         super(props);
         this.state = {
             text: "Verifing"
         }
-        console.log("test");
+        // console.log("test");
     }
     componentDidMount() {
         window.addEventListener('load', this.verify);
@@ -17,15 +17,15 @@ class Verify extends Component {
 
     verify = async() => {
     const path = this.props.location.pathname;
-    console.log(path);
+    // console.log(path);
     try {
         const response = await auth.put(path).then(res => {
             this.setState({ text: "Verified" });
             // return 
         })
     } catch (error) {
-        console.log(path);
-        this.setState({ text: JSON.stringify(error) });
+        // console.log(path);
+        this.setState({ text: errorSetter(error) });
     }
 
 }

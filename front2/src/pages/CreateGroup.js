@@ -14,6 +14,7 @@ import Popupchat from '../components/Popupchat';
 const img_url = require("../utils/imgURL") ;
 const Joi = require("joi")
 const data_type = require("../validation/dataTypes");
+const errorSetter = require("../utils/errorSetter")
 // import { ph_number } from "../../../server/config/validations/dataTypes";
 
 
@@ -43,7 +44,7 @@ const CreateGroup = () => {
             const problems = problemData.data.data.payload;
             setProblemList(problems);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
     useEffect(() => {
@@ -53,10 +54,10 @@ const CreateGroup = () => {
 
     const updateProfile = async (e) => {
         e.preventDefault()
-        console.log(e.target);
+        // console.log(e.target);
         setDisable(true)
-        console.log(e);
-        console.log('starte');
+        // console.log(e);
+        // console.log('starte');
         const schema = Joi.object({
             name: data_type.str_250_req,
             email: data_type.email,
@@ -80,16 +81,16 @@ const CreateGroup = () => {
         }
 
         const { error } = schema.validate(validate)
-        console.log(JSON.stringify(error));
+        // console.log(JSON.stringify(error));
         if (error) {
             setShowError(true)
-            console.log(error);
+            // console.log(error);
             setError(error.details[0].message)
         } else {
             // this.setDisable(true);
             try {
                 const updateProfileForm = document.getElementById("updateProfileForm")
-                console.log(updateProfileForm);
+                // console.log(updateProfileForm);
                 let formData = new FormData();
                 formData.append("name", name);
                 formData.append("email", email);
@@ -98,26 +99,27 @@ const CreateGroup = () => {
                 formData.append("problem_category", problem);
                 formData.append("profile_photo", profile_img);
                 formData.append("cover_photo", cover_img)
-                console.log(formData.getAll("keys"));
+                // console.log(formData.getAll("keys"));
 
                 const access_token = localStorage.getItem("access_token");
                 const AuthStr = 'Bearer '.concat(access_token);
-                console.log(AuthStr);
+                // console.log(AuthStr);
                 const response = await groups.post("/create", formData,
                     { headers: { 'Authorization': AuthStr, 'Content-Type': 'multipart/form-data' } }
                 ).then((res) => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     setDisable(false)
                     setShowSuccess(true)
                     setSuccess(res.data.message)
                 }).catch((e) => {
                     setDisable(false)
                     setShowError(true)
-                    setError(e.response.data.message)
+                    setError(errorSetter(e))
                 })
 
             } catch (e) {
-                console.log(e);
+                setShowError(true);
+                setError(errorSetter(e))
             }
         }
 
@@ -163,7 +165,7 @@ const CreateGroup = () => {
                                                         // console.log(e);
                                                         const url = URL.createObjectURL(e.target.files[0])
                                                         setProfileImgURL(url)
-                                                        console.log(url);
+                                                        // console.log(url);
                                                     }} />
                                                 </label>
 
@@ -217,7 +219,7 @@ const CreateGroup = () => {
                                                 <div className="col-lg-12 mb-3">
                                                     <div className="form-group">
                                                         <label htmlFor="bio">Bio</label>
-                                                        <textarea className="form-control h75 scroll-bar bor-0 w-100 rounded-xxl p-2 ps-2 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" id="bio" rows="3" value={bio} onChange={(e) => { setBio(e.target.value) }}></textarea>
+                                                        <textarea className="form-control h75 scroll-bar w-100 rounded-xxl p-2 ps-2 font-xssss text-grey-500 fw-500 theme-dark-bg" id="bio" rows="3" value={bio} onChange={(e) => { setBio(e.target.value) }}></textarea>
                                                     </div>
                                                 </div>
                                             </div>

@@ -315,7 +315,7 @@ class BaseController {
 	}
 
 	static async getList(req, modelName, options) {
-		const page = req.query.page;
+		// const page = req.query.page;
 		// const  = req.query.number;
 		let results;
 		// {take: ___,where: ___} from options

@@ -617,21 +617,17 @@ class postsController extends BaseController {
 
 	static async getFeed(req, res) {
 		try {
-			// const tokenFromHeader = auth.getJwtToken(req);
-			// const user = jwt.decode(tokenFromHeader).payload.id;
 			const user = req.decoded.payload.id;
 			// const lastRank = req.body.lastRank;
 			let lastRank = req.params.lastRank
-			lastNumber = parseInt(lastRank.replace("n", ""), 10);
-			// const group = req.params.id;
-			// const member_check = await super.isGroupMember(req, res, { group_id: group, user_id: user })
-			// console.log(member_check);
-			// console.log(JSON.stringify(member_check));
+			lastRank = parseInt(lastRank.replace("n", ""), 10);
+			const takeParm = parseInt(req.params.take, 10);
 			const schema = {
 				user: data_type.id,
-				lastRank: data_type.number
+				lastRank: data_type.number,
+				takeParm: data_type.number
 			}
-			const { error } = Joi.validate({ user, lastRank/*is_active: req.body.is_active */ }, schema);
+			const { error } = Joi.validate({ user, lastRank, takeParm }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			console.log('GETTING');
 
@@ -644,10 +640,12 @@ class postsController extends BaseController {
 					following: true
 				}
 			})
-			const following = following_records.map(function (obj) {
-				return obj.id;
+			const following = []
+			following_records.map(function (obj) {
+				following.push(obj.following);
 			});
-
+			console.log(following_records);
+			console.log(following);
 			const group_records = await super.getList(req, "group_member_map", {
 				where: {
 					user_id: user,
@@ -657,13 +655,16 @@ class postsController extends BaseController {
 					group_id: true
 				}
 			})
-			const groups = group_records.map(function (obj) {
-				return obj.id;
+			console.log(group_records);
+			const groups = []
+			group_records.map(function (obj) {
+				groups.push(obj.group_id);
 			});
 
 			//WE COULD DIRECTLY SEARCH ON GROUP MEMBER MAP BUT FINE AS OF NOW
+			const defaultTake = takeParm == -1 ? take : takeParm
 			const options = {
-				take: take,
+				take: defaultTake,
 				where: {
 					OR: [
 						{ user_id: { in: following } },
@@ -674,17 +675,24 @@ class postsController extends BaseController {
 				},
 				orderBy: [
 					{
-						rank: 'desc',
-					},
-					{
 						number: 'desc',
 					},
+					{
+						rank: 'desc',
+					},
+					
 				],
 				select: {
 					id: true,
 					title: true,
 					description: true,
 					rank: true,
+					created_on: true,
+					likes: {
+						where: {
+							user_id : user
+						}
+					},
 					groups: {
 						select: {
 							group_id: true,
@@ -735,7 +743,9 @@ class postsController extends BaseController {
 
 	static async getPopular(req, res) {
 		try {
-			const lastRank = req.body.lastRank;
+			const user = req.decoded.payload.id;
+			let lastRank = req.params.lastRank
+			lastRank = parseInt(lastRank.replace("n", ""), 10);
 			const schema = {
 				// user: data_type.id,
 				lastRank: data_type.number
@@ -761,6 +771,110 @@ class postsController extends BaseController {
 					title: true,
 					description: true,
 					rank: true,
+					created_on: true,
+					likes: {
+						where: {
+							user_id : user
+						}
+					},
+					groups: {
+						select: {
+							group_id: true,
+							name: true,
+							profile_photo: true,
+							cover_photo: true,
+						}
+					},
+					users: {
+						select: {
+							user_id: true,
+							name: true,
+							gender: true,
+							profile_photo: true,
+							// cover_photo: true,
+						}
+					},
+					post_category: {
+						select: {
+							id: true,
+							name: true,
+							value: true
+						}
+
+					},
+					atachments: true,
+					_count: {
+						select: {
+							comments: true,
+							likes: true,
+							shares: true,
+						}
+					}
+				}
+			}
+			if (lastRank > -1)
+				options.where.rank = { lt: lastRank };
+			console.log(options);
+			const payload = await super.getList(req, 'posts', options);
+			// const payload = user_grp_map;
+			console.log(payload);
+			return requestHandler.sendSuccess(res, 'Popular Posts')({ payload });
+		} catch (err) {
+			console.log(err);
+			return requestHandler.sendError(req, res, err);
+		}
+	}
+
+	static async getSearchedPost(req, res) {
+		try {
+			const user = req.decoded.payload.id;
+			const q = req.params.q
+			let lastRank = req.params.lastRank
+			lastRank = parseInt(lastRank.replace("n", ""), 10);
+			const schema = {
+				// user: data_type.id,
+				q: data_type.text_req,
+				lastRank: data_type.number
+			}
+			const { error } = Joi.validate({ lastRank, q /*is_active: req.body.is_active */ }, schema);
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+			console.log('GETTING');
+
+
+			//WE COULD DIRECTLY SEARCH ON GROUP MEMBER MAP BUT FINE AS OF NOW
+			const options = {
+				take: take,
+				where: {
+					active: true,
+					OR: [
+						{
+							title: {
+								contains: q,
+								mode: 'insensitive'
+							}, 
+							description: {
+								contains: q,
+								mode: 'insensitive'
+							}
+						}
+					]
+				},
+				orderBy: [
+					{
+						rank: 'desc',
+					},
+				],
+				select: {
+					id: true,
+					title: true,
+					description: true,
+					rank: true,
+					created_on: true,
+					likes: {
+						where: {
+							user_id : user
+						}
+					},
 					groups: {
 						select: {
 							group_id: true,

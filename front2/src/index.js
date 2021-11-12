@@ -1,3 +1,14 @@
+/*
+लोकाभिरामं रणरंगधीरं राजीवनेत्रं रघुवंशनाथं ।
+कारुण्यरूपं करुणाकरं तं श्रीरामचन्द्रं शरणं प्रपद्ये ॥32॥
+
+मनोजवं मारुततुल्यवेगं जितेन्द्रियं बुद्धिमतां वरिष्ठम ।
+वातात्मजं वानरयूथमुख्यं श्रीराम दूतं शरणं प्रपद्ये ॥33॥
+
+|| श्री सीतारामचंद्र प्रीतिअर्थे समर्पणं अस्तु ||
+|| श्री सीतारामचंद्र अर्पणम अस्तु ||
+*/
+
 // React Required
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -6,7 +17,7 @@ import { UserContextProvider } from './context/UserContext';
 import './main.scss';
 
 // Common Layout
-import Demo from './demo/Demo';
+import Info from './info/info';
 import Home from './pages/Home';
 
 import Badge from './pages/Badge';
@@ -14,6 +25,7 @@ import Group from './pages/Groups';
 import User from './pages/Users';
 import Counsaler from './pages/Counsaler';
 import NGO from './pages/NGO';
+import Search  from './pages/Search';
 import Storie from './pages/Storie';
 import Member from './pages/Member';
 import Email from './pages/Email';
@@ -66,7 +78,7 @@ const Root = () => {
         <UserContextProvider>
             <BrowserRouter basename={'/'}>
                 <Switch>
-                    <Route exact path={`${process.env.PUBLIC_URL}/`} component={Demo} />
+                    <Route exact path={`${process.env.PUBLIC_URL}/`} component={Info} />
                     <Route exact path={`${process.env.PUBLIC_URL}/home`} component={Home} />
                     {/* <Route path={`${process.env.PUBLIC_URL}/verify/:id`}><Verify/></Route> */}
                     <Route exact path={`${process.env.PUBLIC_URL}/verify/:id`} component={Verify} />
@@ -85,8 +97,9 @@ const Root = () => {
                     <Route exact path={`${process.env.PUBLIC_URL}/popular`} component={Popular} />
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultanalytics`} component={Analytics} />
 
-
+                    <Route exact path={`${process.env.PUBLIC_URL}/search/:q`} component={Search} />
                     <Route exact path={`${process.env.PUBLIC_URL}/updateProfile`} component={UpdateProfile} />
+
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultmember`} component={Member} />
                     <Route exact path={`${process.env.PUBLIC_URL}/contactinformation`} component={Contactinfo} />
                     <Route exact path={`${process.env.PUBLIC_URL}/authenticate/google`} component={AuthenticateGoogle}/>

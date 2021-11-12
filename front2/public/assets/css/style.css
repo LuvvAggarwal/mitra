@@ -187,6 +187,10 @@
   background-color: #000;
 }
 
+.bg-white {
+  background-color: #fff !important;
+}
+
 .text-facebook {
   color: #0d66ff !important;
 }
@@ -221,6 +225,10 @@
 
 .text-red {
   color: red !important;
+}
+
+.text-white {
+  color: white !important;
 }
 
 .text-ornage {
@@ -277,6 +285,14 @@
 
 .bg-purple-gradiant {
   background: linear-gradient(to right, #9f05e6, #2c0279) !important;
+}
+
+.white-hover:hover {
+  color: #fff !important;
+}
+
+.bg-white {
+  background-color: #ffffff !important;
 }
 
 .bg-grey {
@@ -823,6 +839,10 @@
 
 .h600 {
   height: 600px !important;
+}
+
+.h-100per {
+  height: 100%;
 }
 
 .max-h5 {
@@ -1649,6 +1669,7 @@
 .theme-dark .form-control {
   background-color: #333 !important;
   border-color: var(--theme-color);
+  color: #adb5bd !important;
 }
 .theme-dark .dropdown-menu-settings:after {
   border-color: transparent transparent #1a2236 transparent;
@@ -16804,6 +16825,34 @@ button[disabled] {
   margin-left: -5px;
   margin-right: -5px;
   overflow-x: hidden !important;
+}
+
+#hero-video {
+  height: 75vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.hero-con {
+  position: absolute;
+  top: 88px;
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 61%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.heading {
+  font-size: 4rem !important;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.m-h {
+  margin-top: 55%;
 }
 
 /*# sourceMappingURL=style.css.map */

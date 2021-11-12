@@ -16,7 +16,7 @@ const DarkMode = (props) => {
   }
 
   let icon = theme === darkTheme ? "sun" : "moon";
-  console.log(theme);
+  // console.log(theme);
   const switchTheme = e => {
     if (theme === darkTheme) {
       body.classList.replace(darkTheme, lightTheme)

@@ -250,6 +250,7 @@ class groupsMemberController extends BaseController {
 				take: take,
 				where: {
 					group_id: req.params.id,
+					active: true,
 					// is_admin: data.is_admin === 'true'
 				},
 				orderBy:{

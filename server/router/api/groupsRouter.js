@@ -311,7 +311,7 @@ router.post('/create', auth.isAuthunticated, profile, GroupsController.createGro
  *         schema:
  *           $ref: '#/definitions/group'
  */
-router.get('/user/id=:id', auth.isAuthunticated, GroupsController.groupsList);
+router.get('/user/:id/:lastNumber', auth.isAuthunticated, GroupsController.groupsList);
 
 router.get('/groups/:q', auth.isAuthunticated, GroupsController.getGroups);
 

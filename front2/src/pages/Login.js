@@ -8,7 +8,7 @@ import AlertComp from "../components/Alert";
 
 const Joi = require("joi")
 const data_type = require("../validation/dataTypes");
-
+const errorSetter = require("../utils/errorSetter")
 
 
 const Login = (props) => {
@@ -66,7 +66,7 @@ const Login = (props) => {
             password: password,
         }
         const { error } = schema.validate(validate)
-        console.log(JSON.stringify(error));
+        // console.log(JSON.stringify(error));
         if (error) {
             // setShowError(true)
             // setError(error.details[0].message)
@@ -78,23 +78,24 @@ const Login = (props) => {
                 const response = await auth.post("/login",
                     { email, password }
                 ).then((res) => {
-                    console.log(res);
+                    // console.log(res);
                     localStorage.setItem("access_token", res.data.data.payload.access_token)
                     setCurrentUser(res.data.data.payload.access_token)
                 }).catch((e) => {
                     // setShowError(true)
                     // setError(error.details[0].message)
                     setShowAlert(true)
-                    setAlertConfig({ variant: "danger", text: e.response.data.message, icon: "alert-octagon", strongText: "Error:" })
+                    setAlertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
                 })
 
             } catch (e) {
-                console.log(e);
+                setShowAlert(true)
+                setAlertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             }
 
         }
     }
-    console.log(process.env);
+    // console.log(process.env);
     const stringifiedParams = queryString.stringify({
         client_id: process.env.REACT_APP_GOOGLE_0AUTH_CLIENT_ID,
         redirect_uri: 'http://localhost:3000/authenticate/google',

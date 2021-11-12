@@ -6,12 +6,14 @@ const img_url = require("../utils/imgURL") ;
 
 const Appfooter = (params) => {
     const { User } = useContext(UserContext);
+    const [id, setId] = useState("")
     const [imgURL, setImgURL] = useState("")
     if (User) {
         User.then((res)=>{
-            console.log(res);
-            console.log(res.profile_photo);
+            // console.log(res);
+            // console.log(res.profile_photo);
             setImgURL(res.profile_photo) ;
+            setId(res.user_id)
         });
     }
 
@@ -21,7 +23,7 @@ const Appfooter = (params) => {
                 <Link to="/popular" className="nav-content-bttn"><i className="feather-package"></i></Link>
                 <Link to="/groups" className="nav-content-bttn" data-tab="chats"><i className="feather-layout"></i></Link>           
                 <Link to="/users" className="nav-content-bttn"><i className="feather-layers"></i></Link>
-                <Link to="/userProfile" className="nav-content-bttn"><img src={imgURL ? img_url(imgURL) : "assets/images/user.png"} alt="user" className="w40 h40 mt--1 rounded-circle" /></Link>
+                <Link to={"/userProfile/" + id} className="nav-content-bttn"><img src={imgURL ? img_url(imgURL) : "assets/images/user.png"} alt="user" className="w40 h40 mt--1 rounded-circle" /></Link>
             </div>        
         );
     }

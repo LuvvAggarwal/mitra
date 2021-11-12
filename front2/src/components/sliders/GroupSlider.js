@@ -1,52 +1,130 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
+import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 import Slider from "react-slick";
-
-const memberList = [
-    {   
-        bgUrl: 'story.png',
-        imageUrl: 'user.png',
-        name: 'Aliqa Macale ',
-        email: 'support@gmail.com',
-    },
-    {   
-        bgUrl: 'story.png',
-        imageUrl: 'user.png',
-        name: 'Seary Victor ',
-        email: 'support@gmail.com',
-    },
-    {   
-        bgUrl: 'story.png',
-        imageUrl: 'user.png',
-        name: 'John Steere ',
-        email: 'support@gmail.com',
-    },
-    {   
-        bgUrl: 'story.png',
-        imageUrl: 'user.png',
-        name: 'Mohannad Zitoun ',
-        email: 'support@gmail.com',
-    },
-    {   
-        bgUrl: 'story.png',
-        imageUrl: 'user.png',
-        name: 'Studio Express ',
-        email: 'support@gmail.com',
-    },
-    {   
-        bgUrl: 'story.png',
-        imageUrl: 'user.png',
-        name: 'Hendrix Stamp ',
-        email: 'support@gmail.com',
-    },
-    {   
-        bgUrl: 'story.png',
-        imageUrl: 'user.png',
-        name: 'Mohannad Zitoun ',
-        email: 'support@gmail.com',
-    },
-]
-
+import grpMember from '../../api/groupMember';
+import img_url from '../../utils/imgURL';
+const errorSetter = require("../../utils/errorSetter");
 class GroupSlider extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: this.props.data,
+            disable: false
+        }
+
+    }
+    btnTextCtrl = (data) => {
+        const req = data.requests ;
+        const mem = data.members ;
+        if(req.length == 0 && mem.length == 0){
+            return "Request"
+        }
+        if (req.length > 0) {
+            return "Cancel"
+        }
+        if (mem.length > 0) {
+            return "Leave"
+        }
+    }
+
+    btnCSSCtrl = (data) => {
+        const req = data.requests ;
+        const mem = data.members ;
+        if(req.length == 0 && mem.length == 0){
+            return "bg-success"
+        }
+        if (req.length > 0) {
+            return "bg-light text-grey-800"
+        }
+        if (mem.length > 0) {
+            return "bg-danger"
+        }
+    }
+
+    btnFunc = async (data, i) => {
+        // const target = data[i];
+        const access_token = localStorage.getItem("access_token");
+        const AuthStr = 'Bearer '.concat(access_token);
+        this.setState({disable: true})
+        const req = data.requests ;
+        const mem = data.members ;
+        if (req.length > 0) {
+            // alert("=      = req");
+            await grpMember.delete(`/req/id=${req[0].id}/rec=${req[0].request_reciever}/sen=${req[0].request_sender}`,{ headers: { 'Authorization': AuthStr } }
+            ).then((res) => {
+                const message = res.data.message;
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
+                this.props.showAlert(true)
+                this.props.alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
+                let obj = data;
+                // console.log(obj);
+                obj.requests.pop();
+                const suggestedData = this.state.data;
+                suggestedData[i] = obj;
+                this.setState({data: suggestedData})
+               
+            }).catch((e) => {
+                // console.log("error>>>>>>>>>>>>>>>>>>");
+                // console.log(e);
+                // console.log(e.response);
+                this.props.showAlert(true)
+                this.props.alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
+            })
+        } else if(mem.length > 0){
+            await grpMember.delete("/id=" + mem[0].id ,{ headers: { 'Authorization': AuthStr } }
+            ).then((res) => {
+                const payload = res.data.data.payload;
+                const message = res.data.message;
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
+                this.props.showAlert(true)
+                this.props.alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
+                // following.push(payload);
+                let obj = data;
+                obj.members.pop();
+                const suggestedData = this.state.data;
+                suggestedData[i] = obj;
+                this.setState({data: suggestedData})
+            }).catch((e) => {
+                // console.log("error>>>>>>>>>>>>>>>>>>");
+                // console.log(e);
+                // console.log(e.response);
+                this.props.showAlert(true)
+                this.props.alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
+            })
+        }else if(mem.length == 0 && req.length == 0){
+            await grpMember.post("/addReq/" + data.id,{request_reciever: data.created_by} ,{ headers: { 'Authorization': AuthStr } }
+            ).then((res) => {
+                const payload = res.data.data.payload;
+                const message = res.data.message;
+                // console.log("res >>>>>>>>>>>");
+                // console.log(res);
+                this.props.showAlert(true)
+                this.props.alertConfig({ variant: "success", text: message, icon: "check", strongText: "Success:" })
+                // following.push(payload);
+                let obj = data;
+                obj.requests.push(payload);
+                const suggestedData = this.state.data;
+                suggestedData[i] = obj;
+                this.setState({data: suggestedData})
+            }).catch((e) => {
+                // console.log("error>>>>>>>>>>>>>>>>>>");
+                // console.log(e);
+                // console.log(e.response);
+                this.props.showAlert(true)
+                this.props.alertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
+            })
+        }
+        this.setState({disable: false})
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.data !== this.props.data) {
+          this.setState({data: this.props.data});
+        }
+      }
+
     render() {
         const settings = {
             arrows: false,
@@ -62,21 +140,19 @@ class GroupSlider extends Component {
                 <div className="border-bottom-light mb-2">
                     <h4 className="fw-400 font-xss mb-1">Groups</h4>
                 </div>
-            <Slider {...settings}>
-                {memberList.map((value , index) => (
-                <div key={index} className="card w200 d-block border-0 shadow-xss rounded-xxl overflow-hidden mb-3 me-3">
-                    <div className="card-body position-relative h100 bg-image-cover bg-image-center" style={{backgroundImage: `url("assets/images/${value.bgUrl}")`}}></div>
-                    <div className="card-body d-block w-100 ps-4 pe-4 pb-4 text-center">
-                        <figure className="avatar overflow-hidden ms-auto me-auto mb-0 mt--6 position-relative w75 z-index-1"><img src={`assets/images/${value.imageUrl}`} alt="avater" className="float-right p-1 bg-white rounded-circle w-100" /></figure>
-                        <div className="clearfix"></div>
-                        <h4 className="fw-700 font-xsss mt-2 mb-1">{value.name} </h4>
-                        <p className="fw-500 font-xsssss text-grey-500 mt-0 mb-2">{value.email}</p>
-                        <span className="live-tag mt-2 mb-0 bg-success p-2 z-index-1 rounded-3 text-white font-xsssss text-uppersace fw-700 ls-3">Join</span>
-                        <div className="clearfix mb-2"></div>
-                    </div>
-                </div>
-                ))}
-            </Slider>
+                <Slider {...settings}>
+                    {this.state.data.map((value, index) => (
+                        <div key={index} className="card w150 d-block border-0 shadow-xss rounded-3 overflow-hidden mb-3 me-3 ">
+                            <div className="card-body d-block w-100 ps-3 pe-3 pb-4 text-center">
+                                <a href={`/userProfile/${value.user_id}`}><figure className="overflow-hidden avatar ms-auto me-auto mb-0 position-relative w45 z-index-1"><img src={`${value.profile_photo ? img_url(value.profile_photo) : "/files/user.png"}`} alt="avater" className="float-right p-0 bg-white rounded-circle w45 h45 shadow-xss" /></figure></a>
+                                <div className="clearfix"></div>
+                                <h4 className="fw-700 font-xssss mt-3 mb-1 d-block w-100"> {value.name} </h4>
+                                <p className="fw-500 font-xsssss text-grey-500 mt-0 mb-3 lh-2">{value.type}</p>
+                                <button disable={this.state.disable.toString()} onClick={(e) => this.btnFunc(value, index)} className={`btn text-center p-2 lh-20 w100 ms-1 ls-3 d-inline-block rounded-xl bg-success font-xsssss fw-700 ls-lg text-white ${this.btnCSSCtrl(value)}`}>{this.btnTextCtrl(value)}</button>
+                            </div>
+                        </div>
+                    ))}
+                </Slider>
             </div>
         );
     }

@@ -18,6 +18,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 // import { required } from "joi";
 // import AlertDiv from "../components/Alert";+
 // const alertDiv = require("../components/Alert")
+const errorSetter = require("../utils/errorSetter")
 const access_token = localStorage.getItem("access_token");
 const AuthStr = 'Bearer '.concat(access_token);
 
@@ -54,7 +55,7 @@ const Counsaler = () => {
             problem: problemCategory,
             keyword: search,
         });
-        console.log("teszt");
+        // console.log("teszt");
         if ((hasMore || triggerSearch) && !showAlert) {
             setIsLoading(true)
             // alert("data");
@@ -72,7 +73,7 @@ const Counsaler = () => {
                     //     setData(data.concat(payload));
                     // }
                     const newLastNumber = payload[payload.length - 1].number;
-                    console.log(">>>>>>> " + newLastNumber);
+                    // console.log(">>>>>>> " + newLastNumber);
                     setLastNumber(newLastNumber)
                     setHasMore(true)
                 }
@@ -82,39 +83,11 @@ const Counsaler = () => {
                 setIsLoading(false)
             }).catch((e) => {
                 setShowAlert(true)
-                setAlertConfig({ variant: "danger", text: "Problem in getting data", icon: "alert-octagon", strongText: "Error:" })
+                setAlertConfig({ variant: "danger", text: errorSetter(e), icon: "alert-octagon", strongText: "Error:" })
             })
         }
     }
 
-    // const handleObserver = useCallback((entries) => {
-    //     const target = entries[0];
-    //     if (target.isIntersecting) {
-    //         setPage((prev) => prev + 1);
-    //     }
-    // }, []);
-
-    // useEffect(() => {
-    //     const option = {
-    //         root: null,
-    //         rootMargin: "20px",
-    //         threshold: 0
-    //     };
-    //     const observer = new IntersectionObserver(handleObserver, option);
-    //     if (loader.current) observer.observe(loader.current);
-    // }, [handleObserver]);
-
-
-    // const scrollHandler = (event) => {
-    //     console.log("scroolllll");
-    //     if (listInnerRef.current) {
-    //         const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-    //         if (scrollTop + clientHeight === scrollHeight) {
-    //             getData()
-    //             console.log("getting");
-    //         }
-    //     }
-    // }
 
     useEffect(() => {
         // setId(User.then((res) => {return res.id})) ;
@@ -124,14 +97,10 @@ const Counsaler = () => {
     }, [])
 
     useEffect(() => {
-        console.log("changed " + triggerSearch);
-        getData()
-        // document.getElementById("data-displayer").addEventListener("scroll", scrollHandler)
+        if (triggerSearch.toString().startsWith("true")) {
+            getData()
+        }
     }, [triggerSearch])
-    // useEffect(() => {
-
-    // }, [data])
-    // window.addEventListener("scroll", scrollHandler)
     return (
         <Fragment>
             {showAlert && <AlertComp config={alertConfig} show={true}></AlertComp>}
@@ -145,7 +114,7 @@ const Counsaler = () => {
                         <div className="row">
                             <div className="col-xl-12">
 
-                                <Pagetitle title="Counsaler" showlink={false} problemState={setProblemCategory} searchState={setSearch} searchVal={search} triggerSearch={setTriggerSearch} setLastNumber={setLastNumber} />
+                                <Pagetitle title="Counsaler" showlink={false} problemState={setProblemCategory} searchState={setSearch} searchVal={search} triggerSearch={setTriggerSearch} setLastNumber={setLastNumber} dataSet={setData} hasMore={setHasMore}/>
 
                                 <InfiniteScroll className="row infinite-scroll"
                                     dataLength={data.length}

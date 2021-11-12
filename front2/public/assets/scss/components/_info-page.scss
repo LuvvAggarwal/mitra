@@ -1,0 +1,32 @@
+#hero-video{
+    height: 75vh;
+    width: 100%;
+    object-fit: cover;
+}
+
+.hero-con{
+    position: absolute;
+    top: 88px;
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 61%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.heading{
+    font-size: 4rem !important;
+}
+
+.text-align-center{
+    text-align: center;
+}
+
+.m-h{
+    margin-top: 55%;
+}
+// @media (max-width: 768px) {
+//     .m-h{
+//         margin-top: 25%;
+//     }
+// }

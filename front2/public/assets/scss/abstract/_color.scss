@@ -40,7 +40,7 @@
 .bg-tumblr {background-color: #34465d !important;}
 .bg-youtube {background-color: #cd201f !important;}
 .bg-black {background-color: #000;}
-
+.bg-white{background-color: #fff !important;}
 .text-facebook {color: #0d66ff !important;}
 .text-messenger {color: #55acee !important;}
 .text-twiiter {color: #3b5999 !important;}
@@ -51,11 +51,11 @@
 
 .text-current {color: var(--theme-color) !important;}
 .text-red {color: red !important;}
+.text-white {color: white !important;}
 .text-ornage {color: #ff9500 !important;}
 .text-black {color: #000 !important;}
 .text-cyan {color: #00a9a8 !important;} 
 .text-yellow {color: #ffde00 !important;} 
-
 .bg-black-08 {background: rgba(0,0,0,0.8);}
 
 .bg-current {background-color: var(--theme-color) !important;}
@@ -75,6 +75,12 @@
 .bg-blue-gradiant {background: linear-gradient(to right, #0575e6, #021b79) !important;}
 .bg-purple-gradiant {background: linear-gradient(to right, #9f05e6, #2c0279) !important;}
 
+.white-hover{
+    &:hover{
+        color: #fff !important;
+    }
+}
+.bg-white {background-color: #ffffff !important;}
 .bg-grey {background-color: #f5f5f5 !important;}
 .bg-lightblue {background-color: #e8f1fa !important;}
 .bg-lightblue2 {background-color: #f7f9fd !important;}

@@ -54,7 +54,7 @@ const User = () => {
             problem: problemCategory,
             keyword: search,
         });
-        console.log("teszt");
+        // console.log("teszt");
         if ((hasMore || triggerSearch) && !showAlert) {
             setIsLoading(true)
             // alert("data");
@@ -72,7 +72,7 @@ const User = () => {
                     //     setData(data.concat(payload));
                     // }
                     const newLastNumber = payload[payload.length - 1].number;
-                    console.log(">>>>>>> " + newLastNumber);
+                    // console.log(">>>>>>> " + newLastNumber);
                     setLastNumber(newLastNumber)
                     setHasMore(true)
                 }
@@ -87,34 +87,6 @@ const User = () => {
         }
     }
 
-    // const handleObserver = useCallback((entries) => {
-    //     const target = entries[0];
-    //     if (target.isIntersecting) {
-    //         setPage((prev) => prev + 1);
-    //     }
-    // }, []);
-
-    // useEffect(() => {
-    //     const option = {
-    //         root: null,
-    //         rootMargin: "20px",
-    //         threshold: 0
-    //     };
-    //     const observer = new IntersectionObserver(handleObserver, option);
-    //     if (loader.current) observer.observe(loader.current);
-    // }, [handleObserver]);
-
-
-    // const scrollHandler = (event) => {
-    //     console.log("scroolllll");
-    //     if (listInnerRef.current) {
-    //         const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-    //         if (scrollTop + clientHeight === scrollHeight) {
-    //             getData()
-    //             console.log("getting");
-    //         }
-    //     }
-    // }
 
     useEffect(() => {
         // setId(User.then((res) => {return res.id})) ;
@@ -124,14 +96,11 @@ const User = () => {
     }, [])
 
     useEffect(() => {
-        console.log("changed " + triggerSearch);
-        getData()
-        // document.getElementById("data-displayer").addEventListener("scroll", scrollHandler)
+        if (triggerSearch.toString().startsWith("true")) {
+            getData()
+        }
     }, [triggerSearch])
-    // useEffect(() => {
-
-    // }, [data])
-    // window.addEventListener("scroll", scrollHandler)
+ 
     return (
         <Fragment>
             {showAlert && <AlertComp config={alertConfig} show={true}></AlertComp>}
@@ -145,7 +114,7 @@ const User = () => {
                         <div className="row">
                             <div className="col-xl-12">
 
-                                <Pagetitle title="USER" showlink={false} problemState={setProblemCategory} searchState={setSearch} searchVal={search} triggerSearch={setTriggerSearch} setLastNumber={setLastNumber} />
+                                <Pagetitle title="USER" showlink={false} problemState={setProblemCategory} searchState={setSearch} searchVal={search} triggerSearch={setTriggerSearch} setLastNumber={setLastNumber} dataSet={setData} hasMore={setHasMore} />
 
                                 <InfiniteScroll className="row infinite-scroll"
                                     dataLength={data.length}
