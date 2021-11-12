@@ -1,0 +1,11 @@
+.theme-dark .slick-prev:before,.theme-dark .slick-next:before,.theme-dark .slick-dots li button:before {
+    color: white !important;
+}
+
+.theme-light .slick-prev:before,.theme-light .slick-next:before,.theme-light .slick-dots li button:before {
+    color: black !important;
+}
+
+.slick-dots{
+    bottom: -10px !important;
+}

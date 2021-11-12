@@ -1,0 +1,178 @@
+2021-06-09 15:12:20 info: a request has been made with the following uuid [60dad511-99d3-489b-a3d6-21bb0036de52] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:13:37 info: a request has been made with the following uuid [9abc47e2-9f0c-49a4-b1ba-6e51202b7964] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:15:15 info: a request has been made with the following uuid [8dba7a7c-2712-4158-a304-b2238b5ce40c] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:15:51 info: a request has been made with the following uuid [7ba2339c-c55a-4cde-b400-b062b1717981] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:15:52 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 15:15:52 GMT+0530 (India Standard Time)
+2021-06-09 15:16:52 info: a request has been made with the following uuid [c3f987fa-f1c0-45b8-bdea-b41da060a71a] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:16:53 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 15:16:53 GMT+0530 (India Standard Time)
+2021-06-09 15:25:12 info: a request has been made with the following uuid [73cbc9e8-7784-4c4a-800f-316cdb4c62b2] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:26:51 info: a request has been made with the following uuid [311e8c40-ebf2-4fc6-afe2-453c0610ebf0] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:30:00 info: a request has been made with the following uuid [d755f915-0013-4319-809f-c5db11245577] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 15:30:02 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 15:30:02 GMT+0530 (India Standard Time)
+2021-06-09 16:05:12 info: a request has been made with the following uuid [ffeb8d85-130d-4c68-852a-f70304af7e77] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 16:05:14 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 16:05:14 GMT+0530 (India Standard Time)
+2021-06-09 17:16:10 info: a request has been made with the following uuid [044ce27a-6e1a-4f26-9472-0a2ed22e63c4] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 17:16:12 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 17:16:12 GMT+0530 (India Standard Time)
+2021-06-09 17:27:47 info: a request has been made with the following uuid [a18c8f78-1113-4011-bd44-0ae55ad6222e] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYTU2MjQwMDktMmY2ZC00OTAyLWJiNmQtMDkzYjgxYTk1MjAwIiwibnVtYmVyIjoiMW4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjpudWxsLCJjb3Zlcl9waG90byI6bnVsbCwiYmlvIjpudWxsLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyMzkxNzIsImV4cCI6MTYzMTg3OTE3Mn0.l2wHK23TxyUDTTj7bYafkerrZJUScIQOGx5HJUo4uZoapYlIHlXvlii9FZnBmPzr_uG__bulx6dWAccugASdcw"}
+2021-06-09 17:27:47 error: the url you are trying to reach is not hosted on our server
+2021-06-09 17:28:23 info: a request has been made with the following uuid [414c0854-f2f7-48b1-a4ff-ba07ec93a144] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYTU2MjQwMDktMmY2ZC00OTAyLWJiNmQtMDkzYjgxYTk1MjAwIiwibnVtYmVyIjoiMW4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjpudWxsLCJjb3Zlcl9waG90byI6bnVsbCwiYmlvIjpudWxsLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyMzkxNzIsImV4cCI6MTYzMTg3OTE3Mn0.l2wHK23TxyUDTTj7bYafkerrZJUScIQOGx5HJUo4uZoapYlIHlXvlii9FZnBmPzr_uG__bulx6dWAccugASdcw"}
+2021-06-09 17:28:23 error: the url you are trying to reach is not hosted on our server
+2021-06-09 17:28:55 info: a request has been made with the following uuid [061d9330-7f6d-4fbc-96a7-f2cda33fd97b] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYTU2MjQwMDktMmY2ZC00OTAyLWJiNmQtMDkzYjgxYTk1MjAwIiwibnVtYmVyIjoiMW4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjpudWxsLCJjb3Zlcl9waG90byI6bnVsbCwiYmlvIjpudWxsLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyMzkxNzIsImV4cCI6MTYzMTg3OTE3Mn0.l2wHK23TxyUDTTj7bYafkerrZJUScIQOGx5HJUo4uZoapYlIHlXvlii9FZnBmPzr_uG__bulx6dWAccugASdcw"}
+2021-06-09 17:28:55 error: the url you are trying to reach is not hosted on our server
+2021-06-09 17:30:10 info: a request has been made with the following uuid [9c538845-a8dd-4dcb-b8df-fdf07263e98b] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYTU2MjQwMDktMmY2ZC00OTAyLWJiNmQtMDkzYjgxYTk1MjAwIiwibnVtYmVyIjoiMW4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjpudWxsLCJjb3Zlcl9waG90byI6bnVsbCwiYmlvIjpudWxsLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyMzkxNzIsImV4cCI6MTYzMTg3OTE3Mn0.l2wHK23TxyUDTTj7bYafkerrZJUScIQOGx5HJUo4uZoapYlIHlXvlii9FZnBmPzr_uG__bulx6dWAccugASdcw"}
+2021-06-09 17:30:10 error: the url you are trying to reach is not hosted on our server
+2021-06-09 17:32:29 info: a request has been made with the following uuid [fc6777e9-a46f-47d8-8712-064eef05bcba] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYTU2MjQwMDktMmY2ZC00OTAyLWJiNmQtMDkzYjgxYTk1MjAwIiwibnVtYmVyIjoiMW4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjpudWxsLCJjb3Zlcl9waG90byI6bnVsbCwiYmlvIjpudWxsLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyMzkxNzIsImV4cCI6MTYzMTg3OTE3Mn0.l2wHK23TxyUDTTj7bYafkerrZJUScIQOGx5HJUo4uZoapYlIHlXvlii9FZnBmPzr_uG__bulx6dWAccugASdcw"}
+2021-06-09 17:32:29 error: the url you are trying to reach is not hosted on our server
+2021-06-09 17:33:07 info: a request has been made with the following uuid [37c46c4d-5c4c-45b0-a69c-5cc6e5d17daf] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYTU2MjQwMDktMmY2ZC00OTAyLWJiNmQtMDkzYjgxYTk1MjAwIiwibnVtYmVyIjoiMW4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjpudWxsLCJjb3Zlcl9waG90byI6bnVsbCwiYmlvIjpudWxsLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyMzkxNzIsImV4cCI6MTYzMTg3OTE3Mn0.l2wHK23TxyUDTTj7bYafkerrZJUScIQOGx5HJUo4uZoapYlIHlXvlii9FZnBmPzr_uG__bulx6dWAccugASdcw"}
+2021-06-09 17:33:07 error: error ,Error during processing request: http://localhost:3000/api/v1/logout details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYTU2MjQwMDktMmY2ZC00OTAyLWJiNmQtMDkzYjgxYTk1MjAwIiwibnVtYmVyIjoiMW4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjpudWxsLCJjb3Zlcl9waG90byI6bnVsbCwiYmlvIjpudWxsLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyMzkxNzIsImV4cCI6MTYzMTg3OTE3Mn0.l2wHK23TxyUDTTj7bYafkerrZJUScIQOGx5HJUo4uZoapYlIHlXvlii9FZnBmPzr_uG__bulx6dWAccugASdcw',
+    id: 'a5624009-2f6d-4902-bb6d-093b81a95200'
+  },
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  data: {
+    access_token: ''
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs exactly one argument, but you provided access_token and id. Please choose one. Available args: 
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+  profile_photo?: String
+  cover_photo?: String
+  bio?: String
+  access_token?: String
+}
+
+
+2021-06-09 17:42:44 info: stopping the server
+2021-06-09 17:55:54 info: a request has been made with the following uuid [40cf80cb-0174-4c6a-b7a5-621c3c3b9960] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","first_name":"Luvv","last_name":"Aggarwal","type":"USER","problem_category":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-09 17:55:54 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: stringUtil is not defined
+2021-06-09 17:56:29 info: a request has been made with the following uuid [ea246ffe-0727-4171-9b49-578e51d02d56] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","first_name":"Luvv","last_name":"Aggarwal","type":"USER","problem_category":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-09 17:56:29 warn: error in validating request : "middle_name" is required
+2021-06-09 17:56:29 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: "middle_name" is required
+2021-06-09 17:57:29 info: a request has been made with the following uuid [70948881-8251-4841-803c-74a2a5af0f26] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","first_name":"Luvv","middle_name":"","last_name":"Aggarwal","type":"USER","problem_category":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-09 17:57:29 warn: error in validating request : "middle_name" is not allowed to be empty
+2021-06-09 17:57:29 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: "middle_name" is not allowed to be empty
+2021-06-09 17:57:51 info: a request has been made with the following uuid [444334fa-639b-4695-991f-fd256b030f37] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","first_name":"Luvv","middle_name":"","last_name":"Aggarwal","type":"USER","problem_category":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-09 17:57:51 warn: error in validating request : "middle_name" is not allowed to be empty
+2021-06-09 17:57:51 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: "middle_name" is not allowed to be empty
+2021-06-09 17:58:17 info: a request has been made with the following uuid [3b3255f9-13b4-4126-9b76-68672f3ee45c] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","first_name":"Luvv","middle_name":"","last_name":"Aggarwal","type":"USER","problem_category":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-09 17:58:18 error: error ,Error during processing request: http://localhost:3000/api/v1/signUp details message: 
+Invalid `prisma.users.create()` invocation:
+
+
+  Foreign key constraint failed on the field: `users_problem_category_fkey (index)`
+2021-06-09 18:04:34 info: a request has been made with the following uuid [01fe1074-259b-46f3-a0d4-411df27ef86d] /api/v1/signUp PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","user_id":"jaiSiyaRam11","first_name":"Luvv","middle_name":"","last_name":"Aggarwal","type":"USER","problem_category":"2ecfc390-d009-4264-a91a-6523c3a0a750","password":"123","ph_number":8979058628}
+2021-06-09 18:04:35 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:04:35 GMT+0530 (India Standard Time)
+2021-06-09 18:04:55 info: a request has been made with the following uuid [2233c5fb-6b0b-4ebd-8aaa-69be62cc6ea6] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 18:04:55 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:04:55 GMT+0530 (India Standard Time)
+2021-06-09 18:05:52 info: a request has been made with the following uuid [8ab50492-e802-491e-9c2b-39773075be91] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 18:05:52 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:05:52 GMT+0530 (India Standard Time)
+2021-06-09 18:06:48 info: a request has been made with the following uuid [e2836970-a857-473f-b517-03f8c4ae7d16] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA"}
+2021-06-09 18:06:48 error: error ,Error during processing request: http://localhost:3000/api/v1/logout details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA',
+    ~~~~~~~~~~~~
+    id: '55425835-db14-4d6d-a6c0-a04bfb6a79d1'
+  },
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  data: {
+    access_token: ''
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs exactly one argument, but you provided access_token and id. Please choose one. Available args: 
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+}
+Unknown arg `access_token` in where.access_token for type usersWhereUniqueInput. Available args:
+
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+}
+
+
+2021-06-09 18:12:54 info: a request has been made with the following uuid [04de2dfc-4a7a-4be2-b00c-e899ef225be1] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA"}
+2021-06-09 18:12:54 error: error ,Error during processing request: http://localhost:3000/api/v1/logout details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA'
+    ~~~~~~~~~~~~
+  },
+  data: {
+    access_token: ''
+  }
+}
+
+Unknown arg `access_token` in where.access_token for type usersWhereUniqueInput. Available args:
+
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+}
+
+
+2021-06-09 18:21:16 info: a request has been made with the following uuid [4402f7f1-3a37-4fac-8847-5af7b02cfb7a] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA"}
+2021-06-09 18:21:16 error: error ,Error during processing request: http://localhost:3000/api/v1/logout details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA'
+    ~~~~~~~~~~~~
+  },
+  data: {
+    access_token: ''
+  }
+}
+
+Unknown arg `access_token` in where.access_token for type usersWhereUniqueInput. Available args:
+
+type usersWhereUniqueInput {
+  id?: String
+  user_id?: String
+  ph_number?: BigInt
+  email?: String
+}
+
+
+2021-06-09 18:22:16 info: a request has been made with the following uuid [6ded7991-1cee-45d5-a289-4bbb810ce282] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA"}
+2021-06-09 18:22:17 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:22:17 GMT+0530 (India Standard Time)
+2021-06-09 18:22:42 info: a request has been made with the following uuid [5a908bac-7095-46d4-b99c-56f86e2fa181] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA"}
+2021-06-09 18:22:42 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:22:42 GMT+0530 (India Standard Time)
+2021-06-09 18:22:45 info: a request has been made with the following uuid [32479ccb-6858-46cc-9ccb-f4c73d25a555] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA"}
+2021-06-09 18:22:45 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:22:45 GMT+0530 (India Standard Time)
+2021-06-09 18:22:46 info: a request has been made with the following uuid [823335a0-0f35-4477-a13d-0f522a57b69b] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA"}
+2021-06-09 18:22:46 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:22:46 GMT+0530 (India Standard Time)
+2021-06-09 18:22:47 info: a request has been made with the following uuid [8bb65d90-f94e-4931-b431-0d0192aee201] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA"}
+2021-06-09 18:22:47 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:22:47 GMT+0530 (India Standard Time)
+2021-06-09 18:25:13 info: a request has been made with the following uuid [ebc77332-2a5e-4a87-8e9a-b1fa9f6ce54e] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA"}
+2021-06-09 18:25:14 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:25:14 GMT+0530 (India Standard Time)
+2021-06-09 18:25:20 info: a request has been made with the following uuid [a47f4abf-9960-4d3d-a8fd-775aaa9ad9f8] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDIxNTIsImV4cCI6MTYzMTg4MjE1Mn0.6TnlSrKLPQIC4CHbgm1L2NG4y7ZvB3TJI6TIFCtzl8KdyxbAwmRO8LNpDLHGp24ZeWKlv_fPXlZ7K0M9gDI6MA"}
+2021-06-09 18:25:20 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:25:20 GMT+0530 (India Standard Time)
+2021-06-09 18:26:35 info: a request has been made with the following uuid [b0ab8501-2874-40ed-98db-744a1e439de8] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-09 18:26:36 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:26:36 GMT+0530 (India Standard Time)
+2021-06-09 18:27:34 info: a request has been made with the following uuid [b280b4b7-3583-4470-b318-649ad36ce2d1] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDMzOTYsImV4cCI6MTYzMTg4MzM5Nn0.5RyhRI5O2earJlFBR4lrpSwZLtk8nFOMQSSPVZyKdbhUxx4afsk32F5Xx9AhHM5fHf8SHWaW0E6--WV921eC6g"}
+2021-06-09 18:27:34 info: a request has been made and proccessed successfully at: Wed Jun 09 2021 18:27:34 GMT+0530 (India Standard Time)
+2021-06-09 18:27:41 info: a request has been made with the following uuid [7abd839e-61c2-4e4a-aa8a-b9daca83766e] /api/v1/logout PostmanRuntime/7.28.0 {"access_token":"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNTU0MjU4MzUtZGIxNC00ZDZkLWE2YzAtYTA0YmZiNmE3OWQxIiwibnVtYmVyIjoiMm4iLCJhY3RpdmUiOnRydWUsInVzZXJfaWQiOiJqYWlTaXlhUmFtMTEiLCJ0eXBlIjoiVVNFUiIsImZpcnN0X25hbWUiOiJMdXZ2IiwibWlkZGxlX25hbWUiOiIiLCJsYXN0X25hbWUiOiJBZ2dhcndhbCIsIm5hbWUiOiIiLCJvY2N1cGF0aW9uIjoiIiwiZXhwZXJpZW5jZSI6MCwicHJvYmxlbV9jYXRlZ29yeSI6IjJlY2ZjMzkwLWQwMDktNDI2NC1hOTFhLTY1MjNjM2EwYTc1MCIsInJlZ2lzdHJhdGlvbl9jb2RlIjpudWxsLCJoZWxwX3R5cGUiOm51bGwsInBoX251bWJlciI6Ijg5NzkwNTg2MjhuIiwiZW1haWwiOiJsdXZ2YWdnYXIyd2FsMjAwMkBnbWFpbC5jb20iLCJwcm9maWxlX3Bob3RvIjoiIiwiY292ZXJfcGhvdG8iOiIiLCJiaW8iOiIiLCJhZGRyZXNzIjpudWxsLCJ2aXNpYmlsaXR5IjoiRlJJRU5EUyIsInRoZW1lIjoiTElHSFQiLCJub3RpZmljYXRpb24iOiJTVEFOREFSRCJ9LCJpYXQiOjE2MjMyNDMzOTYsImV4cCI6MTYzMTg4MzM5Nn0.5RyhRI5O2earJlFBR4lrpSwZLtk8nFOMQSSPVZyKdbhUxx4afsk32F5Xx9AhHM5fHf8SHWaW0E6--WV921eC6g"}
+2021-06-09 18:27:41 error: error ,Error during processing request: http://localhost:3000/api/v1/logout details message: User Already logged out Successfully

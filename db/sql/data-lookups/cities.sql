@@ -1,9 +1,7 @@
 CREATE TABLE IF NOT EXISTS cities (
-  id UUID NOT NULL PRIMARY KEY,
-  number BIGSERIAL NOT NULL,
+  id UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,  number BIGSERIAL NOT NULL,
   active BOOLEAN NOT NULL,
-  created_on TIMESTAMP NOT NULL,
-  updated_on TIMESTAMP NOT NULL,
+  created_on TIMESTAMP DEFAULT NOW() NOT NULL,  updated_on TIMESTAMP DEFAULT NOW()  NOT NULL,
   name varchar(150) NOT NULL,
   state_id UUID NOT NULL,
   CONSTRAINT fk_states

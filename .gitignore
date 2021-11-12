@@ -1,1 +1,8 @@
 node_modules/
+.env
+log/
+Notes
+prisma_backup.txt
+pem/
+front/
+front2/public/files

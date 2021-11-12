@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "groups" ALTER COLUMN "ph_number" DROP NOT NULL,
+ALTER COLUMN "ph_number" SET DATA TYPE TEXT,
+ALTER COLUMN "visibility" SET DEFAULT E'FRIENDS';

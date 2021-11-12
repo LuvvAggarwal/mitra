@@ -1,0 +1,346 @@
+2021-06-08 13:03:33 info: a request has been made with the following uuid [4d9974f2-6319-4849-9de9-deac2431c3d7] /api/v1/login PostmanRuntime/7.28.0 {}
+2021-06-08 13:03:33 warn: error in validating request : "email" is required
+2021-06-08 13:03:33 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: "email" is required
+2021-06-08 13:04:57 info: a request has been made with the following uuid [9c7c5e1c-4f42-4729-a3ed-6ffa304f0198] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:05:00 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: please provide all required headers
+2021-06-08 13:35:37 info: a request has been made with the following uuid [b0d44eb8-5da0-44f0-9430-198991b51c54] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:35:38 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:38:07 info: a request has been made with the following uuid [85be088b-d213-42be-b6f5-8b5e84796156] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:38:07 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:39:18 info: a request has been made with the following uuid [83ec35db-7e99-4742-89cd-f446ab5e38b5] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:39:19 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:40:47 info: a request has been made with the following uuid [9a3183e8-4ccb-4b6e-9e8b-2efab800c2fc] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:40:47 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:42:23 info: a request has been made with the following uuid [aa0771f4-fb84-4c86-8cce-215759983dc5] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:42:25 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:12:24.973Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTM5OTQ0LCJleHAiOjE2MzE3Nzk5NDR9.wF_HsY6xUy9KOljj6JY-14crN4WFsBRCLeJEcfKnfYKKylXapw-hSq1TH8svJFsfOkU6ZW4yyJNS2O0rTyWZ_g'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 13:44:48 info: a request has been made with the following uuid [48a2c7b7-d9d1-4ab9-a944-bdd4fa293dcf] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:44:49 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:45:39 info: a request has been made with the following uuid [4d72cf12-b4c2-4b66-8cd7-e5c5df752b56] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:45:40 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: Cannot read property 'toString' of undefined
+2021-06-08 13:46:39 info: a request has been made with the following uuid [2eef71d2-ca89-4a13-9680-b079ea582b3b] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:46:40 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:48:03 info: a request has been made with the following uuid [b1262a58-f5c7-4c6a-af3d-e59bb1952467] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:48:03 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:49:35 info: a request has been made with the following uuid [8a0ca6ec-fcc6-4f05-9586-5121d055af3a] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:49:36 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:54:51 info: a request has been made with the following uuid [d075e00e-5359-4724-8221-5baec23818a4] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:54:52 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:24:52.875Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQwNjkyLCJleHAiOjE2MzE3ODA2OTJ9.6K0sDMWbfVDxwQpvK1BLC_V3vPjldlHKH9yhWWpRPBDKBhtKCMLey4smb15J-HYP4kejYXxjeNhZpvwgVeGKJA'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 13:55:11 info: a request has been made with the following uuid [c166b74f-f862-46e1-a09e-47643272415c] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:55:13 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:55:15 info: a request has been made with the following uuid [2c826b2d-bbe2-40ab-a61e-3c09cbc954e1] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:55:15 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:55:17 info: a request has been made with the following uuid [f610b430-2e29-4f45-b5f6-6d6557ec407e] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:55:17 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 13:56:23 info: a request has been made with the following uuid [6be5b26d-e974-4c81-ade7-fee09466491d] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 13:56:24 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:01:42 info: a request has been made with the following uuid [8a40df29-991d-43dd-afce-746de8a0fcf8] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:01:43 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:02:39 info: a request has been made with the following uuid [0e2c8319-a0b0-4b4c-9fba-876d93e15958] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:02:41 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:05:20 info: a request has been made with the following uuid [96461464-3138-4a73-91fd-a9e83e9b8230] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:05:22 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:35:22.330Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQxMzIyLCJleHAiOjE2MzE3ODEzMjJ9.Jwa5y6y37GcSRBrZY76ccaYYO6Kgi7wyy6EriBrwLzHZXu_6xqgaT_hgfXHCSB6tuievS5PBxujewQ620cl5pA'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:07:03 info: a request has been made with the following uuid [1294936c-f020-4888-a210-efb604ef9861] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:07:05 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:37:05.068Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQxNDI1LCJleHAiOjE2MzE3ODE0MjV9.nvVKbFLo4Lx5YYH4TAA7iugiLbp5M_hqyuBnzxpnVxdNmxJmwo5VorcCzgWCvUAa68oMuPAzIAQBgppBN4tgIw'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:08:43 info: a request has been made with the following uuid [ae3ae8b1-f612-491b-b2c4-19866591d8a4] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:08:44 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:38:44.757Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQxNTI0LCJleHAiOjE2MzE3ODE1MjR9.Nj7aS1mWkoACYVA-s7zIz1APASE3etkppkY0DotK0iUsQWAf6cRteLjT8dPA5d3I5auo-y5kQgMM1Nqv3UlmfA'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:15:22 info: a request has been made with the following uuid [f5f534f9-8a83-4555-af4f-dd441552db3c] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:17:02 info: a request has been made with the following uuid [c551a807-5c05-46eb-bddc-85bcbacb1a1c] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:18:28 info: a request has been made with the following uuid [354bafc5-9125-4b2d-a503-1cacc89f0cc0] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:19:45 info: a request has been made with the following uuid [b7bde1a0-6654-4af8-ad70-c1d26a4a9e3f] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:19:46 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:49:46.818Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQyMTg2LCJleHAiOjE2MzE3ODIxODZ9.Qq9VP5rab9kopZfT0NtyteuajD5Lfot8gLe6MSlQdyKwVTi5ogTUwr_lDLHUlS8xpRKYS2D1dxgIu4rvUjr0BQ'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:21:47 info: a request has been made with the following uuid [2a6edc2d-b325-46f1-8303-16dda89eca2d] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:21:48 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T08:51:48.263Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQyMzA4LCJleHAiOjE2MzE3ODIzMDh9.IrjdaErKtrEHPv0QWI1Aq9lPn1EP92F1LVSUDnba2LQ14qmON-sdpQNSVb7WuKGpTn4uuUQ-XeprKrFu7Krucw'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:22:30 info: a request has been made with the following uuid [573c004e-de59-4c50-aa2f-b312198d9343] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:23:00 info: a request has been made with the following uuid [33b71af1-5c76-46b1-b36c-87e0bfe31ed8] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:24:28 info: a request has been made with the following uuid [429f88aa-4e2a-4394-9a55-96e234e42e17] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:25:09 info: a request has been made with the following uuid [42fdc3ef-f3c7-405f-afa1-2b8125392c14] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:27:12 info: a request has been made with the following uuid [47ef15b8-ba1d-4336-afe0-7907af662338] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:27:12 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:28:04 info: a request has been made with the following uuid [1c820e0a-8cb3-4367-8b3e-d08311eaa790] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:28:06 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:34:08 info: a request has been made with the following uuid [f64bfbab-72fa-43d1-ad6e-39ce70b4c4fe] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:34:09 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 14:34:53 info: a request has been made with the following uuid [8bd34863-b7e2-4cd4-9409-68e0db14b6de] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:34:55 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: Cannot access 'bcrypt' before initialization
+2021-06-08 14:36:20 info: a request has been made with the following uuid [f4ae5ef6-f685-4e36-b992-20161da07d8f] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:36:22 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T09:06:22.036Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQzMTgyLCJleHAiOjE2MzE3ODMxODJ9.F0Meg2r8HcaPEGaudJM9TpK2J0y20eq9vWaxO0A3sO7z_-xo966jNZIIrjaLVMpF7wTHYMw2WsEB_tJs3hPRpQ'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:37:22 info: a request has been made with the following uuid [182f277d-d801-473a-9e94-4370dedbab0a] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:37:24 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: 
+Invalid `prisma.users.update()` invocation:
+
+{
+  where: {
+?   id?: String,
+?   user_id?: String,
+?   ph_number?: BigInt,
+?   email?: String,
+?   profile_photo?: String,
+?   cover_photo?: String,
+?   bio?: String,
+?   access_token?: String
+  },
+  data: {
+    last_login: '2021-06-08T09:07:24.323Z',
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7fSwiaWF0IjoxNjIzMTQzMjQ0LCJleHAiOjE2MzE3ODMyNDR9.Qv9jISRqeCYj30s0I6zzecf7q569KymGVsVI6ws-v1SAFMxxv8rji48WnjqzFHELrp05OOxf2fV_lUohwVbxpQ'
+  }
+}
+
+Argument where of type usersWhereUniqueInput needs at least one argument. Available args are listed in green.
+
+Note: Lines with ? are optional.
+
+2021-06-08 14:38:19 info: a request has been made with the following uuid [5d1f07bf-b386-4aef-8000-066116a727a6] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:38:48 info: a request has been made with the following uuid [a9f37b10-a5fc-472c-a9a9-e28a19091a2d] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:38:49 info: a request has been made and proccessed successfully at: Tue Jun 08 2021 14:38:49 GMT+0530 (India Standard Time)
+2021-06-08 14:39:33 info: a request has been made with the following uuid [f3edf07c-7c49-4aaf-bee0-64f4609cb782] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:39:34 info: a request has been made and proccessed successfully at: Tue Jun 08 2021 14:39:34 GMT+0530 (India Standard Time)
+2021-06-08 14:40:23 info: a request has been made with the following uuid [c6f65d1c-38a5-4629-a25c-aad8133846a9] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:40:24 info: a request has been made and proccessed successfully at: Tue Jun 08 2021 14:40:24 GMT+0530 (India Standard Time)
+2021-06-08 14:41:08 info: a request has been made with the following uuid [21eebaa4-912a-436f-8da6-63467f38e3cd] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 14:41:09 info: a request has been made and proccessed successfully at: Tue Jun 08 2021 14:41:09 GMT+0530 (India Standard Time)
+2021-06-08 18:08:54 info: a request has been made with the following uuid [fb7ca04f-11a6-4eba-925b-f3ff8cd31b17] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:08:56 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: Do not know how to serialize a BigInt
+2021-06-08 18:09:45 info: a request has been made with the following uuid [1975848f-2078-4572-8625-2436c6d2fb26] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:09:46 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:10:19 info: a request has been made with the following uuid [f4d8ef17-24a4-451b-b4eb-3c848416d5f6] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:10:20 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:16:58 info: a request has been made with the following uuid [0235415d-5479-4031-8392-e8f88f6e1e76] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:16:58 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:31:51 info: a request has been made with the following uuid [32551c9a-eeef-4298-a541-8ca4849e3885] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:31:51 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:32:09 info: a request has been made with the following uuid [e5aecd69-1f60-46bb-b3c4-261324ffd44e] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:32:09 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:33:05 info: a request has been made with the following uuid [31e176f3-2b85-4816-9c64-2223ff4b6b60] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:33:07 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:41:18 info: a request has been made with the following uuid [60b937b4-2398-4881-94f0-ff2f9ea9e1bf] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:41:18 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: Cannot access 'user' before initialization
+2021-06-08 18:42:28 info: a request has been made with the following uuid [e681e8f3-81db-4f8b-b5e6-f26b519c69a4] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:42:29 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 18:43:03 info: a request has been made with the following uuid [87606f2b-4a44-498d-bf44-a8262516b5d9] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:43:03 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: Cannot access 'user' before initialization
+2021-06-08 18:43:56 info: a request has been made with the following uuid [8783c6b5-9a1f-4b49-b44f-00ee7e98d00e] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 18:43:57 error: error ,Error during processing request: http://localhost:3000/api/v1/login details message: data and hash arguments required
+2021-06-08 22:14:32 info: a request has been made with the following uuid [63b6aff1-7a8f-42c4-a9ab-2b5c8aa31b1b] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:16:22 info: a request has been made with the following uuid [36aec3a0-7df9-4a23-aa8c-7d11c5e9de5a] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:16:23 info: a request has been made and proccessed successfully at: Tue Jun 08 2021 22:16:23 GMT+0530 (India Standard Time)
+2021-06-08 22:21:29 info: a request has been made with the following uuid [ae1103fb-1f09-4370-9b7b-e15a7ae50719] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:21:31 info: a request has been made and proccessed successfully at: Tue Jun 08 2021 22:21:31 GMT+0530 (India Standard Time)
+2021-06-08 22:23:32 info: a request has been made with the following uuid [8ddda119-3fe8-474d-9624-f62cb1ba318d] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:25:51 info: a request has been made with the following uuid [20d6de27-2e2d-4496-9d48-3f2f60453be5] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:27:04 info: a request has been made with the following uuid [411d1fb0-1333-42a1-ac86-8fb2f1101f00] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:28:23 info: a request has been made with the following uuid [8a56a2e3-3e05-4099-8d1f-d3956262c182] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:29:16 info: a request has been made with the following uuid [683d8ede-c0a7-4197-8da8-44bca42a469e] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:29:56 info: a request has been made with the following uuid [9174e9d8-9489-4586-b387-705f2ee9d570] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:33:18 info: a request has been made with the following uuid [08e2e5de-92fc-47ff-a938-6fdadaadbf87] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:34:47 info: a request has been made with the following uuid [55fc5c6c-9641-4e28-8383-92b54ed0409f] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:35:41 info: a request has been made with the following uuid [e00302ae-ada9-4ae1-ab37-e5464210cdc1] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:36:11 info: a request has been made with the following uuid [fc433c7f-b204-4554-bf5b-0e638514f876] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:37:13 info: a request has been made with the following uuid [509bff92-842b-40e4-9189-5eb20252e31f] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:37:56 info: a request has been made with the following uuid [9f33793c-be8d-4e51-b50f-6a2fd8f1d41b] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:38:44 info: a request has been made with the following uuid [0d71ead7-4108-42ad-bd99-8b27a53d09d7] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:40:10 info: a request has been made with the following uuid [6a5a27ae-c7f6-414f-a38b-cdd35324e30d] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:41:53 info: a request has been made with the following uuid [1f2a162c-f82e-4b32-9edc-1690fe711d94] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:42:33 info: a request has been made with the following uuid [b26e1f21-233e-4267-b74f-ce033c913648] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:43:34 info: a request has been made with the following uuid [decacb8f-52ea-41cd-b799-04a340962389] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:43:52 info: a request has been made with the following uuid [472199c0-3aa0-4db9-be27-89b444eb2280] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:44:40 info: a request has been made with the following uuid [ffc1bd48-3409-4d9e-bb17-085bb517f55d] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:46:59 info: a request has been made with the following uuid [1e1fddd1-0041-4979-b510-2845e0894160] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:47:58 info: a request has been made with the following uuid [d5c136be-5cfe-4e35-93df-33374b3184c3] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:48:37 info: a request has been made with the following uuid [f653d798-9e12-4903-8654-1b9d1393978b] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:49:54 info: a request has been made with the following uuid [5be22f32-f8e9-4b82-b0bd-f2ea059422d2] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:52:12 info: a request has been made with the following uuid [7710f456-5ab0-4ef7-b670-28f933ca0494] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:53:00 info: a request has been made with the following uuid [1368ee59-dd5c-4dad-90c7-a04301776d23] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:54:04 info: a request has been made with the following uuid [e704934c-daa7-4d33-8099-8dba6c3fa51b] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:54:59 info: a request has been made with the following uuid [65f9b644-3ba5-4a92-8342-dc3361d0b3b7] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:55:53 info: a request has been made with the following uuid [91dbb36c-9e83-4f50-9048-aa7230a57405] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:56:38 info: a request has been made with the following uuid [16a1286f-726c-42d0-afa4-b21fd21ffb30] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:57:10 info: a request has been made with the following uuid [8bbb2941-94df-4ea1-94da-8ffc01b23d6b] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:57:35 info: a request has been made with the following uuid [8fb82ae1-bebb-4db6-ae8a-a45bbe33cbf1] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:58:23 info: a request has been made with the following uuid [caa4e5c7-f7d8-47eb-8268-3b34c8cd92c7] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 22:59:45 info: a request has been made with the following uuid [6e5d463e-7e56-4c76-a188-84d0e0306e3b] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 23:00:52 info: a request has been made with the following uuid [d9c827ad-0c12-410b-8143-894475807698] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
+2021-06-08 23:02:12 info: a request has been made with the following uuid [7c3c41f9-c1ba-4470-864b-90c7f2059f6e] /api/v1/login PostmanRuntime/7.28.0 {"email":"luvvaggar2wal2002@gmail.com","password":"123"}
