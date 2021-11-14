@@ -63,6 +63,7 @@
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test",
+    "react-build": "react-scripts build",
     "eject": "react-scripts eject",
     "dev": "parcel public/index.html",
     "watch": "parcel watch public/index.html",
