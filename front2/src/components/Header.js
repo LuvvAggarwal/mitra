@@ -40,8 +40,10 @@ const Header = () => {
     const toggleActive = () => setIsActive(!isActive)
     const toggleisNoti = () => setIsNoti(!isNoti)
     // Search
-    const triggerSearch = () => {
-        window.location.href = "/search/" + search.replaceAll(" ", "%D")
+    const triggerSearch = (e) => {
+        e.preventDefault()
+        window.location.href = "/search/" + search.replaceAll(" ", "%D");
+        return false
     }
 
     // const { setCurrentUser, User } = useContext(UserContext);
@@ -86,12 +88,12 @@ const Header = () => {
                     <button onClick={toggleOpen} className={`nav-menu me-0 ms-2 ${buttonClass}`}></button>
                 </div>
                 {/* Search */}
-                <form action="#" className="float-left header-search ms-3">
+                <form name="search-lg" onSubmit={e => triggerSearch(e)} className="float-left header-search ms-3">
                     <div className="form-group mb-0 icon-input">
-                        <i onClick={triggerSearch} className="cursor-pointer feather-search font-sm text-grey-400"></i>
+                        <button type="submit" > <i className="cursor-pointer feather-search font-sm text-grey-400"></i> </button>
                         <input type="text" onChange={(e) => {
                             setSearch(e.target.value)
-                        }} value={search} placeholder="Start typing to search..." className="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 text-grey-500 rounded-xl w350 theme-dark-bg" />
+                        }} name="search-pc"  value={search} placeholder="Start typing to search..." className="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 text-grey-500 rounded-xl w350 theme-dark-bg" />
                     </div>
                 </form>
                 <NavLink activeClassName="active" to="/home" className="p-2 text-center ms-3 menu-icon center-menu-icon"><i className="feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "></i></NavLink>
@@ -128,22 +130,24 @@ const Header = () => {
                 </div>
                 <Link to="/defaultmessage" className="p-2 text-center ms-3 menu-icon chat-active-btn"><i className="feather-message-square font-xl text-current"></i></Link>
                 <Darkbutton screen="web" />
-                <Link to={"/userProfile/" + id} className="p-0 ms-3 menu-icon"><img src={imgURL ? img_url(imgURL) : "assets/images/user.png"} alt="user" className="w40 h40 mt--1 rounded-circle" /></Link>
+                <Link to={"/userProfile/" + id} className="p-0 ms-3 menu-icon"><img src={imgURL ? img_url(imgURL) : "/files/user.png"} alt="user" className="w40 h40 mt--1 rounded-circle" /></Link>
 
                 <Leftnav navClass={`${navClass}`} />
                 {/* Search */}
                 <div className={`app-header-search ${searchClass}`}>
-                    <form className="search-form">
-                        <div className="form-group searchbox mb-0 border-0 p-1">
+                    <form name="search-sm" onSubmit={e => triggerSearch(e)} className="search-form">
+                        <div className="form-group searchbox mb-0 border-0 form-control p-1">
                             <input type="text" onChange={(e) => {
                                 setSearch(e.target.value)
                             }} value={search} className="form-control border-0" placeholder="Search..." />
                             <i className="input-icon">
                                 <ion-icon name="search-outline" role="img" className="md hydrated" aria-label="search outline"></ion-icon>
                             </i>
-                            <span onClick={triggerSearch} className="me-2 mt-1 d-inline-block close searchbox-close">
+                            <button type="submit" className={"d-inline border-0 "}>
+                            {/* <span onClick={triggerSearch} className="me-2 mt-1 d-inline-block close searchbox-close"> */}
                                 <i style={{ right: "40px" }} className="ti-search font-xs"></i>
-                            </span>
+                            {/* </span> */}
+                            </button>
                             <span className="ms-1 mt-1 d-inline-block close searchbox-close">
                                 <i className="ti-close font-xs" onClick={toggleActive}></i>
                             </span>

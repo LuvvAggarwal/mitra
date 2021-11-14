@@ -2,6 +2,6 @@
 
 module.exports = {
     backend: {
-        host: "http://localhost:4000"
+        host: process.env.NODE_ENV === "production" ? "" : "http://localhost:4000"
     }
 }

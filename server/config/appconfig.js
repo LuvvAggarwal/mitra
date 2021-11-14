@@ -12,7 +12,7 @@ module.exports = {
 		port: process.env.DEV_APP_PORT || 3000,
 		appName: process.env.APP_NAME || 'mitra',
 		env: process.env.NODE_ENV || 'development',
-		front: "http://localhost:3000",
+		front: process.env.NODE_ENV == "production" ? "https://meetra.in" : "http://localhost:3000",
 		mail: process.env.GMAIL_ACCOUNT,
 		mail_pswd: process.env.GMAIL_PSWD
 	},
