@@ -30,7 +30,7 @@ const FileViewer = ({ attachment, title, viewtype, css }) => {
                 case "video":
                     return <Player className={css} src={`${attachment_url}`}>
                         <ControlBar autoHide={true}>
-                            <BigPlayButton position="right"></BigPlayButton>
+                            <BigPlayButton position="center"></BigPlayButton>
                             <ReplayControl seconds={5} order={2.1} />
                             <ForwardControl seconds={5} order={3.1} />
                         </ControlBar>
@@ -47,7 +47,7 @@ const FileViewer = ({ attachment, title, viewtype, css }) => {
                 case "video":
                     return <Player className={css} src={attachment.url}>
                         <ControlBar autoHide={true}>
-                            <BigPlayButton position="right"></BigPlayButton>
+                            <BigPlayButton position="center"></BigPlayButton>
                             <ReplayControl seconds={5} order={2.1} />
                             <ForwardControl seconds={5} order={3.1} />
                         </ControlBar>

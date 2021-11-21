@@ -40,7 +40,8 @@ const storageS3 = multerS3({
         cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-        cb(null, "files/" + v4());
+        const ext = path.extname(file.originalname).toLowerCase();
+        cb(null, "files/" + v4() + ext);
     },
 });
 
