@@ -49,9 +49,9 @@ class groupsMemberController extends BaseController {
 				}
 			}
 			const obj = {};
-			console.log('check');
+			// console.log('check');
 			const member_check = await super.getByCustomOptions(req, 'group_member_map', options);
-			console.log(member_check);
+			// console.log(member_check);
 			if (member_check.active && member_check.id) {
 				obj.id = member_check.id;
 				obj.isMember = true;
@@ -61,10 +61,10 @@ class groupsMemberController extends BaseController {
 				obj.isMember = false;
 				obj.isAdmin = member_check.is_admin;
 			}
-			console.log(obj);
+			// console.log(obj);
 			return obj;
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -114,7 +114,7 @@ class groupsMemberController extends BaseController {
 				}
 			}
 			const req_data = await super.getByCustomOptions(req, "group_member_req", query)
-			console.log(req_data);
+			// console.log(req_data);
 			if (!req_data) {
 				requestHandler.throwError(400, 'bad request', 'Request not found')();
 			}
@@ -129,9 +129,9 @@ class groupsMemberController extends BaseController {
 			}
 			// const obj = {};
 			const result = await super.create(req, 'group_member_map', options);
-			console.log(result);
+			// console.log(result);
 			const req_accepted = await super.updateById(req, 'group_member_req', { request_accepted: true, member_id: id });
-			console.log(req_accepted);
+			// console.log(req_accepted);
 			const link_source = "/group/" + req_data.groups.group_id
 			const grp_name = req_data.groups.name
 			const notify =  nc.groupMemberRequestAcceptedNotification(user,user_id,link_source,grp_name)
@@ -187,7 +187,7 @@ class groupsMemberController extends BaseController {
 			if (!req_data)
 				requestHandler.throwError(400, 'bad request', 'Member record not found')();
 
-			console.log(req_data);
+			// console.log(req_data);
 
 			const is_admin = await super.getByCustomOptions(req, "group_member_map", {
 				where: {
@@ -197,7 +197,7 @@ class groupsMemberController extends BaseController {
 				}
 			});
 
-			console.log(is_admin);
+			// console.log(is_admin);
 
 			if (!is_admin && user !== req_data.user_id) {
 				requestHandler.throwError(400, 'bad request', 'You cannot delete data')();
@@ -226,9 +226,9 @@ class groupsMemberController extends BaseController {
 		try {
 			// console.log("take " + this.take);
 			const data = req.params;
-			console.log(data);
+			// console.log(data);
 			const lastNumber = parseInt(data.lastNumber.replace("n",""),10);
-			console.log("Lastnumber " + lastNumber);
+			// console.log("Lastnumber " + lastNumber);
 			const schema = {
 				// user_id: Joi.string().required(),
 				group_id: data_type.id,
@@ -297,7 +297,7 @@ class groupsMemberController extends BaseController {
 		try {
 			const id = req.params.id;
 			const user = req.decoded.payload.id;
-			console.log(user);
+			// console.log(user);
 			const schema = {
 				id: data_type.id,
 			}
@@ -322,7 +322,7 @@ class groupsMemberController extends BaseController {
 			if (!req_data) {
 				requestHandler.throwError(400, 'bad request', 'Member not found')();
 			}
-			console.log(req_data);
+			// console.log(req_data);
 
 			const is_admin = await super.getByCustomOptions(req, "group_member_map", {
 				where: {
@@ -331,7 +331,7 @@ class groupsMemberController extends BaseController {
 					is_admin: true
 				}
 			})
-			console.log(is_admin);
+			// console.log(is_admin);
 			if (!is_admin) {
 				requestHandler.throwError(400, 'bad request', 'You cannot block data')();
 			}
@@ -388,7 +388,7 @@ class groupsMemberController extends BaseController {
 			if (!req_data) {
 				requestHandler.throwError(400, 'bad request', 'Member not found')();
 			}
-			console.log(req_data);
+			// console.log(req_data);
 
 			const is_admin = await super.getByCustomOptions(req, "group_member_map", {
 				where: {
@@ -397,7 +397,7 @@ class groupsMemberController extends BaseController {
 					is_admin: true
 				}
 			})
-			console.log(is_admin);
+			// console.log(is_admin);
 			if (!is_admin) {
 				requestHandler.throwError(400, 'bad request', 'You cannot activate data')();
 			}
@@ -459,7 +459,7 @@ class groupsMemberController extends BaseController {
 			if (!req_data) {
 				requestHandler.throwError(400, 'bad request', 'Member not found')();
 			}
-			console.log(req_data);
+			// console.log(req_data);
 
 			const is_admin = await super.getByCustomOptions(req, "group_member_map", {
 				where: {
@@ -468,7 +468,7 @@ class groupsMemberController extends BaseController {
 					is_admin: true
 				}
 			})
-			console.log(is_admin);
+			// console.log(is_admin);
 			if (!is_admin) {
 				requestHandler.throwError(400, 'bad request', 'You cannot update data')();
 			}
@@ -512,9 +512,9 @@ class groupsMemberController extends BaseController {
 			const data = req.body;
 			const user = req.decoded.payload.id;
 			const name = req.decoded.payload.name ;
-			console.log(user);
+			// console.log(user);
 			const group = req.params.id;
-			console.log("Group  "  + group);
+			// console.log("Group  "  + group);
 			const schema = {
 				request_sender: data_type.id,
 				group_id: data_type.id,
@@ -525,8 +525,8 @@ class groupsMemberController extends BaseController {
 				group_id: group,
 				request_reciever: data.request_reciever,
 			}
-			console.log("request reciever");
-			console.log(data.request_reciever);
+			// console.log("request reciever");
+			// console.log(data.request_reciever);
 			const { error } = Joi.validate(options, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
@@ -554,7 +554,7 @@ class groupsMemberController extends BaseController {
 					}
 				}
 			});
-			console.log(sender_data);
+			// console.log(sender_data);
 
 
 			const reciever_data = await super.getByCustomOptions(req, 'group_member_map', {
@@ -574,11 +574,11 @@ class groupsMemberController extends BaseController {
 				}
 			});
 
-			console.log("reciever >>>>>>>>");
-			console.log(reciever_data);
-			console.log("sender >>>>>>>>>>>");
-			console.log(sender_data);
-			console.log(_.isUndefined(sender_data));
+			// console.log("reciever >>>>>>>>");
+			// console.log(reciever_data);
+			// console.log("sender >>>>>>>>>>>");
+			// console.log(sender_data);
+			// console.log(_.isUndefined(sender_data));
 			if (_.isUndefined(sender_data)) {
 				// if (sender_data.is_admin && _.isUndefined(reciever_data))
 				// 	options.is_acceptor_admin = false;
@@ -602,9 +602,9 @@ class groupsMemberController extends BaseController {
 
 					// }
 				})
-				console.log('req');
-				console.log(req_data);
-				console.log(!_.isUndefined(req_data));
+				// console.log('req');
+				// console.log(req_data);
+				// console.log(!_.isUndefined(req_data));
 				if (!_.isUndefined(req_data)) {
 					return requestHandler.throwError(400, "Request already there", "You have already requested to be a member")()
 				}
@@ -613,17 +613,17 @@ class groupsMemberController extends BaseController {
 				options.request_accepted = false;
 				options.id = uuid.v4();
 				// const obj = {};
-				console.log(options);
+				// console.log(options);
 				const payload = await super.create(req, 'group_member_req', options);
 				const link_source = "/group/" + payload.group_id ;
 				const notify = nc.groupMembershipRequestNotification({id:user,name},data.request_reciever,link_source)
 				// const payload = _.pick(result, ['id', 'created_on', 'updated_on', 'active'])
-				console.log(payload);
+				// console.log(payload);
 				return requestHandler.sendSuccess(res, 'Request to join group sent successfully')({ payload,notify });;
 			}
 			else if (_.isUndefined(reciever_data)) {
-				console.log('reciever data');
-				console.log(reciever_data);
+				// console.log('reciever data');
+				// console.log(reciever_data);
 				const req_data = await super.getByCustomOptions(req, "group_member_req", {
 					where: {
 						// OR: [
@@ -651,13 +651,13 @@ class groupsMemberController extends BaseController {
 
 				options.id = uuid.v4();
 				// const obj = {};
-				console.log(options);
+				// console.log(options);
 				const payload = await super.create(req, 'group_member_req', options);
 
 				const link_source = "/group/" + payload.group_id ;
 				const notify = nc.groupMembershipRequestAdminNotification({id:user,name},data.request_reciever,link_source)
 				
-				console.log(payload);
+				// console.log(payload);
 				return requestHandler.sendSuccess(res, 'Request to join group sent successfully successfully')({ payload, notify });;
 			}
 			// if(_.isUndefined(sender_data) )
@@ -667,7 +667,7 @@ class groupsMemberController extends BaseController {
 
 
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -714,12 +714,12 @@ class groupsMemberController extends BaseController {
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
 			const req_data = await super.getById(req, "group_member_req", options);
-			console.log(req_data);
+			// console.log(req_data);
 			// const sender_data = is_member({ user_id: user, group: data.group_id });
 			if (!req_data) {
 				requestHandler.throwError(400, 'bad request', 'invalid delete request,request not found')();
 			}
-			console.log(user);
+			// console.log(user);
 			const is_admin = await super.getByCustomOptions(req, "group_member_map", {
 				where: {
 					group_id: req_data.group_id,
@@ -727,7 +727,7 @@ class groupsMemberController extends BaseController {
 					is_admin: true
 				}
 			})
-			console.log(is_admin);
+			// console.log(is_admin);
 			if (!is_admin && user !== request_sender && user !== request_reciever) {
 				requestHandler.throwError(400, 'bad request', 'You cannot delete data')();
 			}
@@ -741,7 +741,7 @@ class groupsMemberController extends BaseController {
 			// // const obj = {};
 
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -831,10 +831,10 @@ class groupsMemberController extends BaseController {
 			}
 			// const obj = {};
 			const payload = await super.getList(req, 'group_member_req', options);
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, "Group's member requests fetched successfully")({ payload });;
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -933,7 +933,7 @@ class groupsMemberController extends BaseController {
 			}
 			// const obj = {};
 			const payload = await super.getList(req, 'group_member_req', options);
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, "User's Group member requests fetched successfully")({ payload });;
 		} catch (err) {
 			// console.log(err);

@@ -24,10 +24,11 @@ const ShareModal = ({ id, title, des, showAlert, alertConfig }) => {
   const staticStr = "Mitra: A friend for Everyone";
   const access_token = localStorage.getItem("access_token");
   const AuthStr = 'Bearer '.concat(access_token);
+  const baseURL = process.env.NODE_ENV === "production" ? "https://www.meetra.in" : "http://localhost:3000"
   const share = async(platform) => {
     const body = {
       shared_on: platform,
-      share_link: `${process.env.PUBLIC_URL}/post/${id}`,
+      share_link: `${baseURL}/post/${id}`,
     };
     await post_action
       .post(`/share/id=${id}`, body, { headers: { Authorization: AuthStr } })
@@ -77,7 +78,7 @@ const ShareModal = ({ id, title, des, showAlert, alertConfig }) => {
               <FacebookShareButton
                 // url={`http://localhost:3000/post/id=${id}`}
                 // url={`${process.env.PUBLIC_URL}/post/${id}`}
-                url="https://www.youtube.com/"
+                url={`${baseURL}/post/${id}`}
                 quote={`${staticStr} \n ${title} \n ${des}`}
                 hashtag="Mitra"
                 onShareWindowClose={()=>share("facebook")}
@@ -87,8 +88,7 @@ const ShareModal = ({ id, title, des, showAlert, alertConfig }) => {
             </li>
             <li className="me-1 cursor-pointer">
               <TwitterShareButton
-                // url={`http://localhost:3000/post/id=${id}`}
-                url={`${process.env.PUBLIC_URL}/post/${id}`}
+                url={`${baseURL}/post/${id}`}
                 title={title}
                 via="mitra"
                 hashtags={["mitra", "a_friend_for_everyone"]}
@@ -99,8 +99,7 @@ const ShareModal = ({ id, title, des, showAlert, alertConfig }) => {
             </li>
             <li className="me-1 cursor-pointer">
               <LinkedinShareButton
-                // url={`http://localhost:3000/post/id=${id}`}
-                url={`${process.env.PUBLIC_URL}/post/${id}`}
+                url={`${baseURL}/post/${id}`}
                 title={title}
                 summary={des}
                 source={"Mitra"}
@@ -112,7 +111,7 @@ const ShareModal = ({ id, title, des, showAlert, alertConfig }) => {
             <li className="me-1 cursor-pointer">
               <WhatsappShareButton
                 // url={`http://localhost:3000/post/id=${id}`}
-                url={`${process.env.PUBLIC_URL}/post/${id}`}
+                url={`${baseURL}/post/${id}`}
                 title={title}
                 separator={des}
                 onShareWindowClose={()=>share("whatsapp")}
@@ -123,7 +122,7 @@ const ShareModal = ({ id, title, des, showAlert, alertConfig }) => {
             <li className="me-1 cursor-pointer">
               <TelegramShareButton
                 // url={`http://localhost:3000/post/id=${id}`}
-                url={`${process.env.PUBLIC_URL}/post/${id}`}
+                url={`${baseURL}/post/${id}`}
                 title={title}
                 onShareWindowClose={()=>share("telegram")}
               >

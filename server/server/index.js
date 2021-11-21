@@ -79,7 +79,7 @@ io.on('connection', (socket) => {
 	console.log('a user connected ' + socket.id);
 
 	socket.on('post-created', async(id) => {
-		console.log(">>>>>>> " + id);
+		// console.log(">>>>>>> " + id);
 		const opt = {
 			where: {
 				id: id
@@ -93,7 +93,7 @@ io.on('connection', (socket) => {
 		followers.map((e)=>{
 			result.push(e.id) ;
 		})
-		console.log(result);
+		// console.log(result);
 		socket.broadcast.emit("followers" ,result.toString());
 	  });
   });

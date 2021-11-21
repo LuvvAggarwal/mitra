@@ -43,10 +43,10 @@ const sendEmail = async (mailOptions, msg) => {
     return new Promise(function (resolve, reject) {
         transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
-                console.log("error: ", err);
+                // console.log("error: ", err);
                 reject(err);
             } else {
-                console.log(`Mail sent successfully!`);
+                // console.log(`Mail sent successfully!`);
                 msg = "Verification link has been sent on your email. Please Check."
                 resolve(msg);
             }

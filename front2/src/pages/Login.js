@@ -96,9 +96,10 @@ const Login = (props) => {
         }
     }
     // console.log(process.env);
+    const baseURL = process.env.NODE_ENV === "production" ? "https://www.meetra.in" : "http://localhost:3000"
     const stringifiedParams = queryString.stringify({
         client_id: process.env.REACT_APP_GOOGLE_0AUTH_CLIENT_ID,
-        redirect_uri: 'http://localhost:3000/authenticate/google',
+        redirect_uri: baseURL + '/authenticate/google',
         scope: [
             'https://www.googleapis.com/auth/userinfo.email',
             'https://www.googleapis.com/auth/userinfo.profile',
@@ -119,7 +120,7 @@ const Login = (props) => {
                 {redirect && <Redirect to={redirect} />}
                 <div className="nav-header bg-transparent shadow-none border-0">
                     <div className="nav-top w-100">
-                        <a href="/"><i className="feather-zap text-success display1-size me-2 ms-0"></i><span className="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">Mitra </span> </a>
+                        <a href="/home"><i className="feather-zap text-success display1-size me-2 ms-0"></i><span className="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">Meetra </span> </a>
                         <button className="nav-menu me-0 ms-auto"></button>
 
                         <a href="/login" className="header-btn d-none d-lg-block bg-dark fw-500 text-white font-xsss p-3 ms-auto w100 text-center lh-20 rounded-xl">Login</a>
@@ -128,7 +129,7 @@ const Login = (props) => {
                 </div>
                 <div className="row" style={{ marginTop: `55px` }}>
                     <div className="col-xl-5 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"
-                        style={{ backgroundImage: `url("assets/images/bg-login.png")` }}></div>
+                        style={{ backgroundImage: `url("https://meetra-app.s3.ap-south-1.amazonaws.com/static/bg-login.png")` }}></div>
                     <div className="col-xl-7 vh-100 align-items-center d-flex bg-white rounded-3 overflow-hidden">
                         <div className="card shadow-none border-0 ms-auto me-auto login-card">
                             <div className="card-body rounded-0 text-left">

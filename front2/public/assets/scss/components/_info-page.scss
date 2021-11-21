@@ -1,21 +1,35 @@
-#hero-video{
+#hero{
     height: 75vh;
     width: 100%;
     object-fit: cover;
 }
 
 .hero-con{
-    position: absolute;
-    top: 88px;
-    background-color: rgba(0, 0, 0, 0.2);
-    height: 61%;
-    width: 100%;
-    display: flex;
-    align-items: center;
+    // position: absolute;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://meetra-app.s3.ap-south-1.amazonaws.com/static/Hero.jpg");
+    height: 60vh;
+    background-position: 20%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    top: 88.5px;
+    margin-bottom: 98.5px;
+    padding-top: 10%;
+}
+
+// .quote{
+//     color: $primary;
+//     position: relative;
+//     top: -15px;
+// }
+
+.tagline{
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .heading{
-    font-size: 4rem !important;
+    font-size: 4rem;
 }
 
 .text-align-center{

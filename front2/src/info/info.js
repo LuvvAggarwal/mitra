@@ -46,7 +46,7 @@ class Demo extends Component {
                 <div className="header-wrapper bg-white demo-style">
                     <div className="container max-container">
                         <div className="row">
-                            <div className="col-lg-3 col-md-6 col-sm-3 col-xs-6"><a href="/" className="logo"><span className="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">Mitra</span> </a></div>
+                            <div className="col-lg-3 col-md-6 col-sm-3 col-xs-6"><a href="/" className="logo"><span className="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">Meetra</span> </a></div>
                             <div className="col-lg-6 col-md-6 col-sm-6 d-none d-lg-block">
                                 <ul className="list-inline text-center mb-0 mt-2 pt-1">
                                     <li className="list-inline-item pe-4 ps-4"><a className="scroll-tiger" href="#about">About</a></li>
@@ -61,63 +61,68 @@ class Demo extends Component {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <video autoPlay id="hero-video" loop muted>
-                        <source src="assets/images/hero-video.mp4" type="video/mp4" ></source>
-                    </video>
+                {/* <div> */}
+                {/* <img src="https://meetra-app.s3.ap-south-1.amazonaws.com/static/Hero.jpg" id="hero" className=""/>  */}
 
-                    <div className="banner-wrapper bscover demo-style hero-con">
-                        <div className="container max-container">
-                            <div className="row">
-                                <div className="col-12">
-                                    <h1 className="text-white heading">
-                                        <span className="d-inline-block fredoka-font ls-3 fw-600 text-current logo-text mb-0">Meetra</span>
-                                        <p className="mt-1 font-xxl">Friend for everyone</p>
-                                    </h1>
-                                    <a href="/login" className="btn btn-lg btn-primary mr-4 text-uppercase animate__animated animate__backInLeft animate__delay-1s animate__slow mt-3">Login</a>
-                                    <a href="/register" className="btn btn-lg animate__animated animate__backInRight bg-white ms-4 text-uppercase animate__delay-1s animate__slow mt-3">Register</a>
+                <div className="banner-wrapper demo-style hero-con">
+                    <div className="container max-container">
+                        <div className="row">
+                            <div className="col-12">
+                                <h1 className="text-white ">
+                                    {/* <span className="d-inline-block fredoka-font ls-3 fw-600 text-current logo-text mb-0" ><i className="ti-quote-left"></i></span> */}
+                                    <p className="mb-3 font-xxl tagline">Friend for everyone</p>
+                                    <p className="mt-3 font-xs lh-20">Join Meetra to interact with people like you <br />
+                                    for improving your and others life.</p>
+                                </h1>
+                                <a href="/login" className="btn btn-lg btn-primary mr-4 text-uppercase animate__animated animate__fadeInLeft animate__delay-1s animate__slow mt-3">Login</a>
+                                <a href="/register" className="btn btn-lg animate__animated animate__fadeInRight bg-white ms-4 text-uppercase animate__delay-1s animate__slow mt-3">Register</a>
 
-                                    {/* <div className="icon-scroll pos-bottom-center icon-white"></div> */}
-                                </div>
-
+                                {/* <div className="icon-scroll pos-bottom-center icon-white"></div> */}
                             </div>
+
                         </div>
                     </div>
                 </div>
+                {/* </div> */}
 
                 <div className="section demo-style" id="about">
                     <div className="container ms-0 me-0" style={{ width: "100%", maxWidth: "100%", padding: "0" }}>
                         <h2 className="title-text2 mb-3 mt-2 text-align-center"><b>About</b></h2>
                         {/* <p className="mb-5">Mitra as a platform have 3 user types</p> */}
                         <div className="row text-white me-0 ms-0">
-                            <ScrollAnimation animateIn="animate__slideInUp" className="col-md-4 col-12 col-sm-12" style={{
-                                    minHeight: "100%",
-                                    background: "linear-gradient(90deg, rgba(112,24,60,0.35) 0%, rgba(130,10,10,0.35) 35%, rgba(84,32,11,0.35) 100%), url(assets/images/divyang.jpeg)",
-                                    backgroundSize: "cover",
-                                    height: "350px",
-                                }}>
-                                    <h2 className="fw-700 text-white m-h">Specials</h2>
-                                    <p className="fw-400 lh-24">Specials are those users which are currently having social, mental or physical problem.Due to these problem there life is impacted adversly</p>
-
-                            </ScrollAnimation>
-                            <ScrollAnimation animateIn="animate__slideInDown" className="col-md-4 col-12 col-sm-12" style={{
-                                    minHeight: "100%",
-                                    background: "linear-gradient(90deg, rgba(12,67,142,0.5) 0%, rgba(10,41,130,0.5) 35%), url(assets/images/counsoler.jpg)",
-                                    backgroundSize: "cover",
-                                    height: "350px",
-                                }}>
-                                    <h2 className="fw-700 text-white m-h">Counsoler</h2>
-                                    <p className="fw-400 lh-24">Counsolers are those users which have faced similar social, mental or physical problem.But now they are doing good in life.</p>
-                            </ScrollAnimation>
-                            <ScrollAnimation animateIn="animate__slideInUp" className="col-md-4 col-12 col-sm-12" style={{
+                            <div className="col-md-4 col-12 col-sm-12" style={{
                                 minHeight: "100%",
-                                background: "linear-gradient(90deg, rgba(37,230,22,0.5) 0%, rgba(3,124,17,0.5) 35%), url(assets/images/ngo.jpg)",
+                                background: "linear-gradient(90deg, rgba(112,24,60,0.35) 0%, rgba(130,10,10,0.35) 35%, rgba(84,32,11,0.35) 100%), url(https://meetra-app.s3.ap-south-1.amazonaws.com/static/divyang.jpeg)",
                                 backgroundSize: "cover",
                                 height: "350px",
                             }}>
-                                <h2 className="fw-700 text-white m-h">NGOs</h2>
-                                <p className="fw-400 lh-24">NGOs are institutions that help users which are currently having social, mental or physical problem. With their help users can have better life</p>
-                            </ScrollAnimation>
+                                <ScrollAnimation animateIn="animate__fadeIn" delay="100" duration="2">
+                                    <h2 className="fw-700 text-white m-h">Specials</h2>
+                                    <p className="fw-400 lh-24">Specials are those users which are currently having social, mental or physical problem.Due to these problem there life is impacted adversly</p>
+                                </ScrollAnimation>
+                            </div>
+                            <div className="col-md-4 col-12 col-sm-12" style={{
+                                minHeight: "100%",
+                                background: "linear-gradient(90deg, rgba(12,67,142,0.5) 0%, rgba(10,41,130,0.5) 35%), url(https://meetra-app.s3.ap-south-1.amazonaws.com/static/counsoler.jpg)",
+                                backgroundSize: "cover",
+                                height: "350px",
+                            }}>
+                                <ScrollAnimation animateIn="animate__fadeIn" delay="200" duration="2">
+                                    <h2 className="fw-700 text-white m-h">Counsoler</h2>
+                                    <p className="fw-400 lh-24">Counsolers are those users which have faced similar social, mental or physical problem.But now they are doing good in life.</p>
+                                </ScrollAnimation>
+                            </div>
+                            <div className="col-md-4 col-12 col-sm-12" style={{
+                                minHeight: "100%",
+                                background: "linear-gradient(90deg, rgba(37,230,22,0.5) 0%, rgba(3,124,17,0.5) 35%), url(https://meetra-app.s3.ap-south-1.amazonaws.com/static/ngo.jpg)",
+                                backgroundSize: "cover",
+                                height: "350px",
+                            }}>
+                                <ScrollAnimation animateIn="animate__fadeIn" delay="400" duration="2">
+                                    <h2 className="fw-700 text-white m-h">NGOs</h2>
+                                    <p className="fw-400 lh-24">NGOs are institutions that help users which are currently having social, mental or physical problem. With their help users can have better life</p>
+                                </ScrollAnimation>
+                            </div>
                         </div>
                     </div>
                 </div>

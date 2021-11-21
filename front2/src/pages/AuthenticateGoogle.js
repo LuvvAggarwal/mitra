@@ -80,6 +80,7 @@ const AuthenticateGoogle = () => {
             // setData(data)
         };
 
+        const baseURL = process.env.NODE_ENV === "production" ? "https://www.meetra.in" : "http://localhost:3000"
         const getAccessTokenFromCode = async (code) => {
             const data = await axios({
                 url: `https://oauth2.googleapis.com/token`,
@@ -87,7 +88,7 @@ const AuthenticateGoogle = () => {
                 data: {
                     client_id: process.env.REACT_APP_GOOGLE_0AUTH_CLIENT_ID,
                     client_secret: process.env.REACT_APP_GOOGLE_0AUTH_CLIENT_SECRET,
-                    redirect_uri: 'http://localhost:3000/authenticate/google',
+                    redirect_uri: baseURL + '/authenticate/google',
                     grant_type: 'authorization_code',
                     code,
                 },

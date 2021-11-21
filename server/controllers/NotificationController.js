@@ -38,7 +38,7 @@ class notificationController extends BaseController {
 				event: event_id,
 				seen: false
 			}
-			console.log("checking");
+			// console.log("checking");
 			data.id = uuid.v4() ;
 			// console.log(options);
 			const result = await super.create({}, 'notifications', data);
@@ -61,7 +61,7 @@ class notificationController extends BaseController {
 				event: event_id,
 				seen: false
 			}
-			console.log("checking");
+			// console.log("checking");
 			data.id = uuid.v4() ;
 			// console.log(options);
 			const result = await super.create({}, 'notifications', data);
@@ -84,7 +84,7 @@ class notificationController extends BaseController {
 				event: event_id,
 				seen: false
 			}
-			console.log("checking");
+			// console.log("checking");
 			data.id = uuid.v4() ;
 			// console.log(options);
 			const result = await super.create({}, 'notifications', data);
@@ -109,7 +109,7 @@ class notificationController extends BaseController {
 				event: event_id,
 				seen: false
 			}
-			console.log("checking");
+			// console.log("checking");
 			data.id = uuid.v4() ;
 			// console.log(options);
 			const result = await super.create({}, 'notifications', data);
@@ -131,7 +131,7 @@ class notificationController extends BaseController {
 				event: event_id,
 				seen: false
 			}
-			console.log("checking");
+			// console.log("checking");
 			data.id = uuid.v4() ;
 			// console.log(options);
 			const result = await super.create({}, 'notifications', data);
@@ -153,7 +153,7 @@ class notificationController extends BaseController {
 				event: event_id,
 				seen: false
 			}
-			console.log("checking");
+			// console.log("checking");
 			data.id = uuid.v4() ;
 			// console.log(options);
 			const result = await super.create({}, 'notifications', data);
@@ -175,7 +175,7 @@ class notificationController extends BaseController {
 				event: event_id,
 				seen: false
 			}
-			console.log("checking");
+			// console.log("checking");
 			data.id = uuid.v4() ;
 			// console.log(options);
 			const result = await super.create({}, 'notifications', data);
@@ -199,7 +199,7 @@ class notificationController extends BaseController {
 				event: event_id,
 				seen: false
 			}
-			console.log("checking");
+			// console.log("checking");
 			data.id = uuid.v4() ;
 			// console.log(options);
 			const result = await super.create({}, 'notifications', data);
@@ -222,7 +222,7 @@ class notificationController extends BaseController {
 				event: event_id,
 				seen: false
 			}
-			console.log("checking");
+			// console.log("checking");
 			data.id = uuid.v4() ;
 			// console.log(options);
 			const result = await super.create({}, 'notifications', data);
@@ -247,7 +247,7 @@ class notificationController extends BaseController {
 			const { error } = Joi.validate({ id: user, lastNumber, takeNotification }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
-			console.log(user);
+			// console.log(user);
 			// EFFECTIVE QUERY HANDLING
 			const query = {
 				take: 10,
@@ -286,16 +286,16 @@ class notificationController extends BaseController {
 					},
 				}
 			}
-			console.log("checking");
+			// console.log("checking");
 			if (lastNumber > -1) {
 				query.where.number = {
 					lt: lastNumber
 				}
 			}
-			console.log(query);
+			// console.log(query);
 			// console.log(options);
 			const payload = await super.getList	(req, 'notifications', query);
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, "Notification fetched successfully", 200)({payload});
 		} catch (error) {
 			return requestHandler.sendError(req,res,err)
@@ -325,7 +325,7 @@ class notificationController extends BaseController {
 					updated_on: new Date().toISOString()
 				}
 			}
-			console.log("checking");
+			// console.log("checking");
 
 			// console.log(options);
 			const payload = await super.updateMany(req, 'notifications', data);

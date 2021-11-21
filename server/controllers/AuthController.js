@@ -125,7 +125,7 @@ class AuthController extends BaseController {
 			}, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			// console.log('finding');
-			console.log(uniqueString);
+			// console.log(uniqueString);
 			const id = uniqueString.split("_")[1];
 			const options = {
 				id
@@ -213,16 +213,16 @@ class AuthController extends BaseController {
 			// }
 			// console.log(schema);
 			// ----------------------------------
-			console.log(validate);
+			// console.log(validate);
 			const { error } = Joi.validate(validate, schema);
 
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
 
-			console.log(data.user_id);
+			// console.log(data.user_id);
 			const options = { where: { email: data.email } };
 			const user = await super.getByCustomOptions(req, 'users', options);
-			console.log(user);
+			// console.log(user);
 
 			if (user) {
 				requestHandler.throwError(400, 'bad request', 'invalid email account,email already existed')();
@@ -239,7 +239,7 @@ class AuthController extends BaseController {
 			data.verified = false
 			const obj = _.pick(data, "active", "id", "user_id", "first_name", "middle_name", "last_name", "name", "email", "password", "type", "ph_number", "problem_category")
 			const createdUser = await super.create(req, 'users', obj);
-			console.log(createdUser);
+			// console.log(createdUser);
 			if (!(_.isNull(createdUser))) {
 				// let message = "";
 				const uniqueString = randomString + "_" + createdUser.id;
@@ -258,9 +258,9 @@ class AuthController extends BaseController {
 				let message;
 				(async () => {
 					const workerPool = WorkerCon.get()
-					console.log(JSON.stringify(workerPool));
+					// console.log(JSON.stringify(workerPool));
 					message = await workerPool.sendVerifyEmail(mailOptions, msg)
-					console.log(message);
+					// console.log(message);
 					const payload = {
 						user: createdUser,
 						message
@@ -273,7 +273,7 @@ class AuthController extends BaseController {
 				requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
 			}
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			requestHandler.sendError(req, res, err);
 		}
 	}
@@ -330,21 +330,21 @@ class AuthController extends BaseController {
 			// }
 			// console.log(schema);
 			// ----------------------------------
-			console.log(validate);
+			// console.log(validate);
 			const { error } = Joi.validate(validate, schema);
 
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
 
-			console.log(data.user_id);
+			// console.log(data.user_id);
 			const options = { where: { email: data.email } };
 			const user = await super.getByCustomOptions(req, 'users', options);
-			console.log(user);
+			// console.log(user);
 
 			if (user && !user.sso) {
 				requestHandler.throwError(400, 'bad request', 'Invalid email account,email already existed')();
 			} else if (user && user.sso) {
-				console.log("my sso");
+				// console.log("my sso");
 				
 				requestHandler.sendSuccess(res, "User is signed in", 200)({ access_token: user.access_token });
 			} else if(!user) {
@@ -354,16 +354,16 @@ class AuthController extends BaseController {
 				data.sso = true
 				const obj = _.pick(data, "active", "id", "user_id", "first_name", "middle_name", "last_name", "name", "email", "password", "type", "ph_number", "problem_category", "profile_photo","sso")
 				const createdUser = await super.create(req, 'users', obj);
-				console.log(createdUser);
+				// console.log(createdUser);
 				if (!(_.isNull(createdUser))) {
 
 					const payload = _.omit(createdUser, ['created_on', 'updated_on', 'last_login', 'password', 'gender', 'access_token']);
-					console.log("payload");
-					console.log(payload);
+					// console.log("payload");
+					// console.log(payload);
 					// const payload = json.parse(payloadData)
 					const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
-					console.log("token");
-					console.log(token);
+					// console.log("token");
+					// console.log(token);
 					const token_data = {
 						last_login: new Date().toISOString(),
 						access_token: token
@@ -379,7 +379,7 @@ class AuthController extends BaseController {
 			}
 
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 		return	requestHandler.sendError(req, res, err);
 		}
 	}
@@ -436,7 +436,7 @@ class AuthController extends BaseController {
 			const workerPool = WorkerCon.get()
 			const message = await workerPool.sendVerifyEmail(mailOptions, msg)
 
-			console.log(message);
+			// console.log(message);
 			const payload = {
 				user: user,
 				message
@@ -486,7 +486,7 @@ class AuthController extends BaseController {
 			// data.user_id = createId(data.name)
 			const options = { where: { email: req.params.email, active: true } };
 			const user = await super.getById(req, 'users', options);
-			console.log(user);
+			// console.log(user);
 			if (!user) {
 				requestHandler.throwError(400, 'bad request', 'User does not exists.')();
 			}
@@ -502,7 +502,7 @@ class AuthController extends BaseController {
 				requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
 			}
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			requestHandler.sendError(req, res, err);
 		}
 	}
@@ -556,7 +556,7 @@ class AuthController extends BaseController {
 
 	static async logOut(req, res) {
 		try {
-			console.log('first');
+			// console.log('first');
 			const act = auth.getTokenFromHeader(req)
 			const schema = {
 				// platform: Joi.string().valid('ios', 'android', 'web').required(),

@@ -38,9 +38,9 @@ class postsController extends BaseController {
 	 */
 	static async getPostById(req, res) {
 		try {
-			console.log(req.params);
+			// console.log(req.params);
 			const reqParam = req.params.id;
-			console.log(reqParam);
+			// console.log(reqParam);
 			const schema = {
 				id: data_type.id,
 				// is_active: Joi.boolean().required(),
@@ -83,9 +83,9 @@ class postsController extends BaseController {
 					},
 				}
 			};
-			console.log("checking");
+			// console.log("checking");
 
-			console.log(options);
+			// console.log(options);
 			const result = await super.getByCustomOptions(req, 'posts', options);
 			const payload = result
 			// _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
@@ -136,8 +136,8 @@ class postsController extends BaseController {
 			if (canDelete) {
 				const children_data = post_children()
 				const result = await super.deleteByIdCascade(req, 'posts',children_data)
-				console.log("result");
-				console.log(result);
+				// console.log("result");
+				// console.log(result);
 				const payload = result
 				//  _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
 				return requestHandler.sendSuccess(res, 'Post Deleted Successfully')({ payload });
@@ -146,7 +146,7 @@ class postsController extends BaseController {
 				requestHandler.throwError(400, "bad request", "You cannot delete post")
 			}
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -273,13 +273,13 @@ class postsController extends BaseController {
 				// approved: data.approved,
 				visibility: data.visibility,
 			};
-			console.log("req > ");
-			console.log(req.body);
+			// console.log("req > ");
+			// console.log(req.body);
 			const { error } = Joi.validate(options, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			// options.group_id = createId(data.name);
 			// options.updated_by = user;
-			console.log("updating .... ");
+			// console.log("updating .... ");
 			// ISME DONO COVER HO GYE GROUP CHECK AND MEMBER CHECK
 			const record = await super.getById(req, "posts", {
 				id: req.params.id, active: true
@@ -288,7 +288,7 @@ class postsController extends BaseController {
 				requestHandler.throwError(400, "bad request", "Post not found")
 			if (record.user_id === user) {
 				const result = await super.updateById(req, 'posts', options);
-				console.log(result);
+				// console.log(result);
 				const payload = _.omit(result, ['created_on', 'updated_on', 'active']);
 				return requestHandler.sendSuccess(res, 'Post updated Successfully')({ payload });
 			}
@@ -296,7 +296,7 @@ class postsController extends BaseController {
 				return requestHandler.throwError(400, 'bad request', "User is not authorized to update post.")()
 			}
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -360,10 +360,10 @@ class postsController extends BaseController {
 			// options.group_id = createId(data.name);
 			// options.created_by = user;
 			// options.updated_by = user
-			console.log("req > ");
-			console.log(req.files);
-			// console.log(req);
-			console.log(options);
+			// console.log("req > ");
+			// console.log(req.files);
+			// // console.log(req);
+			// console.log(options);
 			if(options.group_id){
 				const member_check = await isGroupMember(req, res, { user_id: user, group_id: data.group_id });
 				if (member_check.isAdmin || member_check.isMember) {
@@ -390,7 +390,7 @@ class postsController extends BaseController {
 			// const payload = { profile, addMember }
 			return requestHandler.sendSuccess(res, 'Post created Successfully')({ payload });
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -502,17 +502,17 @@ class postsController extends BaseController {
 
 			if (lastNumber > -1)
 				options.where.number = { lt: lastNumber };
-			console.log(options);
+			// console.log(options);
 
 
 
 			const payload = await super.getList(req, 'posts', options);
 
 			// const payload = user_grp_map;
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, 'Group Posts')({ payload });
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -536,7 +536,7 @@ class postsController extends BaseController {
 			}
 			const { error } = Joi.validate({ user_id, user ,lastNumber/*lastRank: lastRankis_active: req.body.is_active */ }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-			console.log('GETTING');
+			// console.log('GETTING');
 
 
 			//WE COULD DIRECTLY SEARCH ON GROUP MEMBER MAP BUT FINE AS OF NOW
@@ -604,13 +604,13 @@ class postsController extends BaseController {
 
 			if (lastNumber > -1)
 				options.where.number = { lt: lastNumber };
-			console.log(options);
+			// console.log(options);
 			const payload = await super.getList(req, 'posts', options);
 			// const payload = user_grp_map;
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, 'My Posts')({ payload });
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -629,7 +629,7 @@ class postsController extends BaseController {
 			}
 			const { error } = Joi.validate({ user, lastRank, takeParm }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-			console.log('GETTING');
+			// console.log('GETTING');
 
 			const following_records = await super.getList(req, "follower_following", {
 				where: {
@@ -644,8 +644,8 @@ class postsController extends BaseController {
 			following_records.map(function (obj) {
 				following.push(obj.following);
 			});
-			console.log(following_records);
-			console.log(following);
+			// console.log(following_records);
+			// console.log(following);
 			const group_records = await super.getList(req, "group_member_map", {
 				where: {
 					user_id: user,
@@ -655,7 +655,7 @@ class postsController extends BaseController {
 					group_id: true
 				}
 			})
-			console.log(group_records);
+			// console.log(group_records);
 			const groups = []
 			group_records.map(function (obj) {
 				groups.push(obj.group_id);
@@ -730,13 +730,13 @@ class postsController extends BaseController {
 			}
 			if (lastRank > -1)
 				options.where.rank = { lt: lastRank };
-			console.log(options);
+			// console.log(options);
 			const payload = await super.getList(req, 'posts', options);
 			// const payload = user_grp_map;
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, 'Feed Posts')({ payload });
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -752,7 +752,7 @@ class postsController extends BaseController {
 			}
 			const { error } = Joi.validate({ lastRank/*is_active: req.body.is_active */ }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-			console.log('GETTING');
+			// console.log('GETTING');
 
 
 			//WE COULD DIRECTLY SEARCH ON GROUP MEMBER MAP BUT FINE AS OF NOW
@@ -814,13 +814,13 @@ class postsController extends BaseController {
 			}
 			if (lastRank > -1)
 				options.where.rank = { lt: lastRank };
-			console.log(options);
+			// console.log(options);
 			const payload = await super.getList(req, 'posts', options);
 			// const payload = user_grp_map;
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, 'Popular Posts')({ payload });
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -838,7 +838,7 @@ class postsController extends BaseController {
 			}
 			const { error } = Joi.validate({ lastRank, q /*is_active: req.body.is_active */ }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-			console.log('GETTING');
+			// console.log('GETTING');
 
 
 			//WE COULD DIRECTLY SEARCH ON GROUP MEMBER MAP BUT FINE AS OF NOW
@@ -912,13 +912,13 @@ class postsController extends BaseController {
 			}
 			if (lastRank > -1)
 				options.where.rank = { lt: lastRank };
-			console.log(options);
+			// console.log(options);
 			const payload = await super.getList(req, 'posts', options);
 			// const payload = user_grp_map;
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, 'Popular Posts')({ payload });
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
