@@ -29,8 +29,8 @@ class followerFollowingController extends BaseController {
 			const name = req.decoded.payload.name
 			const user_id = req.decoded.payload.user_id
 			const following  = req.params.id;
-			console.log(follower);
-			console.log(following);
+			// console.log(follower);
+			// console.log(following);
 			const schema = {
 				follower: data_type.id,
 				following: data_type.id,
@@ -48,7 +48,7 @@ class followerFollowingController extends BaseController {
 			const query = {
 				follower, following, active: true
 			}
-			console.log(query);
+			// console.log(query);
 			const record = await super.getByCustomOptions(req, "follower_following", { where: query });
 			if (record)
 				requestHandler.throwError(400, 'bad request', 'You are already following')()
@@ -125,7 +125,7 @@ class followerFollowingController extends BaseController {
 		try {
 			const follower = req.params.user
 			let lastNumber = req.params.lastNumber
-			console.log(lastNumber);
+			// console.log(lastNumber);
 			lastNumber = parseInt(lastNumber.replace("n", ""), 10);
 			const schema = {
 				follower: data_type.id,
@@ -165,10 +165,10 @@ class followerFollowingController extends BaseController {
 			// const userProfileParsed = userProfile
 			// let payload = _.omit(result, ['created_on', 'updated_on',]);
 
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, 'User following fetched Successfully')({ payload });
 		} catch (err) {
-			console.log('error');
+			// console.log('error');
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -240,10 +240,10 @@ class followerFollowingController extends BaseController {
 			// console.log(userProfile);
 			// const userProfileParsed = userProfile
 			// const payload = _.omit(result, ['created_on', 'updated_on',]);
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, 'User followers fetched Successfully')({ payload });
 		} catch (err) {
-			console.log('error');
+			// console.log('error');
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -285,7 +285,7 @@ class followerFollowingController extends BaseController {
 		try {
 			const user = req.decoded.payload.id;
 			// const { otherUser } = req.body;
-			console.log(user + "  " + otherUser);
+			// console.log(user + "  " + otherUser);
 			const schema = {
 				user: data_type.id,
 				otherUser: data_type.id,
@@ -322,7 +322,7 @@ class followerFollowingController extends BaseController {
 			return obj.relation;
 		}
 		catch (err) {
-			console.log('error');
+			// console.log('error');
 			return requestHandler.throwError(400, "bad request", err.message)({err});
 		}
 	}

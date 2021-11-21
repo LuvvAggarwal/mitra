@@ -35,7 +35,7 @@ class dataLookupController extends BaseController {
 	 */
 	 static async getDL(req, res) {
 		try {
-			console.log(req.params);
+			// console.log(req.params);
 			const model = req.params.model;
 			// console.log(reqParam);
 			const schema = {
@@ -51,9 +51,9 @@ class dataLookupController extends BaseController {
 					active: true
 				},
 			};
-			console.log("checking");
+			// console.log("checking");
 
-			console.log(options);
+			// console.log(options);
 			const result = await super.getList(req, model, options);
 			const payload = result
 			// _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
@@ -81,9 +81,9 @@ class dataLookupController extends BaseController {
 					active: true
 				},
 			};
-			console.log("checking");
+			// console.log("checking");
 
-			console.log(options);
+			// console.log(options);
 			const result = await super.getList(req, 'countries', options);
 			const payload = result
 			// _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
@@ -95,7 +95,7 @@ class dataLookupController extends BaseController {
 
 	static async getStates(req, res) {
 		try {
-			console.log(req.params);
+			// console.log(req.params);
 			const country_id = req.params.id;
 			// console.log(reqParam);
 			const schema = {
@@ -115,9 +115,9 @@ class dataLookupController extends BaseController {
 					name: "asc"
 				}
 			};
-			console.log("checking");
+			// console.log("checking");
 
-			console.log(options);
+			// console.log(options);
 			const result = await super.getList(req, 'states', options);
 			const payload = result
 			// _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
@@ -129,7 +129,7 @@ class dataLookupController extends BaseController {
 
 	static async getCities(req, res) {
 		try {
-			console.log(req.params);
+			// console.log(req.params);
 			const state_id = req.params.id;
 			// console.log(reqParam);
 			const schema = {
@@ -149,9 +149,9 @@ class dataLookupController extends BaseController {
 					name: "asc"
 				}
 			};
-			console.log("checking");
+			// console.log("checking");
 
-			console.log(options);
+			// console.log(options);
 			const result = await super.getList(req, 'cities', options);
 			const payload = result
 			// _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
@@ -184,9 +184,9 @@ class dataLookupController extends BaseController {
 					name: "asc"
 				}
 			};
-			console.log("checking");
+			// console.log("checking");
 
-			console.log(options);
+			// console.log(options);
 			const result = await super.getList(req, model, options);
 			const payload = result
 			// _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])

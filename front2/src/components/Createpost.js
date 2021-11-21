@@ -224,7 +224,7 @@ class Createpost extends Component {
                                 </div>
                             </div>
                         </Modal.Body>
-                        <Modal.Footer className="py-1 d-flex justify-content-center">
+                        <Modal.Footer className="py-1 d-flex justify-content-center bg-white border-top-xs z-index-1">
                             <div>
                                 <Button variant="primary" className="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl" disabled={this.state.disable} onClick={this.createPost}>Post</Button>
                             </div>

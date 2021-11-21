@@ -77,7 +77,7 @@ class usersController extends BaseController {
 				return requestHandler.sendError(res, 'User not found')();
 			if (req.params.id === user.id) {
 				const children_data = user_children()
-				console.log(children_data);
+				// console.log(children_data);
 				const result = await super.deleteByIdCascade(req, 'users', children_data);
 				const payload = _.omit(result, ['access_token', 'password', 'theme', 'visibility', 'notification', 'created_on', 'updated_on'])
 				return requestHandler.sendSuccess(res, 'User Deleted Successfully')({ payload });
@@ -104,16 +104,16 @@ class usersController extends BaseController {
 	static async getProfile(req, res) {
 		// console.log(req);
 		try {
-			console.log('getting profile');
+			// console.log('getting profile');
 			// const tokenFromHeader = auth.getJwtToken(req);
 			const current_user = req.decoded.payload.id;
 			const user_id = !req.params.user_id ? req.decoded.payload.user_id : req.params.user_id;
-			console.log(user_id);
+			// console.log(user_id);
 			const schema = {
 				user_id: data_type.str_100_req,
 			};
 			const { error } = Joi.validate({ user_id }, schema);
-			console.log(error);
+			// console.log(error);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
 			let options = {
 				where: {
@@ -195,7 +195,7 @@ class usersController extends BaseController {
 				requestHandler.throwError(400, "bad request", "User not found")();
 			}
 			if (current_user !== profile.id && current_user !== profile.user_id) {
-				console.log(profile.id);
+				// console.log(profile.id);
 				const relation = await getRelation(req, res, profile.id);
 				if (relation == 'No-Friend') {
 					// HUME ABHI ZAROORAT H ISKI
@@ -267,7 +267,7 @@ class usersController extends BaseController {
 	static async getUserProfile(req, res) {
 		// console.log(req);
 		try {
-			console.log('getting profile');
+			// console.log('getting profile');
 			// const tokenFromHeader = auth.getJwtToken(req);
 			const current_user = req.decoded.payload.id;
 			const id = req.params.id;
@@ -275,7 +275,7 @@ class usersController extends BaseController {
 				id: data_type.id,
 			};
 			const { error } = Joi.validate({ id: id }, schema);
-			console.log(error);
+			// console.log(error);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
 			let options = {
 				where: {
@@ -426,17 +426,17 @@ class usersController extends BaseController {
 			const newOptions = { ...options, ...additionalOptions }
 
 			const userProfile = await super.getByCustomOptions(req, 'users', newOptions);
-			console.log(userProfile);
+			// console.log(userProfile);
 			if (!userProfile) {
 				requestHandler.throwError(400, "bad request", "User not found")();
 			}
 			// const count = await super.raw()
 			// const userProfileParsed = userProfile
 			const payload = _.omit(userProfile, ['created_on', 'updated_on', 'number', 'last_login', 'password', 'access_token']);
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, 'User Profile fetched Successfully', 200)({ payload });
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -444,7 +444,7 @@ class usersController extends BaseController {
 	static async getNgoProfile(req, res) {
 		// console.log(req);
 		try {
-			console.log('getting profile');
+			// console.log('getting profile');
 			// const tokenFromHeader = auth.getJwtToken(req);
 			const current_user = req.decoded.payload.id;
 			const id = req.params.id;
@@ -608,7 +608,7 @@ class usersController extends BaseController {
 			const newOptions = { ...options, ...additionalOptions }
 
 			const userProfile = await super.getByCustomOptions(req, 'users', newOptions);
-			console.log(userProfile);
+			// console.log(userProfile);
 			if (!userProfile) {
 				requestHandler.throwError(400, "bad request", "User not found")();
 			}
@@ -616,7 +616,7 @@ class usersController extends BaseController {
 			const payload = _.omit(userProfile, ['created_on', 'updated_on', 'number', 'last_login', 'password', 'access_token']);
 			return requestHandler.sendSuccess(res, 'NGO Profile fetched Successfully')({ payload });
 		} catch (err) {
-			console.log('error');
+			// console.log('error');
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -624,7 +624,7 @@ class usersController extends BaseController {
 	static async getCounsalerProfile(req, res) {
 		// console.log(req);
 		try {
-			console.log('getting profile');
+			// console.log('getting profile');
 			// const tokenFromHeader = auth.getJwtToken(req);
 			const current_user = req.decoded.payload.id;
 			const id = req.params.id;
@@ -794,7 +794,7 @@ class usersController extends BaseController {
 			const newOptions = { ...options, ...additionalOptions }
 
 			const userProfile = await super.getByCustomOptions(req, 'users', newOptions);
-			console.log(userProfile);
+			// console.log(userProfile);
 			if (!userProfile) {
 				requestHandler.throwError(400, "bad request", "User not found")();
 			}
@@ -802,7 +802,7 @@ class usersController extends BaseController {
 			const payload = _.omit(userProfile, ['created_on', 'updated_on', 'number', 'last_login', 'password', 'access_token']);
 			return requestHandler.sendSuccess(res, 'Counsaler Profile fetched Successfully')({ payload });
 		} catch (err) {
-			console.log('error');
+			// console.log('error');
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -820,7 +820,7 @@ class usersController extends BaseController {
 		try {
 			const user = req.decoded.payload;
 			// const type = req.body.type ;
-			console.log(req.files);
+			// console.log(req.files);
 			const schema = {
 				user: {
 					// first_name: data_type.str_100_req,
@@ -940,8 +940,8 @@ class usersController extends BaseController {
 				}
 			}
 
-			console.log("req > ");
-			console.log(req.body);
+			// console.log("req > ");
+			// console.log(req.body);
 			const type = req.body.type.toLowerCase();
 			const { error } = Joi.validate(validate[type], schema[type]);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
@@ -950,7 +950,7 @@ class usersController extends BaseController {
 				active: true,
 			}
 			const user_data = await super.getById(req, "users", options)
-			console.log(user_data);
+			// console.log(user_data);
 			if (_.isUndefined(user_data))
 				return requestHandler.throwError(400, 'bad request', 'User not found')();
 			// if(user === user_data.id){
@@ -988,10 +988,10 @@ class usersController extends BaseController {
 			}
 			const { error } = Joi.validate({ q: q }, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', 'invalid User Id');
-			console.log('GETTING');
+			// console.log('GETTING');
 			const urlSearchParams = new URLSearchParams(q);
 			const query = Object.fromEntries(urlSearchParams.entries());
-			console.log(query);
+			// console.log(query);
 			if(query.type != undefined && query.type.indexOf("{") == "0"){
 				query.type = JSON.parse(query.type)
 			}
@@ -1132,18 +1132,18 @@ class usersController extends BaseController {
 				// 	}
 				// }
 			}
-			console.log(options);
+			// console.log(options);
 			const users = await super.getList(req, 'users', options);
 			// const omit = _.omitBy(user, ['created_on', 'updated_on', 'last_login_date', 'password', 'access_token']);
-			console.log("omit");
+			// console.log("omit");
 			// console.log(omit);
 			const payload = _.map(users,(row)=>{
 				return _.omit(row,['created_on', 'updated_on', 'last_login_date', 'password', 'access_token'])
 			})
-			console.log(payload);
+			// console.log(payload);
 			return requestHandler.sendSuccess(res, "Users Fetched Successfully")({ payload });
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}

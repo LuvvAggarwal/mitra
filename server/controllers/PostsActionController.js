@@ -34,7 +34,7 @@ class postsActionController extends BaseController {
 	 */
 	static async likePost(req, res) {
 		try {
-			console.log(req.params);
+			// console.log(req.params);
 			const user = req.decoded.payload;
 			const user_id = user.id;
 			const post = req.params.id
@@ -81,17 +81,17 @@ class postsActionController extends BaseController {
 				user_id,
 				post: record.id
 			};
-			console.log("checking");
+			// console.log("checking");
 
 			// console.log(options);
 			const result = await super.create(req, 'like_post', data);
 			const payload = result;
-			console.log(payload);
+			// console.log(payload);
 			const rank = parseFloat((parseFloat(record.rank) + parseFloat((1 / (record.post_category.value * 1000)).toFixed(3))).toFixed(5))
 			const updateRank = await super.updateById(req, "posts", {
 				rank
 			})
-			console.log("Notifying");
+			// console.log("Notifying");
 			const link_source = "/post/" + record.id
 			const notify = await nc.likeNotification(user, record.user_id, link_source)
 			// _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
@@ -141,17 +141,17 @@ class postsActionController extends BaseController {
 				}
 			}
 			const record = await super.getByCustomOptions(req, "like_post", query)
-			console.log(record);
+			// console.log(record);
 
 			if (!record) {
-				console.log("error");
+				// console.log("error");
 				requestHandler.throwError(400, "bad request", "record not found")();
 			}
 
 			if (record.user_id === user) {
 				const result = await super.deleteByIdPermanent(req, 'like_post')
-				console.log("result");
-				console.log(result);
+				// console.log("result");
+				// console.log(result);
 				// const payload = result;
 				const rank = parseFloat((parseFloat(record.posts.rank) - parseFloat((1 / (record.posts.post_category.value * 1000)).toFixed(3))).toFixed(5))
 
@@ -167,7 +167,7 @@ class postsActionController extends BaseController {
 				requestHandler.throwError(400, "bad request", "You cannot unlike post")();
 			}
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -282,9 +282,9 @@ class postsActionController extends BaseController {
 			// 	user_id, post
 			// };
 			options.id = uuid.v4()
-			console.log("checking");
+			// console.log("checking");
 
-			console.log(options);
+			// console.log(options);
 			const result = await super.create(req, 'comment_post', options);
 			const payload = result
 			const rank = parseFloat((parseFloat(record.rank) + parseFloat((2 / (record.post_category.value * 1000)).toFixed(3))).toFixed(5))
@@ -327,8 +327,8 @@ class postsActionController extends BaseController {
 
 			if (record.user_id === user) {
 				const result = await super.updateById(req, 'comment_post', { comment })
-				console.log("result");
-				console.log(result);
+				// console.log("result");
+				// console.log(result);
 				const payload = result
 				//  _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
 				return requestHandler.sendSuccess(res, 'Comment updated Successfully')({ payload });
@@ -337,7 +337,7 @@ class postsActionController extends BaseController {
 				requestHandler.throwError(400, "bad request", "You cannot updated comment")()
 			}
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -383,8 +383,8 @@ class postsActionController extends BaseController {
 
 			if (record.user_id === user) {
 				const result = await super.deleteByIdPermanent(req, 'comment_post')
-				console.log("result");
-				console.log(result);
+				// console.log("result");
+				// console.log(result);
 				const rank = parseFloat((parseFloat(record.posts.rank) - parseFloat((2 / (record.posts.post_category.value * 1000)).toFixed(3))).toFixed(5))
 
 				req.params.id = result.post;
@@ -400,7 +400,7 @@ class postsActionController extends BaseController {
 				requestHandler.throwError(400, "bad request", "You cannot delete comment")()
 			}
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}
@@ -471,7 +471,7 @@ class postsActionController extends BaseController {
  */
 	static async sharePost(req, res) {
 		try {
-			console.log(req.params);
+			// console.log(req.params);
 			const user = req.decoded.payload;
 			const post = req.params.id
 			// console.log(reqParam);
@@ -511,12 +511,12 @@ class postsActionController extends BaseController {
 			// const data = {
 			// 	user_id, post
 			// };
-			console.log("checking");
+			// console.log("checking");
 			options.id = uuid.v4()
-			console.log(options);
+			// console.log(options);
 			const result = await super.create(req, 'share_post', options);
 			const rank = parseFloat((parseFloat(record.rank) + parseFloat((3 / (record.post_category.value * 1000)).toFixed(3))).toFixed(5))
-			console.log(rank);
+			// console.log(rank);
 			const updateRank = await super.updateById(req, "posts", {
 				rank
 			})
@@ -617,8 +617,8 @@ class postsActionController extends BaseController {
 
 			if (record.user_id === user) {
 				const result = await super.deleteById(req, 'atachment_post_map')
-				console.log("result");
-				console.log(result);
+				// console.log("result");
+				// console.log(result);
 				const payload = result
 				//  _.omit(result, ['created_on', 'updated_on', 'active', 'updated_by', 'created_by'])
 				return requestHandler.sendSuccess(res, 'Post Attachment deleted Successfully')({ payload });
@@ -627,7 +627,7 @@ class postsActionController extends BaseController {
 				requestHandler.throwError(400, "bad request", "You cannot delete attachment")()
 			}
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			return requestHandler.sendError(req, res, err);
 		}
 	}

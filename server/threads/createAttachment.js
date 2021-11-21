@@ -1,6 +1,6 @@
 const { workerData, parentPort, isMainThread } = require("worker_threads");
 const { createMany } = require("../controllers/BaseController");
-
+const {v4} = require("uuid")
 // if (!isMainThread) {
 //     try {
 //         parentPort.on("message", async (data) => {
@@ -21,10 +21,10 @@ const { createMany } = require("../controllers/BaseController");
 const createAttachmentRecord = async (post, attachments) => {
     const data = [];
     attachments.forEach((e,i) => {
-        console.log(i);
-        console.log(e);
-        let url = e.path;
-        let id = e.filename.split("_")[0]
+        // console.log(i);
+        // console.log(e);
+        let url = e.location;
+        let id = v4() //.split("_")[0]
         let mime_type = e.mimetype;
         let record = {
             post: post,
@@ -32,11 +32,12 @@ const createAttachmentRecord = async (post, attachments) => {
             url: url,
             id: id
         }
+        // console.log(e);
         data.push(record)
     });
     const payload =  createMany(attachments, "atachment_post_map", data);
-    console.log("attachments>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-    console.log(payload);
+    // console.log("attachments>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    // console.log(payload);
     return payload;
 }
 
