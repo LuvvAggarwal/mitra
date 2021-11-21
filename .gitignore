@@ -7,3 +7,5 @@ pem/
 front/
 front2/public/files
 front2/build/
+front2/.cache
+front2/dist
