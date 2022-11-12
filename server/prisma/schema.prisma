@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["selectRelationCount"]
+  //previewFeatures = ["selectRelationCount"]
 }
 
 datasource db {
@@ -321,10 +321,19 @@ model users {
   first_name              String?              @default("") @db.VarChar(100)
   middle_name             String?              @default("") @db.VarChar(100)
   last_name               String?              @default("") @db.VarChar(100)
-  name                    String              @default("") @db.VarChar(250)
+  name                    String               @default("") @db.VarChar(250)
   occupation              String?              @default("") @db.VarChar(100)
   experience              Int?                 @default(0)
-  problem_category        String?               @db.Uuid
+  problem_category        String?              @db.Uuid
+  verified_counsoler      Boolean?              @default(false)
+  fees                    Int?
+  balance                 BigInt?
+  RCI_certification       String?
+  account_holder_name     String?
+  bank_branch             String?
+  account_no              String?
+  ifsc_code               String?
+  time_slot               String?
   registration_code       String?              @db.VarChar(100)
   help_type               String?              @db.Uuid
   ph_number               String?              @unique @db.VarChar(15)
@@ -344,7 +353,7 @@ model users {
   city                    String?              @db.Uuid
   cities                  cities?              @relation(fields: [city], references: [id])
   help                    help_type?           @relation(fields: [help_type], references: [id])
-  problem                 problem_category?     @relation(fields: [problem_category], references: [id])
+  problem                 problem_category?    @relation(fields: [problem_category], references: [id])
   comment_post            comment_post[]
   follower                follower_following[] @relation("follower_following_followerTousers")
   following               follower_following[] @relation("follower_following_followingTousers")
@@ -358,7 +367,34 @@ model users {
   notifications_senderTo  notifications[]      @relation("notifications_senderTousers")
   posts                   posts[]
   share_post              share_post[]
+  booking_counsoler       booking[]            @relation("booking_counsoler")
+  booking_user       booking[]            @relation("booking_user")
 }
+
+model booking {
+  id             String    @id @db.Uuid
+  number         BigInt    @default(autoincrement())
+  active         Boolean   @default(true)
+  deleted        Boolean   @default(false)
+  deleted_on     DateTime? @default(now()) @db.Timestamp(6)
+  created_on     DateTime  @default(now()) @db.Timestamp(6)
+  updated_on     DateTime  @default(now()) @db.Timestamp(6)
+  start_time     DateTime  
+  end_time       DateTime
+  counsoler      String    @db.Uuid
+  user           String    @db.Uuid
+  meeting_link   String
+  paid           Boolean   @default(false)
+  resource_id       String
+  order_id       String?
+  razorpay_payment_id    String?
+  key_secret     String?
+  review         String?    
+  rating         String?         
+  counsoler_user users     @relation("booking_counsoler", fields: [counsoler], references: [id])
+  user_user      users     @relation("booking_user", fields: [user], references: [id])
+}
+
 
 enum Attachment_Type {
   IMAGE
