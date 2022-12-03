@@ -16862,4 +16862,14 @@ button[disabled] {
   margin-top: 55%;
 }
 
+table#RBS-Scheduler-root div.ant-row-flex.ant-row-flex-space-between.ant-row-flex-middle div.ant-col:nth-child(2) label.ant-radio-button-wrapper:nth-child(1) {
+  display: none !important;
+}
+table#RBS-Scheduler-root div.ant-row-flex.ant-row-flex-space-between.ant-row-flex-middle div.ant-col:nth-child(2) label.ant-radio-button-wrapper:nth-child(4) {
+  display: none;
+}
+table#RBS-Scheduler-root div.ant-row-flex.ant-row-flex-space-between.ant-row-flex-middle div.ant-col:nth-child(2) label.ant-radio-button-wrapper:nth-child(5) {
+  display: none;
+}
+
 /*# sourceMappingURL=style.css.map */

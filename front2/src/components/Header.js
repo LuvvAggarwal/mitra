@@ -90,7 +90,7 @@ const Header = () => {
                 {/* Search */}
                 <form name="search-lg" onSubmit={e => triggerSearch(e)} className="float-left header-search ms-3">
                     <div className="form-group mb-0 icon-input">
-                        <button type="submit" > <i className="cursor-pointer feather-search font-sm text-grey-400"></i> </button>
+                        <button type="submit" className={"d-inline border-0 "}> <i className="cursor-pointer feather-search font-sm text-grey-400"></i> </button>
                         <input type="text" onChange={(e) => {
                             setSearch(e.target.value)
                         }} name="search-pc"  value={search} placeholder="Start typing to search..." className="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 text-grey-500 rounded-xl w350 theme-dark-bg" />

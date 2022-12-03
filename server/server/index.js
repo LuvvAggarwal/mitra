@@ -10,6 +10,7 @@
 */
 
 // JAI SHREE SITARAM
+try{
 const express = require('express');
 // const bodyParser = require('body-parser');
 
@@ -111,6 +112,8 @@ io.on('connection', (socket) => {
 		console.log('Server is listening on: ', port)
 	})
 })()
+module.exports = app;	
+}catch(e){
+	console.log(e)
+}
 
-
-module.exports = app;

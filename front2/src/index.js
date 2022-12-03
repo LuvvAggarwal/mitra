@@ -69,6 +69,7 @@ import AuthenticateGoogle from './pages/AuthenticateGoogle';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import CreateGroup from './pages/CreateGroup';
+import Booking from './pages/Booking';
 
 // const app_config = require("./config/app_config")
 
@@ -95,6 +96,7 @@ const Root = () => {
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultemailopen`} component={Emailopen} />
                     <Route exact path={`${process.env.PUBLIC_URL}/setting`} component={Settings} />
                     <Route exact path={`${process.env.PUBLIC_URL}/popular`} component={Popular} />
+                    <Route exact path={`${process.env.PUBLIC_URL}/booking/id=:id`} component={Booking} />
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultanalytics`} component={Analytics} />
 
                     <Route exact path={`${process.env.PUBLIC_URL}/search/:q`} component={Search} />

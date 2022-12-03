@@ -11,7 +11,8 @@ import Leftnav from '../components/Leftnav';
 import Rightchat from '../components/Rightchat';
 import Appfooter from '../components/Appfooter';
 import Popupchat from '../components/Popupchat';
-const img_url = require("../utils/imgURL") ;
+import TimePicker from 'react-bootstrap-time-picker';
+const img_url = require("../utils/imgURL");
 const Joi = require("joi")
 const data_type = require("../validation/dataTypes");
 const errorSetter = require("../utils/errorSetter")
@@ -38,6 +39,14 @@ const UpdateGroupProfile = () => {
     const [problem, setProblem] = useState("");
     const [bio, setBio] = useState("");
     const [help_type, setHelp_type] = useState("");
+    // Counsoler specific fields
+ /*   const [bank_branch, setBank_branch] = useState("");
+    const [ifsc_code, setIfsc_code] = useState("");
+    const [account_holder_name, setAccount_holder_name] = useState("");
+    const [account_no, setAccount_no] = useState("");
+    const [time_slot_start, setTime_slot_start] = useState("");
+    const [time_slot_end, setTime_slot_end] = useState("");
+    const [time_slot, setTime_slot] = useState(""); */
     const [showError, setShowError] = useState("");
     const [error, setError] = useState("");
     const [showSuccess, setShowSuccess] = useState("");
@@ -72,7 +81,7 @@ const UpdateGroupProfile = () => {
         fetchData()
         if (User) {
             User.then((res) => {
-                // console.log(res);
+                console.log(res);
                 if (res) {
                     // console.log("my");
                     setEmail(() => { if (res.email != null) return res.email; else return ""; })
@@ -112,8 +121,18 @@ const UpdateGroupProfile = () => {
                         help_opt.value = res.help.id;
                         help_opt.innerHTML = res.help.name;
                         helpSelect.appendChild(help_opt)
-                        setProblem(res.help.id)
+                        setHelp_type(res.help.id)
                     }
+               /*     // if (res.type == "COUNSALER") {
+                        setBank_branch(res.bank_branch);
+                        setAccount_no(res.account_no);
+                        setAccount_holder_name(res.account_holder_name);
+                        setIfsc_code(res.ifsc_code);
+                        if (res.time_slot) {
+                            setTime_slot_start(res.time_slot.split(" :: ")[0] * 60 * 60)
+                            setTime_slot_end(res.time_slot.split(" :: ")[1] * 60 * 60)
+                        }
+                    // }*/
                 }
             })
         }
@@ -123,7 +142,7 @@ const UpdateGroupProfile = () => {
 
     const getStates = async () => {
         const stateResponse = await dl.get(`/states/${country}`);
-        // console.log(country);
+        // consolelog(country);
         const states = stateResponse.data.data.payload
         setStateList(states);
     }
@@ -144,7 +163,8 @@ const UpdateGroupProfile = () => {
         setDisable(true)
         // console.log(e);
         // console.log('starte');
-        const schema = Joi.object({
+        let timeSlot = "";
+        let userSchema = {
             name: data_type.str_250_req,
             email: data_type.email,
             ph_number: data_type.ph_number,
@@ -157,7 +177,31 @@ const UpdateGroupProfile = () => {
             country: data_type.id,
             profile_img_url: data_type.img_url,
             cover_img_url: data_type.img_url,
-        })
+        }
+
+        let schema = Joi.object(userSchema)
+
+        let counsolerSchema = {
+            name: data_type.str_250_req,
+            email: data_type.email,
+            ph_number: data_type.ph_number,
+            problem: data_type.id,
+            // help_type: data_type.id_opt,
+            address: data_type.str_250_req,
+            bio: data_type.text_req,
+            city: data_type.id,
+            state: data_type.id,
+            country: data_type.id,
+            profile_img_url: data_type.img_url,
+            cover_img_url: data_type.img_url,
+         /*   ifsc_code : data_type.str_100_req,
+            account_no : data_type.str_100_req,
+            account_holder_name : data_type.str_250_req,
+            bank_branch : data_type.str_250_req,
+            time_slot : data_type.str_250_req,*/
+        }
+
+
         const validate = {
             name,
             email,
@@ -173,7 +217,27 @@ const UpdateGroupProfile = () => {
             cover_img_url,
         }
 
+        /*if (type == "COUNSALER") {
+            alert("TEST")
+            const start_hr = time_slot_start / 60 / 60;
+            const end_hr = time_slot_end / 60 / 60;
+            alert(start_hr + "   " + end_hr)
+            timeSlot = start_hr + " :: " + end_hr;
+            alert(timeSlot)
+            // setTime_slot(timeSlot);
+            // alert(time_slot);
+
+            validate.ifsc_code = ifsc_code;
+            validate.account_holder_name = account_holder_name;
+            validate.account_no = account_no;
+            validate.bank_branch = bank_branch;
+            validate.time_slot = timeSlot;
+
+            schema = Joi.object(counsolerSchema)
+        }
+        */
         const { error } = schema.validate(validate)
+
         // console.log(JSON.stringify(error));
         if (error) {
             setShowError(true)
@@ -194,7 +258,15 @@ const UpdateGroupProfile = () => {
                 formData.append("type", type);
                 formData.append("help_type", help_type);
                 formData.append("profile_photo", profile_img);
-                formData.append("cover_photo", cover_img)
+                formData.append("cover_photo", cover_img);
+             /*   if (type == "COUNSALER") {
+                    formData.append("time_slot", timeSlot)
+                    formData.append("account_holder_name", account_holder_name)
+                    formData.append("account_no", account_no)
+                    formData.append("bank_branch", bank_branch)
+                    formData.append("ifsc_code", ifsc_code)
+                }*/
+                
                 // console.log(formData.getAll("keys"));
 
                 const access_token = localStorage.getItem("access_token");
@@ -339,18 +411,78 @@ const UpdateGroupProfile = () => {
                                                 </div>}
                                             </div>
 
+                                            {/* COUNSOLER PROFILE SPECIFIC FIELDS */}
+                                    {/*        {type == "COUNSALER" &&
+                                                <div>
+                                                    <div className="row">
+                                                        <div className={`col-lg-6 mb-3`}>
+                                                            <div className="form-group">
+                                                                <label className="mont-font fw-600 font-xsss mb-2">Bank Branch</label>
+                                                                <input type="text" className="form-control"
+                                                                    value={bank_branch} onChange={(e) => { setBank_branch(e.target.value) }} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-6 mb-3">
+                                                            <div className="form-group">
+                                                                <label className="mont-font fw-600 font-xsss mb-2">Account Holder Name</label>
+                                                                <input type="text" className="form-control"
+                                                                    value={account_holder_name} onChange={(e) => { setAccount_holder_name(e.target.value) }} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className={`col-lg-6 mb-3`}>
+                                                            <div className="form-group">
+                                                                <label className="mont-font fw-600 font-xsss mb-2"> Account Number</label>
+                                                                <input type="text" className="form-control"
+                                                                    value={account_no} onChange={(e) => { setAccount_no(e.target.value) }} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-6 mb-3">
+                                                            <div className="form-group">
+                                                                <label className="mont-font fw-600 font-xsss mb-2">IFSC Code</label>
+                                                                <input type="text" className="form-control"
+                                                                    value={ifsc_code} onChange={(e) => { setIfsc_code(e.target.value) }} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className={`col-lg-6 mb-3`}>
+                                                            <div className="form-group">
+                                                                <label className="mont-font fw-600 font-xsss mb-2">Time Slot Start</label>
+                                                                <TimePicker start="00:00" end="24:00" format={24} value={time_slot_start} onChange={(e) => { setTime_slot_start(e) }} step={30} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-6 mb-3">
+                                                            <div className="form-group">
+                                                                <label className="mont-font fw-600 font-xsss mb-2">Time Slot End</label>
+                                                                <TimePicker start="00:00" end="24:00" format={24} value={time_slot_end} onChange={(e) => {
+                                                                    if (e > time_slot_start) {
+                                                                        setTime_slot_end(e);
+                                                                    }
+                                                                    else {
+                                                                        alert("End slot should be greater than start")
+                                                                        setTime_slot_end("")
+                                                                    }
+                                                                }} step={30} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }  */}
+
                                             <div className="row">
                                                 <div className="col-lg-4 mb-3">
                                                     <div className="form-group">
-                                                    <label className="mont-font fw-600 font-xsss mb-2">Country</label>
-                                                    <select className="form-control" value={country} onChange={(e) => { setCountry(e.target.value) }}>
-                                                        <option value="" disabled>Please Select</option>
-                                                        {countryList.map(e => {
-                                                            return (
-                                                                <option key={e.id} value={e.id}>{e.name}</option>
-                                                            )
-                                                        })}
-                                                    </select>
+                                                        <label className="mont-font fw-600 font-xsss mb-2">Country</label>
+                                                        <select className="form-control" value={country} onChange={(e) => { setCountry(e.target.value) }}>
+                                                            <option value="" disabled>Please Select</option>
+                                                            {countryList.map(e => {
+                                                                return (
+                                                                    <option key={e.id} value={e.id}>{e.name}</option>
+                                                                )
+                                                            })}
+                                                        </select>
                                                     </div>
                                                 </div>
 
