@@ -820,7 +820,9 @@ class usersController extends BaseController {
 		try {
 			const user = req.decoded.payload;
 			// const type = req.body.type ;
-			// console.log(req.files);
+			console.log(req.files);
+			const profile_photo = req.files.profile_photo ? req.files.profile_photo[0].location : req.body.profile_photo;
+			const cover_photo = req.files.cover_photo ? req.files.cover_photo[0].location : req.body.cover_photo;
 			const schema = {
 				user: {
 					// first_name: data_type.str_100_req,
@@ -874,6 +876,11 @@ class usersController extends BaseController {
 					problem_category: data_type.id,
 					help_type: data_type.id_opt,
 					type: data_type.type,
+					/*ifsc_code : data_type.str_100_req,
+					account_no : data_type.str_100_req,
+					account_holder_name : data_type.str_250_req,
+					bank_branch : data_type.str_250_req,
+					time_slot : data_type.str_250_req,*/
 					// visibility: data_type.visibility,
 					// theme: data_type.theme,
 					// notification: data_type.notification,
@@ -888,8 +895,8 @@ class usersController extends BaseController {
 					name: req.body.name,
 					address: req.body.address,
 					ph_number: req.body.ph_number,
-					profile_photo: req.files.profile_photo[0].path,
-					cover_photo: req.files.cover_photo[0].path,
+					profile_photo: profile_photo,
+					cover_photo: cover_photo,
 					// gender: req.body.gender,
 					bio: req.body.bio,
 					// occupation: req.body.occupation,
@@ -904,8 +911,8 @@ class usersController extends BaseController {
 					name: req.body.name,
 					address: req.body.address,
 					ph_number: req.body.ph_number,
-					profile_photo: req.files.profile_photo[0].path,
-					cover_photo: req.files.cover_photo[0].path,
+					profile_photo: profile_photo,
+					cover_photo: cover_photo,
 					bio: req.body.bio,
 					problem_category: req.body.problem_category,
 					// occupation: req.body.occupation,
@@ -924,8 +931,8 @@ class usersController extends BaseController {
 					name: req.body.name,
 					address: req.body.address,
 					ph_number: req.body.ph_number,
-					profile_photo: req.files.profile_photo[0].path,
-					cover_photo: req.files.cover_photo[0].path,
+					profile_photo: profile_photo,
+					cover_photo: cover_photo,
 					// gender: req.body.gender,
 					bio: req.body.bio,
 					// occupation: req.body.occupation,
@@ -933,7 +940,12 @@ class usersController extends BaseController {
 					problem_category: req.body.problem_category,
 					city: req.body.city,
 					help_type: req.body.help_type,
-					type: req.body.type
+					type: req.body.type,
+			/*		ifsc_code: req.body.ifsc_code,
+					account_holder_name: req.body.account_holder_name,
+					account_no: req.body.account_no,
+					bank_branch: req.body.bank_branch,
+					time_slot: req.body.time_slot*/
 					// visibility: req.body.visibility,
 					// theme: req.body.theme,
 					// notification: req.body.notification,
@@ -981,7 +993,7 @@ class usersController extends BaseController {
 			// const user = jwt.decode(tokenFromHeader).payload.id;
 			const id = req.decoded.payload.id
 			const q = req.params.q; // query
-			
+
 			const schema = {
 				q: data_type.text,
 				// lastNumber: data_type.integer
@@ -992,7 +1004,7 @@ class usersController extends BaseController {
 			const urlSearchParams = new URLSearchParams(q);
 			const query = Object.fromEntries(urlSearchParams.entries());
 			// console.log(query);
-			if(query.type != undefined && query.type.indexOf("{") == "0"){
+			if (query.type != undefined && query.type.indexOf("{") == "0") {
 				query.type = JSON.parse(query.type)
 			}
 			let where;
@@ -1102,10 +1114,10 @@ class usersController extends BaseController {
 
 
 			//WE COULD DIRECTLY SEARCH ON GROUP MEMBER MAP BUT FINE AS OF NOW
-			const lastNumber = parseInt(query.lastNumber.replace("n",""),10)
+			const lastNumber = parseInt(query.lastNumber.replace("n", ""), 10)
 			if (lastNumber > -1)
 				where.number = { lt: lastNumber };
-			const limit = query.take ? parseInt(query.take, 10): take;
+			const limit = query.take ? parseInt(query.take, 10) : take;
 			const options = {
 				take: limit,
 				where: where,
@@ -1115,7 +1127,7 @@ class usersController extends BaseController {
 				include: {
 					following: {
 						where: {
-							follower : id,
+							follower: id,
 							active: true
 						}
 					},
@@ -1137,8 +1149,8 @@ class usersController extends BaseController {
 			// const omit = _.omitBy(user, ['created_on', 'updated_on', 'last_login_date', 'password', 'access_token']);
 			// console.log("omit");
 			// console.log(omit);
-			const payload = _.map(users,(row)=>{
-				return _.omit(row,['created_on', 'updated_on', 'last_login_date', 'password', 'access_token'])
+			const payload = _.map(users, (row) => {
+				return _.omit(row, ['created_on', 'updated_on', 'last_login_date', 'password', 'access_token'])
 			})
 			// console.log(payload);
 			return requestHandler.sendSuccess(res, "Users Fetched Successfully")({ payload });
